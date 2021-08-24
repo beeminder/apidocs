@@ -344,35 +344,46 @@
 <p>See 
 <a href="https://github.com/beeminder" title="The Beeminder org on GitHub">github.com/beeminder</a> 
 for API libraries in various languages.
-Examples here are currently just Curl and Ruby so far. </p>
+Examples here are currently just Curl and Ruby. </p>
 </blockquote>
 
 <p>In case you&#39;re here to automate adding data to Beeminder, there&#39;s a good chance 
 we&#39;ve got you covered with our 
 <a href="http://beeminder.com/zapier" title="Zapier is a service like IFTTT that connects hundreds of disparate webservices. In the case of Beeminder you can create triggers in other webservices that automatically cause data to be added to Beeminder graphs.">Zapier integration</a>
 or our
-<a href="http://ifthisMINDthat.com" title="IFTTT = If This Then That">IFTTT integration</a>.
-If you&#39;re looking for ideas for things to do with the Beeminder API, we have a
-<a href="http://blog.beeminder.com/api" title="This was the blog post that originally announced our API in 2012">blog post with lots of examples</a>.
-The
-<a href="http://forum.beeminder.com/c/tech" title="Yay Discourse.org!">tech category of our forum</a>
-is a good place to ask questions and show off what you&#39;re working on.</p>
+<a href="http://ifthisMINDthat.com" title="IFTTT = If This Then That">IFTTT integration</a>.</p>
 
-<p>It&#39;s really important to us that this API be easy for developers to use so please don&#39;t be shy about asking us questions.
+<p>The
+<a href="http://forum.beeminder.com/c/tech" title="Yay Discourse.org!">tech category of our forum</a>
+is a good place to ask questions and show off what you&#39;re working on.
+It&#39;s really important to us that this API be easy for developers to use so please don&#39;t be shy about asking us questions.
 Whether you post in
 <a href="http://forum.beeminder.com" title="The above link is the Tech subset of the forum; this link is to the main page for the forum">the forum</a>
 or email us at <strong>support@beeminder.com</strong> we&#39;ve invariably found that questions people avoided asking for fear they were dumb turned out to point to things we needed to improve in the API or the documentation.
 So lean on us heavily as you&#39;re hacking away with our API &mdash; it helps us a lot when you do!</p>
 
-<p>A note of caution for the reader: We document the User and Goal resources below, explaining various attributes that you will find in the API outputs. If you inspect the API outputs you get, however, you&#39;ll probably notice a bunch of info that&#39;s not included here. You can use any of that info you like, but it may change at our whim down the road. (That&#39;s why we don&#39;t document it.) </p>
-<h2 id='preliminaries'>Preliminaries</h2>
+<p>If you&#39;re looking for ideas for things to do with the Beeminder API, we have a
+<a href="http://blog.beeminder.com/api" title="This was the blog post that originally announced our API in 2012">blog post with lots of examples</a>.
+While we&#39;re talking about things that people have done with the Beeminder API, we want to ladle out some extra praise for the
+<a href="https://complice.co/features#beeminder" title="Complice explains how Beeminder integration complements Complice">Complice</a> 
+and 
+<a href="https://docs.taskratchet.com/integrations.html#beeminder" title="Describing how Beeminder works with TaskRatchet">TaskRatchet</a> integrations.
+Malcolm and Narthur, respectively, have built useful Beeminder integrations without us having to lift a finger. 
+A beautiful example of our API earning its keep. </p>
+<h2 id='preliminaries'>Preliminaries</h2><h3 id='api-base-url'>API Base URL</h3>
 <p>The base URL for all requests is <code>https://www.beeminder.com/api/v1/</code>.</p>
-
-<p>A common mistake is to use the wrong URL, e.g., using an <code>http</code> protocol instead of <code>https</code>, or leaving out the <code>www</code> subdomain. 
-We redirect insecure and non <code>www</code> requests to the canonical Beeminder URL, but do not forward parameters for <code>POST</code> requests, so some things will break opaquely if you don&#39;t use exactly the above base URL.</p>
 
 <p>You may also consume the Beeminder API via
 <a href="https://rapidapi.com/beeminder/api/beeminder" title="RapidAPI (formerly Mashape) is a hub for cloud APIs (is how Wikipedia puts it)">RapidAPI</a>.</p>
+<h3 id='troubleshooting'>Troubleshooting</h3>
+<p>A common mistake is to use the wrong URL, e.g., using an <code>http</code> protocol instead of <code>https</code>, or leaving out the <code>www</code> subdomain. 
+We redirect insecure and non <code>www</code> requests to the canonical Beeminder URL, but do not forward parameters for <code>POST</code> requests, so some things will break opaquely if you don&#39;t use exactly the above base URL.
+(And even worse, others will not.)</p>
+
+<p>Also, please pay attention to the type of HTTP request an endpoint is expecting.
+For example, the <code>Goal#create</code> endpoint and <code>Goal#update</code> endpoint differ primarily in whether you are making a <code>POST</code> or a <code>PUT</code> request (respectively).</p>
+<h3 id='backwards-compatibility'>Backwards Compatibility</h3>
+<p>A note of caution for the reader: We document the User and Goal resources below, explaining various attributes that you will find in the API outputs. If you inspect the API outputs you get, however, you&#39;ll probably notice a bunch of info that&#39;s not included here. You can use any of that info you like, but it may change at our whim down the road. (That&#39;s why we don&#39;t document it.) </p>
 
 <p><a href="#">Back to top</a></p>
 
