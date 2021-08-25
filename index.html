@@ -1265,7 +1265,8 @@ NB: If you&#39;re sending multiple create datapoint requests in rapid succession
 <h3 id='parameters-14'>Parameters</h3>
 <ul>
 <li><code>datapoints</code> (array of Datapoints):
-Each must include <code>timestamp</code>, <code>value</code>, and <code>comment</code>, with <code>requestid</code> optional.</li>
+Each Datapoint should be a JSON object, and must include at minimum a <code>value</code>.
+Other parameters are the same as for the single-create method above.<br></li>
 </ul>
 <h3 id='returns-13'>Returns</h3>
 <p>A list of successfully created <a href="#datapoint">Datapoints</a>. 
