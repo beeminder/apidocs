@@ -446,7 +446,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `fullroad` (array): Like `roadall` but with the nulls filled in.
 * `rah` (number): Road value (y-value of the bright line of the yellow brick road) at the akrasia horizon (today plus one week).
 * `delta` (number): Distance from the yellow brick road to today's datapoint (`curval`).
-* `delta_text` (string): Deprecated.
+* `delta_text` (string): Deprecated. The amounts you need to do get 1, 2, and 3 days of safety buffer, e.g. "✔ +2 +6"
 * `safebuf` (number): The integer number of safe days. If it's a beemergency this will be zero.
 * `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
 * `id` (string of hex digits): We prefer using user/slug as the goal identifier, however, since we began allowing users to change slugs, this id is useful!
