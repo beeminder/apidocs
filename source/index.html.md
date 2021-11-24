@@ -621,6 +621,56 @@ Goals are sorted in descending order of urgency, i.e., increasing order of time 
 (There's actually a very tiny caveat to this involving the long-deprecated "sort threshold" parameter.
 If you don't know what that is then you can ignore this parenthetical!)
 
+<h2 id="getarchivedgoals">Get archived goals for a user</h2>
+
+
+> Examples
+
+```shell
+  curl https://www.beeminder.com/api/v1/users/alice/goals/archived.json?auth_token=abc123
+```
+
+```json
+  [ { "slug": "gmailzero",
+      "title": "Inbox Zero",
+      "goal_type": "inboxer",
+      "svg_url": "http://static.beeminder.com/alice+gmailzero.svg",
+      "graph_url": "http://static.beeminder.com/alice+gmailzero.png",
+      "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",
+      "losedate": 1347519599,
+      "goaldate": 0,
+      "goalval": 25.0,
+      "rate": -0.5,
+      "updated_at": 1345774578,
+      "queued": false },
+    { "slug": "fitbit-me",
+      "title": "Never stop moving",
+      "goal_type": "hustler",
+      "svg_url": "http://static.beeminder.com/alice+fitbit-me.svg",
+      "graph_url": "http://static.beeminder.com/alice+fitbit-me.png",
+      "thumb_url": "http://static.beeminder.com/alice+fitbit-thumb.png",
+      "losedate": 1346482799,
+      "goaldate": 1349582400,
+      "goalval": null,
+      "rate": 8.0,
+      "updated_at": 1345771188,
+      "queued": false } ]
+```
+
+### HTTP Request
+
+`GET /users/`*u*`/goals.json`
+
+Get user *u*'s archived goals.
+
+### Parameters
+
+None.
+
+### Returns
+
+A list of [Goal](#goal) objects representing the user's archived goals.
+
 <h2 id="creategoal">Create a goal for a user</h2>
 
 
