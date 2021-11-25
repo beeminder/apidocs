@@ -266,6 +266,9 @@
                     <a href="#getgoals" class="toc-h2 toc-link" data-title="Goal Resource">Get all goals for a user</a>
                   </li>
                   <li>
+                    <a href="#getarchivedgoals" class="toc-h2 toc-link" data-title="Goal Resource">Get archived goals for a user</a>
+                  </li>
+                  <li>
                     <a href="#creategoal" class="toc-h2 toc-link" data-title="Goal Resource">Create a goal for a user</a>
                   </li>
                   <li>
@@ -954,6 +957,45 @@ Goals are sorted in descending order of urgency, i.e., increasing order of time 
 (There&#39;s actually a very tiny caveat to this involving the long-deprecated &quot;sort threshold&quot; parameter.
 If you don&#39;t know what that is then you can ignore this parenthetical!)</p>
 
+<h2 id="getarchivedgoals">Get archived goals for a user</h2>
+
+<blockquote>
+<p>Examples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/archived.json?auth_token<span class="o">=</span>abc123
+</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gmailzero"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Inbox Zero"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inboxer"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.svg"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.png"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight-thumb.png"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1347519599</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mf">25.0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fitbit-me"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Never stop moving"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.svg"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.png"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-thumb.png"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1346482799</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1349582400</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345771188</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></code></pre><h3 id='http-request-5'>HTTP Request</h3>
+<p><code>GET /users/</code><em>u</em><code>/goals.json</code></p>
+
+<p>Get user <em>u</em>&#39;s archived goals.</p>
+<h3 id='parameters-5'>Parameters</h3>
+<p>None.</p>
+<h3 id='returns-4'>Returns</h3>
+<p>A list of <a href="#goal">Goal</a> objects representing the user&#39;s archived goals.</p>
+
 <h2 id="creategoal">Create a goal for a user</h2>
 
 <blockquote>
@@ -980,11 +1022,11 @@ If you don&#39;t know what that is then you can ignore this parenthetical!)</p>
     </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
     </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-5'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-6'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals.json</code></p>
 
 <p>Create a new goal for user <em>u</em>.</p>
-<h3 id='parameters-5'>Parameters</h3>
+<h3 id='parameters-6'>Parameters</h3>
 <ul>
 <li><code>slug</code> (string)</li>
 <li><code>title</code> (string)</li>
@@ -1004,7 +1046,7 @@ If you don&#39;t know what that is then you can ignore this parenthetical!)</p>
 <p><a href="http://youtu.be/QM9Bynjh2Lk?t=4m14s">Exactly</a> two out of three of <code>goaldate</code>, <code>goalval</code>, and <code>rate</code> are required.</p>
 
 <p>If you pass in your API client&#39;s registered name for the <code>datasource</code>, and your client has a registered <code>autofetch_callback_url</code>, we will POST to your callback when this goal wants new data, as outlined in <a href="#6-optional-autofetch-callback">Client OAuth</a>.</p>
-<h3 id='returns-4'>Returns</h3>
+<h3 id='returns-5'>Returns</h3>
 <p>The newly created <a href="#goal">Goal</a> object.</p>
 
 <p>One of the three fields <code>goaldate</code>, <code>goalval</code>, and <code>rate</code> will return a null value.
@@ -1032,13 +1074,13 @@ This indicates that the value is calculated based on the other two fields, as se
     </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
     </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-6'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-7'>HTTP Request</h3>
 <p><code>PUT /users/</code><em>u</em><code>/goals/</code><em>g</em><code>.json</code></p>
 
 <p>Update user <em>u</em>&#39;s goal with slug <em>g</em>.
 This is similar to the call to create a new goal, but the goal type (<code>goal_type</code>) cannot be changed.
 To change any of {<code>goaldate</code>, <code>goalval</code>, <code>rate</code>} use <code>roadall</code>.</p>
-<h3 id='parameters-6'>Parameters</h3>
+<h3 id='parameters-7'>Parameters</h3>
 <ul>
 <li>[<code>title</code>] (string)</li>
 <li>[<code>yaxis</code>] (string)</li>
@@ -1065,7 +1107,7 @@ To change any of {<code>goaldate</code>, <code>goalval</code>, <code>rate</code>
 </ul></li>
 <li>[<code>tags</code>] (array). A list of tags for the goal. Each tag must be an alphanumeric strings. NOTE: if you pass this parameter, it will replace the existing tags for the goal. If you pass an empty array, or an explicit nil value, it will remove all tags from the goal. </li>
 </ul>
-<h3 id='returns-5'>Returns</h3>
+<h3 id='returns-6'>Returns</h3>
 <p>The updated <a href="#goal">Goal</a> object.</p>
 
 <h2 id="refresh">Force a fetch of autodata and graph refresh</h2>
@@ -1075,14 +1117,14 @@ To change any of {<code>goaldate</code>, <code>goalval</code>, <code>rate</code>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/refresh_graph.json?auth_token<span class="o">=</span>abc123
 </code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="kc">true</span><span class="w">
-</span></code></pre><h3 id='http-request-7'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-8'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/refresh_graph.json</code></p>
 
 <p>Analagous to the refresh button on the goal page. Forces a refetch of autodata for goals with automatic data sources. Refreshes the graph image regardless.
 <strong><em>Please be extremely conservative with this endpoint!</em></strong></p>
-<h3 id='parameters-7'>Parameters</h3>
+<h3 id='parameters-8'>Parameters</h3>
 <p>None.</p>
-<h3 id='returns-6'>Returns</h3>
+<h3 id='returns-7'>Returns</h3>
 <p>This is an asynchronous operation, so this endpoint simply returns <strong>true</strong> if the goal was queued and <strong>false</strong> if not.
 It is up to you to watch for an updated graph image.</p>
 
@@ -1106,7 +1148,7 @@ It is up to you to watch for an updated graph image.</p>
     </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mi">166</span><span class="p">,</span><span class="w">                         
     </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">,</span><span class="w">                           
     </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1358524800</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-8'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-9'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/dial_road.json</code></p>
 
 <aside class="notice">
@@ -1117,7 +1159,7 @@ Note: the dial_road endpoint is deprecated in favor of
 <p>Change the slope of the yellow brick road (starting after the one-week
 <a href="http://blog.beeminder.com/dial">Akrasia Horizon</a>)
 for beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-8'>Parameters</h3>
+<h3 id='parameters-9'>Parameters</h3>
 <ul>
 <li><code>rate</code> (number or null)</li>
 <li><code>goaldate</code> (number or null)</li>
@@ -1125,39 +1167,39 @@ for beeminder.com/<em>u</em>/<em>g</em>.</p>
 </ul>
 
 <p>Exactly two of <code>goaldate</code>, <code>goalval</code>, and <code>rate</code> should be specified &mdash; setting two implies the third.</p>
-<h3 id='returns-7'>Returns</h3>
-<p>The updated <a href="#goal">Goal</a> object.</p>
-
-<h2 id="shortcircuit">Short circuit a goal's pledge</h2>
-<h3 id='http-request-9'>HTTP Request</h3>
-<p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/shortcircuit.json</code></p>
-
-<p>Increase the goal&#39;s pledge level and <strong>charge the user the amount of the current pledge</strong>.</p>
-<h3 id='parameters-9'>Parameters</h3>
-<p>None</p>
 <h3 id='returns-8'>Returns</h3>
 <p>The updated <a href="#goal">Goal</a> object.</p>
 
-<h2 id="stepdown">Step down a goal's pledge</h2>
+<h2 id="shortcircuit">Short circuit a goal's pledge</h2>
 <h3 id='http-request-10'>HTTP Request</h3>
-<p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/stepdown.json</code></p>
+<p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/shortcircuit.json</code></p>
 
-<p>Decrease the goal&#39;s pledge level <strong>subject to the akrasia horizon</strong>, i.e., not immediately.
-After a successful request the goal will have a countdown to when it will revert to the lower pledge level.</p>
+<p>Increase the goal&#39;s pledge level and <strong>charge the user the amount of the current pledge</strong>.</p>
 <h3 id='parameters-10'>Parameters</h3>
 <p>None</p>
 <h3 id='returns-9'>Returns</h3>
 <p>The updated <a href="#goal">Goal</a> object.</p>
 
-<h2 id="cancelstepdown">Cancel a scheduled step down</h2>
+<h2 id="stepdown">Step down a goal's pledge</h2>
 <h3 id='http-request-11'>HTTP Request</h3>
+<p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/stepdown.json</code></p>
+
+<p>Decrease the goal&#39;s pledge level <strong>subject to the akrasia horizon</strong>, i.e., not immediately.
+After a successful request the goal will have a countdown to when it will revert to the lower pledge level.</p>
+<h3 id='parameters-11'>Parameters</h3>
+<p>None</p>
+<h3 id='returns-10'>Returns</h3>
+<p>The updated <a href="#goal">Goal</a> object.</p>
+
+<h2 id="cancelstepdown">Cancel a scheduled step down</h2>
+<h3 id='http-request-12'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/cancel_stepdown.json</code></p>
 
 <p>Cancel a pending stepdown of a goal&#39;s pledge.
 The pledge will remain at the current amount.</p>
-<h3 id='parameters-11'>Parameters</h3>
+<h3 id='parameters-12'>Parameters</h3>
 <p>None</p>
-<h3 id='returns-10'>Returns</h3>
+<h3 id='returns-11'>Returns</h3>
 <p>The updated <a href="#goal">Goal</a> object.</p>
 
 <p><a href="#">Back to top</a></p>
@@ -1185,18 +1227,18 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
 <pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token<span class="o">=</span>abc123
 </code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1234567890</span><span class="p">,</span><span class="w"> </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="s2">"20090213"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="s2">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"a"</span><span class="p">},</span><span class="w">
    </span><span class="p">{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1234567891</span><span class="p">,</span><span class="w"> </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="s2">"20090214"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="s2">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"b"</span><span class="p">}]</span><span class="w">
-</span></code></pre><h3 id='http-request-12'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints.json</code></p>
 
 <p>Get the list of datapoints for user <em>u</em>&#39;s goal <em>g</em> &mdash; beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-12'>Parameters</h3>
+<h3 id='parameters-13'>Parameters</h3>
 <ul>
 <li>[<code>sort</code>] (string): Which attribute to sort on. Defaults to <code>id</code> if none given. </li>
 <li>[<code>count</code>] (integer): Limit results to count number of datapoints. Defaults to all datapoints if parameter is missing. </li>
 <li>[<code>page</code>] (integer): Used to paginate results. </li>
 <li>[<code>per</code>] (integer): Number of results per page. Default 25. Ignored without page parameter. </li>
 </ul>
-<h3 id='returns-11'>Returns</h3>
+<h3 id='returns-12'>Returns</h3>
 <p>The list of <a href="#datapoint">Datapoint</a> objects.</p>
 
 <h2 id="postdata">Create a datapoint</h2>
@@ -1215,11 +1257,11 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
     </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sweat a lot today"</span><span class="p">,</span><span class="w">   
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4f9dd9fd86f22478d3000008"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475925"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-14'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints.json</code></p>
 
 <p>Add a new datapoint to user <em>u</em>&#39;s goal <em>g</em> &mdash; beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-13'>Parameters</h3>
+<h3 id='parameters-14'>Parameters</h3>
 <ul>
 <li><code>value</code> (number)<br></li>
 <li>[<code>timestamp</code>] (number). Defaults to &quot;now&quot; if none is passed in, or the existing timestamp if the datapoint is being updated rather than created (see <code>requestid</code> below).</li>
@@ -1235,7 +1277,7 @@ If no datapoint with the requestid exists then the datapoint is simply created.
 In other words, this is an upsert endpoint and requestid is an idempotency key.
 NB: If you&#39;re sending multiple create datapoint requests in rapid succession (within say &lt; 100-500ms of each other) using this endpoint, and sending the same requestid, it&#39;s not guaranteed that the datapoints won&#39;t be duplicated, as you might expect.</li>
 </ul>
-<h3 id='returns-12'>Returns</h3>
+<h3 id='returns-13'>Returns</h3>
 <p>The updated <a href="#datapoint">Datapoint</a> object.</p>
 
 <h2 id="postdatas">Create multiple datapoints</h2>
@@ -1260,17 +1302,17 @@ NB: If you&#39;re sending multiple create datapoint requests in rapid succession
       </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343491200</span><span class="p">,</span><span class="w">
       </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475923"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span></code></pre><h3 id='http-request-14'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-15'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/create_all.json</code></p>
 
 <p>Create multiple new datapoints for beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-14'>Parameters</h3>
+<h3 id='parameters-15'>Parameters</h3>
 <ul>
 <li><code>datapoints</code> (array of Datapoints):
 Each Datapoint should be a JSON object, and must include at minimum a <code>value</code>.
 Other parameters are the same as for the single-create method above.<br></li>
 </ul>
-<h3 id='returns-13'>Returns</h3>
+<h3 id='returns-14'>Returns</h3>
 <p>A list of successfully created <a href="#datapoint">Datapoints</a>. 
 Or, in the case of any errors, you will receive an object with two lists, <code>successes</code>, and <code>errors</code>.</p>
 
@@ -1288,17 +1330,17 @@ Or, in the case of any errors, you will receive an object with two lists, <code>
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
     </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-15'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-16'>HTTP Request</h3>
 <p><code>PUT /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/</code><em>id</em><code>.json</code></p>
 
 <p>Update the datapoint with ID <em>id</em> for user <em>u</em>&#39;s goal <em>g</em> (beeminder.com/<em>u</em>/<em>g</em>).</p>
-<h3 id='parameters-15'>Parameters</h3>
+<h3 id='parameters-16'>Parameters</h3>
 <ul>
 <li>[<code>timestamp</code>] (number)</li>
 <li>[<code>value</code>] (number)</li>
 <li>[<code>comment</code>] (string)</li>
 </ul>
-<h3 id='returns-14'>Returns</h3>
+<h3 id='returns-15'>Returns</h3>
 <p>The updated <a href="#datapoint">Datapoint</a> object.</p>
 
 <h2 id="deletedata">Delete a datapoint</h2>
@@ -1313,13 +1355,13 @@ Or, in the case of any errors, you will receive an object with two lists, <code>
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
     </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-16'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-17'>HTTP Request</h3>
 <p><code>DELETE /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/</code><em>id</em><code>.json</code></p>
 
 <p>Delete the datapoint with ID <em>id</em> for user <em>u</em>&#39;s goal <em>g</em> (beeminder.com/<em>u</em>/<em>g</em>).</p>
-<h3 id='parameters-16'>Parameters</h3>
+<h3 id='parameters-17'>Parameters</h3>
 <p>None.</p>
-<h3 id='returns-15'>Returns</h3>
+<h3 id='returns-16'>Returns</h3>
 <p>The deleted <a href="#datapoint">Datapoint</a> object.</p>
 
 <p><a href="#">Back to top</a></p>
@@ -1352,17 +1394,17 @@ A <code>Charge</code> object has the following attributes:</p>
     </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
     </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I'm not worthy; charge myself $10"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alice"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-17'>HTTP request</h3>
+</span></code></pre><h3 id='http-request-18'>HTTP request</h3>
 <p><code>POST /charges</code></p>
 
 <p>Create a charge of a given amount and optionally add a note.</p>
-<h3 id='parameters-17'>Parameters</h3>
+<h3 id='parameters-18'>Parameters</h3>
 <ul>
 <li><code>amount</code> (number)</li>
 <li><code>note</code> (string)</li>
 <li>[<code>dryrun</code>] (string): If passed, the Charge is not actually created, but the JSON for it is returned as if it were. Default: false.</li>
 </ul>
-<h3 id='returns-16'>Returns</h3>
+<h3 id='returns-17'>Returns</h3>
 <p>The Charge object, or an object with the error message(s) if the request was not successful.</p>
 
 <p><a href="#">Back to top</a></p>
