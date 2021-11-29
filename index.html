@@ -278,7 +278,7 @@
                     <a href="#refresh" class="toc-h2 toc-link" data-title="Goal Resource">Force a fetch of autodata and graph refresh</a>
                   </li>
                   <li>
-                    <a href="#dialroad" class="toc-h2 toc-link" data-title="Goal Resource">[deprecated] Update a yellow brick road</a>
+                    <a href="#dialroad" class="toc-h2 toc-link" data-title="Goal Resource">[deprecated] Update a yellow brick road aka bright red line</a>
                   </li>
                   <li>
                     <a href="#shortcircuit" class="toc-h2 toc-link" data-title="Goal Resource">Short circuit a goal's pledge</a>
@@ -654,7 +654,7 @@ Allows third-party apps to send the user to a specific part of the website witho
 
 <h1 id="goal">Goal Resource</h1>
 
-<p>A Goal object includes everything about a specific goal for a specific user, including the target value and date, the steepness of the yellow brick road, the graph image, and various settings for the goal.</p>
+<p>A Goal object includes everything about a specific goal for a specific user, including the target value and date, the steepness of the bright red line, the graph image, and various settings for the goal.</p>
 <h3 id='attributes-2'>Attributes</h3>
 <ul>
 <li><code>slug</code> (string): The final part of the URL of the goal, used as an identifier. E.g., if user &quot;alice&quot; has a goal at beeminder.com/alice/weight then the goal&#39;s slug is &quot;weight&quot;.</li>
@@ -663,9 +663,9 @@ Allows third-party apps to send the user to a specific part of the website witho
 <li><code>fineprint</code> (string): The user-provided description of what exactly they are committing to.</li>
 <li><code>yaxis</code> (string): The label for the y-axis of the graph. E.g., &quot;Cumulative total hours&quot;.</li>
 <li><code>goaldate</code> (number): Unix timestamp (in seconds) of the goal date.</li>
-<li><code>goalval</code> (number): Goal value &mdash; the number the yellow brick road will eventually reach. E.g., 70 kilograms.</li>
-<li><code>rate</code> (number): The slope of the (final section of the) yellow brick road. You must also consider <code>runits</code> to fully specify the rate.</li>
-<li><code>runits</code> (string): Rate units. One of <code>y</code>, <code>m</code>, <code>w</code>, <code>d</code>, <code>h</code> indicating that the rate of the yellow brick road is yearly, monthly, weekly, daily, or hourly.</li>
+<li><code>goalval</code> (number): Goal value &mdash; the number the bright red line will eventually reach. E.g., 70 kilograms.</li>
+<li><code>rate</code> (number): The slope of the (final section of the) bright red line. You must also consider <code>runits</code> to fully specify the rate.</li>
+<li><code>runits</code> (string): Rate units. One of <code>y</code>, <code>m</code>, <code>w</code>, <code>d</code>, <code>h</code> indicating that the rate of the bright red line is yearly, monthly, weekly, daily, or hourly.</li>
 <li><code>svg_url</code> (string): URL for the goal&#39;s graph svg. E.g., &quot;http://static.beeminder.com/alice/weight.svg&quot;.</li>
 <li><code>graph_url</code> (string): URL for the goal&#39;s graph image. E.g., &quot;http://static.beeminder.com/alice/weight.png&quot;.</li>
 <li><code>thumb_url</code> (string): URL for the goal&#39;s graph thumbnail image. E.g., &quot;http://static.beeminder.com/alice/weight-thumb.png&quot;.</li>
@@ -681,22 +681,22 @@ Allows third-party apps to send the user to a specific part of the website witho
 <li><code>drinker</code>: Do Less</li>
 <li><code>custom</code>: Full access to the underlying goal parameters</li>
 </ul></li>
-<li><code>losedate</code> (number): Unix timestamp of derailment. When you&#39;ll be off the road if nothing is reported.</li>
+<li><code>losedate</code> (number): Unix timestamp of derailment. When you&#39;ll cross the bright red line if nothing is reported.</li>
 <li><code>queued</code> (boolean): Whether the graph is currently being updated to reflect new data.</li>
 <li><code>secret</code> (boolean): Whether you have to be logged in as owner of the goal to view it. Default: <code>false</code>.</li>
 <li><code>datapublic</code> (boolean): Whether you have to be logged in as the owner of the goal to view the datapoints. Default: <code>false</code>.</li>
 <li><code>datapoints</code> (array of <a href="#datapoint">Datapoints</a>): The datapoints for this goal.</li>
 <li><code>numpts</code> (number): Number of datapoints.</li>
 <li><code>pledge</code> (number): Amount pledged (USD) on the goal.</li>
-<li><code>initday</code> (number): Unix timestamp (in seconds) of the start of the yellow brick road.</li>
-<li><code>initval</code> (number): The y-value of the start of the yellow brick road.</li>
-<li><code>curday</code> (number): Unix timestamp (in seconds) of the end of the yellow brick road, i.e., the most recent (inferred) datapoint.</li>
+<li><code>initday</code> (number): Unix timestamp (in seconds) of the start of the bright red line.</li>
+<li><code>initval</code> (number): The y-value of the start of the bright red line.</li>
+<li><code>curday</code> (number): Unix timestamp (in seconds) of the end of the bright red line, i.e., the most recent (inferred) datapoint.</li>
 <li><code>curval</code> (number): The value of the most recent datapoint.</li>
 <li><code>lastday</code> (number): Unix timestamp (in seconds) of the last (explicitly entered) datapoint.</li>
-<li><code>yaw</code> (number): Good side of the road. I.e., the side of the road (+1/-1 = above/below) that makes you say &quot;yay&quot;.</li>
-<li><code>dir</code> (number): Direction the road is sloping, usually the same as yaw.</li>
+<li><code>yaw</code> (number): Good side of the bright red line. I.e., the side of the line (+1/-1 = above/below) that makes you say &quot;yay&quot;.</li>
+<li><code>dir</code> (number): Direction the bright red line is sloping, usually the same as yaw.</li>
 <li><code>lane</code> (number): Deprecated. See <code>losedate</code> and <code>safebuf</code>.</li>
-<li><code>mathishard</code> (array of 3 numbers): The goaldate, goalval, and rate &mdash; all filled in. (The road dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.)</li>
+<li><code>mathishard</code> (array of 3 numbers): The goaldate, goalval, and rate &mdash; all filled in. (The commitment dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.)</li>
 <li><code>headsum</code> (string): Deprecated. Summary text blurb saying how much safety buffer you have.</li>
 <li><code>limsum</code> (string): Summary of what you need to do to eke by, e.g., &quot;+2 within 1 day&quot;.</li>
 <li><code>kyoom</code> (boolean): Cumulative; plot values as the sum of all those entered so far, aka auto-summing.</li>
@@ -711,11 +711,11 @@ Allows third-party apps to send the user to a specific part of the website witho
 <li><code>lost</code> (boolean): Whether the goal is currently off track.</li>
 <li><code>maxflux</code> (Integer): Max daily fluctuation for weight goals. Used as an absolute buffer amount on recommit. Also shown on the graph as a thick guiding line.</li>
 <li><code>contract</code> (dictionary): Dictionary with two attributes. <code>amount</code> is the amount at risk on the contract, and <code>stepdown_at</code> is a Unix timestamp of when the contract is scheduled to revert to the next lowest pledge amount. <code>null</code> indicates that it is not scheduled to revert.</li>
-<li><code>road</code> (array): Array of tuples that can be used to construct the Yellow Brick Road. This field is also known as the road matrix. Each tuple specifies 2 out of 3 of [<code>time</code>, <code>goal</code>, <code>rate</code>]. To construct the road, start with a known starting point (time, value) and then each row of the road matrix specifies 2 out of 3 of {t,v,r} which gives the segment ending at time t. You can walk forward filling in the missing 1-out-of-3 from the (time, value) in the previous row.</li>
+<li><code>road</code> (array): Array of tuples that can be used to construct the Bright Red Line (formerly &quot;Yellow Brick Road&quot;). This field is also known as the graph matrix. Each tuple specifies 2 out of 3 of [<code>time</code>, <code>goal</code>, <code>rate</code>]. To construct <code>road</code>, start with a known starting point (time, value) and then each row of the graph matrix specifies 2 out of 3 of {t,v,r} which gives the segment ending at time t. You can walk forward filling in the missing 1-out-of-3 from the (time, value) in the previous row.</li>
 <li><code>roadall</code> (array): Like <code>road</code> but with an additional initial row consisting of [<code>initday</code>, <code>initval</code>, null] and an additional final row consisting of [<code>goaldate</code>, <code>goalval</code>, <code>rate</code>].</li>
 <li><code>fullroad</code> (array): Like <code>roadall</code> but with the nulls filled in.</li>
-<li><code>rah</code> (number): Road value (y-value of the bright line of the yellow brick road) at the akrasia horizon (today plus one week).</li>
-<li><code>delta</code> (number): Distance from the yellow brick road to today&#39;s datapoint (<code>curval</code>).</li>
+<li><code>rah</code> (number): Red line value (y-value of the bright red line) at the akrasia horizon (today plus one week).</li>
+<li><code>delta</code> (number): Distance from the bright red line to today&#39;s datapoint (<code>curval</code>).</li>
 <li><code>delta_text</code> (string): Deprecated.</li>
 <li><code>safebuf</code> (number): The integer number of safe days. If it&#39;s a beemergency this will be zero.</li>
 <li><code>safebump</code> (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.</li>
@@ -855,7 +855,7 @@ The following table lists what those attributes are.</p>
 <code>WEEN = dir +1 &amp; yaw -1</code>: &quot;go up less, like quit smoking&quot;<br>
 <code>RASH = dir -1 &amp; yaw +1</code>: &quot;go down less, ie, rationing, <a href="http://beeminder.com/d/contacts" title="The Beeminder CEO with an early Beeminder graph to ration his supply of 'daily' contact lenses to last for 2 years, till 2013">for example</a>&quot;</p>
 
-<p>The <code>dir</code> parameter, for which direction the road is expected to go, is mostly just for the above categorization, but is used specifically in the following ways:</p>
+<p>The <code>dir</code> parameter, for which direction the bright red line is expected to go, is mostly just for the above categorization, but is used specifically in the following ways:</p>
 
 <ol>
 <li>Where to draw the watermarks (amount pledged and number of safe days)</li>
@@ -875,7 +875,7 @@ Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots 
 </code></pre>
 <p>Finally, the way to tell if a goal has finished successfully is <code>now &gt;= goaldate &amp;&amp; goaldate &lt; losedate</code>.
 That is, you win if you hit the goal date before hitting <code>losedate</code>.
-You don&#39;t have to actually reach the goal value &mdash; staying on the yellow brick road till the end suffices.</p>
+You don&#39;t have to actually reach the goal value &mdash; staying on the right side of the bright red line till the end suffices.</p>
 
 <h2 id="getgoal">Get information about a goal</h2>
 
@@ -1093,11 +1093,11 @@ To change any of {<code>goaldate</code>, <code>goalval</code>, <code>rate</code>
 <ul>
 <li>This must not make the goal easier between now and the akrasia horizon (unless you are an admin).</li>
 <li>Use <code>roadall</code> returned by <a href="#getgoal">goal GET</a>, not <code>road</code> &mdash; the latter is missing the first and last rows (for the sake of backwards compatibility).</li>
-<li>The first row must be <code>[date, value, null]</code> and gives the start of the road, same as <code>initday</code> and <code>initval</code> in <a href="#getgoal">goal GET</a>.</li>
+<li>The first row must be <code>[date, value, null]</code> and gives the start of the bright red line, same as <code>initday</code> and <code>initval</code> in <a href="#getgoal">goal GET</a>.</li>
 <li>The last row can be <code>[null, value, rate]</code> but no other row can be.</li>
-<li>You can also send a road with dates specified as either a daystamp or date string, e.g., &quot;20170727&quot; or &quot;2017-07-27&quot;.</li>
-<li>This is a superset of <code>dial_road</code> (which changes just the last row of this roadall).</li>
-<li>If you change rate units in the same call, the road will be updated first, and rate units second, so make adjustments to the road in terms of the original rate units, or make two separate calls, first updating rate units, then sending  your adjusted road.</li>
+<li>You can also send a <code>roadall</code> with dates specified as either a daystamp or date string, e.g., &quot;20170727&quot; or &quot;2017-07-27&quot;.</li>
+<li>This is a superset of <code>dial_road</code> (which changes just the last row of this <code>roadall</code>).</li>
+<li>If you change rate units in the same call, the bright red line will be updated first, and rate units second, so make adjustments to the bright red line in terms of the original rate units, or make two separate calls, first updating rate units, then sending your adjusted <code>roadall</code>.</li>
 </ul></li>
 <li>[<code>datasource</code>] (string): one of {&quot;api&quot;, &quot;ifttt&quot;, &quot;zapier&quot;, or <code>clientname</code>}. Default: none.
 
@@ -1128,7 +1128,7 @@ To change any of {<code>goaldate</code>, <code>goalval</code>, <code>rate</code>
 <p>This is an asynchronous operation, so this endpoint simply returns <strong>true</strong> if the goal was queued and <strong>false</strong> if not.
 It is up to you to watch for an updated graph image.</p>
 
-<h2 id="dialroad">[deprecated] Update a yellow brick road</h2>
+<h2 id="dialroad">[deprecated] Update a yellow brick road aka bright red line</h2>
 <pre class="highlight shell tab-shell"><code>  // Example request
 
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/dial_road.json <span class="se">\</span>
@@ -1156,7 +1156,7 @@ Note: the dial_road endpoint is deprecated in favor of
 <a href="#putgoal" title="on the goal update endpoint">roadall</a> which, despite its highly confusing state, is the future.
 </aside>
 
-<p>Change the slope of the yellow brick road (starting after the one-week
+<p>Change the slope of the yellow brick road aka bright red line (starting after the one-week
 <a href="http://blog.beeminder.com/dial">Akrasia Horizon</a>)
 for beeminder.com/<em>u</em>/<em>g</em>.</p>
 <h3 id='parameters-9'>Parameters</h3>
