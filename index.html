@@ -1040,7 +1040,7 @@ If you don&#39;t know what that is then you can ignore this parenthetical!)</p>
 <li>[<code>datapublic</code>] (boolean)</li>
 <li>[<code>datasource</code>] (string): one of {&quot;api&quot;, &quot;ifttt&quot;, &quot;zapier&quot;, or <code>clientname</code>}. Default: none (i.e., &quot;manual&quot;).</li>
 <li>[<code>dryrun</code>] (boolean). Pass this to test the endpoint without actually creating a goal. Defaults to false.</li>
-<li>[<code>tags</code>] (array). An optional list of tags to add to the new goal. Each tag must be an alphanumeric strings.</li>
+<li>[<code>tags</code>] (array). An optional list of tags to add to the new goal. Each tag must be an alphanumeric string.</li>
 </ul>
 
 <p><a href="http://youtu.be/QM9Bynjh2Lk?t=4m14s">Exactly</a> two out of three of <code>goaldate</code>, <code>goalval</code>, and <code>rate</code> are required.</p>
@@ -1105,7 +1105,7 @@ To change any of {<code>goaldate</code>, <code>goalval</code>, <code>rate</code>
 <li>If you pass in your API client&#39;s registered name for the <code>datasource</code>, and your client has a registered <code>autofetch_callback_url</code>, we will POST to your callback when this goal wants new data, as outlined in <a href="#6-optional-autofetch-callback">Client OAuth</a>.</li>
 <li>To unset the datasource, (i.e., return to manual entry) pass in the empty string <code>&quot;&quot;</code>.</li>
 </ul></li>
-<li>[<code>tags</code>] (array). A list of tags for the goal. Each tag must be an alphanumeric strings. NOTE: if you pass this parameter, it will replace the existing tags for the goal. If you pass an empty array, or an explicit nil value, it will remove all tags from the goal. </li>
+<li>[<code>tags</code>] (array). A list of tags for the goal. Each tag must be an alphanumeric string. NOTE: if you pass this parameter, it will replace the existing tags for the goal. If you pass an empty array, or an explicit nil value, it will remove all tags from the goal. </li>
 </ul>
 <h3 id='returns-6'>Returns</h3>
 <p>The updated <a href="#goal">Goal</a> object.</p>
