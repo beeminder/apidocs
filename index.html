@@ -1275,8 +1275,7 @@ Using requestids also means clients can safely resend datapoints without acciden
 If <code>requestid</code> is included and the datapoint is identical to the existing datapoint with that requestid then the datapoint will be ignored (the API will return &quot;duplicate datapoint&quot;).
 If <code>requestid</code> is included and the datapoint differs from the existing one with the same requestid then the datapoint will be updated.
 If no datapoint with the requestid exists then the datapoint is simply created.
-In other words, this is an upsert endpoint and requestid is an idempotency key.
-NB: If you&#39;re sending multiple create datapoint requests in rapid succession (within say &lt; 100-500ms of each other) using this endpoint, and sending the same requestid, it&#39;s not guaranteed that the datapoints won&#39;t be duplicated, as you might expect.</li>
+In other words, this is an upsert endpoint and requestid is an idempotency key.</li>
 </ul>
 <h3 id='returns-13'>Returns</h3>
 <p>The updated <a href="#datapoint">Datapoint</a> object.</p>
