@@ -447,8 +447,8 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `rah` (number): Red line value (y-value of the bright red line) at the akrasia horizon (today plus one week).
 * `delta` (number): Distance from the bright red line to today's datapoint (`curval`).
 * `delta_text` (string): Deprecated.
-* `safebuf` (number): The integer number of safe days. If it's a beemergency this will be zero.
-* `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
+* `safebuf` (number): The integer number of safe days. If it's a beemergency this will be zero. _Nullable. Null if beebrain could not actually create (road dial error)_
+* `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer. _(Nullable, see `safebuf`)_
 * `id` (string of hex digits): We prefer using user/slug as the goal identifier, however, since we began allowing users to change slugs, this id is useful!
 * `callback_url` (string): Callback URL, as
 [discussed in the forum](http://forum.beeminder.com/t/webhook-callback-documentation/313 "In short: you can add a callback to your own server whenever data is added on Beeminder").
