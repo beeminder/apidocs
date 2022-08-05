@@ -921,7 +921,7 @@ You don&#39;t have to actually reach the goal value &mdash; staying on the right
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token<span class="o">=</span>abc123&amp;filter<span class="o">=</span>frontburner
+<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token<span class="o">=</span>abc123
 </code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gmailzero"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Inbox Zero"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inboxer"</span><span class="p">,</span><span class="w">
@@ -1247,7 +1247,7 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json
+<pre class="highlight shell tab-shell"><code>  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json <span class="se">\</span>
     -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
     -d <span class="nv">timestamp</span><span class="o">=</span>1325523600 <span class="se">\</span>
     -d <span class="nv">value</span><span class="o">=</span>130.1 <span class="se">\</span>
@@ -1285,7 +1285,7 @@ In other words, this is an upsert endpoint and requestid is an idempotency key.<
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json
+<pre class="highlight shell tab-shell"><code>  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json <span class="se">\</span>
     -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
     -d <span class="nv">datapoints</span><span class="o">=[{</span><span class="s2">"timestamp"</span>:1343577600,<span class="s2">"value"</span>:220.6,<span class="s2">"comment"</span>:<span class="s2">"blah+blah"</span>, <span class="s2">"requestid"</span>:<span class="s2">"abcd182475929"</span><span class="o">}</span>, <span class="o">{</span><span class="s2">"timestamp"</span>:1343491200,<span class="s2">"value"</span>:220.7, <span class="s2">"requestid"</span>:<span class="s2">"abcd182475930"</span><span class="o">}]</span>
 </code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
