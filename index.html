@@ -692,6 +692,7 @@ Allows third-party apps to send the user to a specific part of the website witho
 <li><code>initval</code> (number): The y-value of the start of the bright red line.</li>
 <li><code>curday</code> (number): Unix timestamp (in seconds) of the end of the bright red line, i.e., the most recent (inferred) datapoint.</li>
 <li><code>curval</code> (number): The value of the most recent datapoint.</li>
+<li><code>currate</code> (number): The rate of the red line at time <code>curday</code>; if there&#39;s a rate change on that day, take the limit from the left.</li>
 <li><code>lastday</code> (number): Unix timestamp (in seconds) of the last (explicitly entered) datapoint.</li>
 <li><code>yaw</code> (number): Good side of the bright red line. I.e., the side of the line (+1/-1 = above/below) that makes you say &quot;yay&quot;.</li>
 <li><code>dir</code> (number): Direction the bright red line is sloping, usually the same as yaw.</li>
