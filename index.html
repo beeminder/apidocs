@@ -42,7 +42,7 @@
 .highlight .cs {
   color: #75715e;
 }
-.highlight .c, .highlight .cd {
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cpf {
   color: #75715e;
 }
 .highlight .err {
@@ -126,7 +126,7 @@
 .highlight .s1 {
   color: #e6db74;
 }
-.highlight .s {
+.highlight .s, .highlight .sa, .highlight .dl {
   color: #e6db74;
 }
 .highlight .na {
@@ -141,41 +141,52 @@
 .highlight .ne {
   color: #a6e22e;
 }
-.highlight .nf {
+.highlight .nf, .highlight .fm {
   color: #a6e22e;
 }
 .highlight .vc {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .nn {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .nl {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .ni {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .bp {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .vg {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .vi {
   color: #ffffff;
+  background-color: #272822;
 }
-.highlight .nv {
+.highlight .nv, .highlight .vm {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .w {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .n, .highlight .py, .highlight .nx {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .ow {
   color: #f92672;
@@ -207,11 +218,11 @@
     <a href="#" id="nav-button">
       <span>
         NAV
-        <img src="images/navbar.png" alt="Navbar" />
+        <img src="images/navbar.png" alt="" />
       </span>
     </a>
     <div class="toc-wrapper">
-      <img src="images/bee_logo_110.png" class="logo" alt="Bee logo 110" />
+      <img src="images/bee_logo_110.png" class="logo" alt="" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="ruby">ruby</a>
@@ -406,8 +417,8 @@ The parameter name for your personal auth token should be `auth_token`.
 <p>For example, if your username is &quot;alice&quot; and your token is &quot;abc123&quot; you can 
 query information about your &quot;weight&quot; goal like so:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token<span class="o">=</span>abc123
-</code></pre>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token<span class="o">=</span>abc123
+</code></pre></div>
 <p>This authentication pattern is for making API calls just to your own Beeminder account.</p>
 
 <p>After you
@@ -436,10 +447,10 @@ The redirect URL is where the user is sent after authorizing your app.</p>
 <blockquote>
 <p>Example authorization URL:</p>
 </blockquote>
-<pre class="highlight plaintext"><code>  https://www.beeminder.com/apps/authorize?\
+<div class="highlight"><pre class="highlight plaintext"><code>  https://www.beeminder.com/apps/authorize?\
    client_id=xyz456&amp;redirect_uri=http&amp;#58;//foo.com/auth_callback\
    &amp;response_type=token
-</code></pre>
+</code></pre></div>
 <p>The base URL is the same for all apps:
 <code>https://www.beeminder.com/apps/authorize</code>.
 You&#39;ll need to add the following parameters:</p>
@@ -461,8 +472,8 @@ this if it contains any special characters like question marks or ampersands.</l
 <blockquote>
 <p>For example, if the user &quot;alice&quot; has access token &quot;abc123&quot; then the following string would be appended to the URL when the user is redirected there:</p>
 </blockquote>
-<pre class="highlight plaintext"><code>  ?access_token=abc123&amp;username=alice
-</code></pre>
+<div class="highlight"><pre class="highlight plaintext"><code>  ?access_token=abc123&amp;username=alice
+</code></pre></div>
 <p>After the user authorizes your application they&#39;ll be redirected to the <code>redirect_uri</code> that you specified, with two additional parameters,
 <code>access_token</code> and
 <code>username</code>, in the
@@ -475,8 +486,8 @@ The access token uniquely identifies the user&#39;s authorization for your app.<
 You can retrieve the username for a given access token at any time by sending a GET request for <code>/api/v1/me.json</code> with the token appended as a parameter.</p>
 
 <h3 id="tokenparam">4. Include access token as a parameter</h3>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/me.json?access_token<span class="o">=</span>abc123
-</code></pre>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/me.json?access_token<span class="o">=</span>abc123
+</code></pre></div>
 <p>Append the access token as a parameter on any API requests you make on behalf of that user.
 For example, your first request will probably be to get information about the
 <a href="#user">User</a>
@@ -524,33 +535,33 @@ Only returned if <code>diff_since</code> is sent.</li>
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice.json?auth_token<span class="o">=</span>abc123
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice.json?auth_token<span class="o">=</span>abc123
 
   <span class="o">{</span> <span class="s2">"username"</span>: <span class="s2">"alice"</span>,
     <span class="s2">"timezone"</span>: <span class="s2">"America/Los_Angeles"</span>,
     <span class="s2">"updated_at"</span>: 1343449880,                       
     <span class="s2">"goals"</span>: <span class="o">[</span><span class="s2">"gmailzero"</span>, <span class="s2">"weight"</span><span class="o">]</span> <span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code>  <span class="nb">require</span> <span class="s1">'beeminder'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code>  <span class="nb">require</span> <span class="s1">'beeminder'</span>
 
   <span class="n">bee</span> <span class="o">=</span> <span class="no">Beeminder</span><span class="o">::</span><span class="no">User</span><span class="p">.</span><span class="nf">new</span> <span class="s2">"yourtoken"</span>
   <span class="n">bee</span><span class="p">.</span><span class="nf">info</span>
-</code></pre><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice.json?diff_since<span class="o">=</span>1352561989&amp;auth_token<span class="o">=</span>abc123
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alice"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"America/Los_Angeles"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343449880</span><span class="p">,</span><span class="w">                       
-    </span><span class="s2">"goals"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"weight"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"datapoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325523600</span><span class="p">,</span><span class="w">    
-                    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">70.45</span><span class="p">,</span><span class="w">            
-                    </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">     
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4f9dd9fd86f22478d3"</span><span class="p">},</span><span class="w">
-                   </span><span class="p">{</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325610000</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">70.85</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5f9d79fd86f33468d4"</span><span class="p">}],</span><span class="w">
-               </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weight Loss"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">},</span><span class="w">
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice.json?diff_since<span class="o">=</span>1352561989&amp;auth_token<span class="o">=</span>abc123
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alice"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"America/Los_Angeles"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343449880</span><span class="p">,</span><span class="w">                       
+    </span><span class="nl">"goals"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"weight"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">,</span><span class="w">
+               </span><span class="nl">"datapoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325523600</span><span class="p">,</span><span class="w">    
+                    </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">70.45</span><span class="p">,</span><span class="w">            
+                    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">     
+                    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4f9dd9fd86f22478d3"</span><span class="p">},</span><span class="w">
+                   </span><span class="p">{</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325610000</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">70.85</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5f9d79fd86f33468d4"</span><span class="p">}],</span><span class="w">
+               </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weight Loss"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">},</span><span class="w">
                </span><span class="p">{</span><span class="w"> </span><span class="err">another</span><span class="w"> </span><span class="err">goal</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"deleted_goals"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"519279fd86f33468ne"</span><span class="p">},</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request'>HTTP Request</h3>
+    </span><span class="nl">"deleted_goals"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"519279fd86f33468ne"</span><span class="p">},</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='http-request'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>.json</code></p>
 
 <p>Retrieves information and a list of goalnames for the user with username <em>u</em>.</p>
@@ -639,8 +650,8 @@ If you store the returned value and, on your next call to this endpoint, the val
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice.json?auth_token<span class="o">=</span>abc123&amp;redirect_to_url<span class="o">=</span>https%3A%2F%2Fwww.beeminder.com%2Fpledges
-</code></pre><h3 id='http-request-2'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice.json?auth_token<span class="o">=</span>abc123&amp;redirect_to_url<span class="o">=</span>https%3A%2F%2Fwww.beeminder.com%2Fpledges
+</code></pre></div><h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>.json</code></p>
 
 <p>Attempts to authenticate the user and if successful redirects to the given URL.
@@ -662,15 +673,15 @@ Allows third-party apps to send the user to a specific part of the website witho
 <li><code>title</code> (string): The title that the user specified for the goal. E.g., &quot;Weight Loss&quot;.</li>
 <li><code>fineprint</code> (string): The user-provided description of what exactly they are committing to.</li>
 <li><code>yaxis</code> (string): The label for the y-axis of the graph. E.g., &quot;Cumulative total hours&quot;.</li>
-<li><code>goaldate</code> (number): Unix timestamp (in seconds) of the goal date.</li>
-<li><code>goalval</code> (number): Goal value &mdash; the number the bright red line will eventually reach. E.g., 70 kilograms.</li>
-<li><code>rate</code> (number): The slope of the (final section of the) bright red line. You must also consider <code>runits</code> to fully specify the rate.</li>
+<li><code>goaldate</code> (number): Unix timestamp (in seconds) of the goal date. NOTE: this may be null; <a href="#one-of-three">see below</a>.</li>
+<li><code>goalval</code> (number): Goal value &mdash; the number the bright red line will eventually reach. E.g., 70 kilograms. NOTE: this may be null; <a href="#one-of-three">see below</a>.</li>
+<li><code>rate</code> (number): The slope of the (final section of the) bright red line. You must also consider <code>runits</code> to fully specify the rate. NOTE: this may be null; <a href="#one-of-three">see below</a>. </li>
 <li><code>runits</code> (string): Rate units. One of <code>y</code>, <code>m</code>, <code>w</code>, <code>d</code>, <code>h</code> indicating that the rate of the bright red line is yearly, monthly, weekly, daily, or hourly.</li>
 <li><code>svg_url</code> (string): URL for the goal&#39;s graph svg. E.g., &quot;http://static.beeminder.com/alice/weight.svg&quot;.</li>
 <li><code>graph_url</code> (string): URL for the goal&#39;s graph image. E.g., &quot;http://static.beeminder.com/alice/weight.png&quot;.</li>
 <li><code>thumb_url</code> (string): URL for the goal&#39;s graph thumbnail image. E.g., &quot;http://static.beeminder.com/alice/weight-thumb.png&quot;.</li>
 <li><code>autodata</code> (string): The name of automatic data source, if this goal has one. Will be null for manual goals.</li>
-<li><code>goal_type</code> (string): One of the following symbols:
+<li><code>goal_type</code> (string): One of the following symbols (detailed info <a href="#goal-types">below</a>):
 
 <ul>
 <li><code>hustler</code>: Do More</li>
@@ -744,7 +755,10 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).</li>
 <li><code>tags</code> (array): A list of the goal&#39;s tags.</li>
 </ul>
 
-<p>The goal types are shorthand for a collection of settings of more fundamental goal attributes.
+<p><em id="one-of-three">A note about rate, date, and val:</em> One of the three fields <code>goaldate</code>, <code>goalval</code>, and <code>rate</code> will return a null value.
+This indicates that the value is calculated based on the other two fields, as selected by the user.</p>
+
+<p><em id="goal-types">A detailed note about goal types:</em> The goal types are shorthand for a collection of settings of more fundamental goal attributes.
 Note that changing the goal type of an already-created goal has no effect on those fundamental goal attributes.
 The following table lists what those attributes are.</p>
 
@@ -871,11 +885,11 @@ Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots 
 </aside>
 
 <p>If you just want the dot color, here&#39;s how to infer it from <code>safebuf</code> (see code in sidebar).</p>
-<pre class="highlight plaintext"><code>color = (safebuf &lt; 1 ? "red"    :
+<div class="highlight"><pre class="highlight plaintext"><code>color = (safebuf &lt; 1 ? "red"    :
          safebuf &lt; 2 ? "orange" :
          safebuf &lt; 3 ? "blue"   : 
          safebuf &lt; 7 ? "green"  : "gray")
-</code></pre>
+</code></pre></div>
 <p>Finally, the way to tell if a goal has finished successfully is <code>now &gt;= goaldate &amp;&amp; goaldate &lt; losedate</code>.
 That is, you win if you hit the goal date before hitting <code>losedate</code>.
 You don&#39;t have to actually reach the goal value &mdash; staying on the right side of the bright red line till the end suffices.</p>
@@ -885,29 +899,29 @@ You don&#39;t have to actually reach the goal value &mdash; staying on the right
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token<span class="o">=</span>abc123&amp;datapoints<span class="o">=</span><span class="nb">true</span>
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"weight"</span><span class="p">,</span><span class="w">               
-    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weight Loss"</span><span class="p">,</span><span class="w">         
-    </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1358524800</span><span class="p">,</span><span class="w">         
-    </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mi">166</span><span class="p">,</span><span class="w">                 
-    </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">                   
-    </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w">   </span><span class="s2">"http://static.beeminder.com/alice+weight.svg"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight.png"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight-thumb.png"</span><span class="p">,</span><span class="w">    
-    </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fatloser"</span><span class="p">,</span><span class="w">            
-    </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1358524800</span><span class="p">,</span><span class="w">        
-    </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">                
-    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1337479214</span><span class="p">,</span><span class="w">       
-    </span><span class="s2">"datapoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325523600</span><span class="p">,</span><span class="w">    
-                    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">70.45</span><span class="p">,</span><span class="w">            
-                    </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">     
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4f9dd9fd86f22478d3"</span><span class="p">},</span><span class="w">
-                   </span><span class="p">{</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325610000</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">70.85</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5f9d79fd86f33468d4"</span><span class="p">}]}</span><span class="w">
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token<span class="o">=</span>abc123&amp;datapoints<span class="o">=</span><span class="nb">true</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"weight"</span><span class="p">,</span><span class="w">               
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weight Loss"</span><span class="p">,</span><span class="w">         
+    </span><span class="nl">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1358524800</span><span class="p">,</span><span class="w">         
+    </span><span class="nl">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mi">166</span><span class="p">,</span><span class="w">                 
+    </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">                   
+    </span><span class="nl">"svg_url"</span><span class="p">:</span><span class="w">   </span><span class="s2">"http://static.beeminder.com/alice+weight.svg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight-thumb.png"</span><span class="p">,</span><span class="w">    
+    </span><span class="nl">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fatloser"</span><span class="p">,</span><span class="w">            
+    </span><span class="nl">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1358524800</span><span class="p">,</span><span class="w">        
+    </span><span class="nl">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">                
+    </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1337479214</span><span class="p">,</span><span class="w">       
+    </span><span class="nl">"datapoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325523600</span><span class="p">,</span><span class="w">    
+                    </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">70.45</span><span class="p">,</span><span class="w">            
+                    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">     
+                    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4f9dd9fd86f22478d3"</span><span class="p">},</span><span class="w">
+                   </span><span class="p">{</span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325610000</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">70.85</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5f9d79fd86f33468d4"</span><span class="p">}]}</span><span class="w">
 
-</span></code></pre><h3 id='http-request-3'>HTTP Request</h3>
+</span></code></pre></div><h3 id='http-request-3'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>/goals/</code><em>g</em><code>.json</code></p>
 
 <p>Gets goal details for user <em>u</em>&#39;s goal <em>g</em> &mdash; beeminder.com/<em>u</em>/<em>g</em>.</p>
@@ -923,32 +937,32 @@ You don&#39;t have to actually reach the goal value &mdash; staying on the right
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token<span class="o">=</span>abc123
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gmailzero"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Inbox Zero"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inboxer"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.svg"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.png"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight-thumb.png"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1347519599</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mf">25.0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fitbit-me"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Never stop moving"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.svg"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.png"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-thumb.png"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1346482799</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1349582400</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345771188</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span></code></pre><h3 id='http-request-4'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token<span class="o">=</span>abc123
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gmailzero"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Inbox Zero"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inboxer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.svg"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight-thumb.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1347519599</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mf">25.0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fitbit-me"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Never stop moving"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.svg"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-thumb.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1346482799</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1349582400</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345771188</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></code></pre></div><h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>/goals.json</code></p>
 
 <p>Get user <em>u</em>&#39;s list of goals.</p>
@@ -965,32 +979,32 @@ If you don&#39;t know what that is then you can ignore this parenthetical!)</p>
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/archived.json?auth_token<span class="o">=</span>abc123
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gmailzero"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Inbox Zero"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inboxer"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.svg"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.png"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight-thumb.png"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1347519599</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mf">25.0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fitbit-me"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Never stop moving"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.svg"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.png"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-thumb.png"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1346482799</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1349582400</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345771188</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span></code></pre><h3 id='http-request-5'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/archived.json?auth_token<span class="o">=</span>abc123
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gmailzero"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Inbox Zero"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inboxer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.svg"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+gmailzero.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight-thumb.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1347519599</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mf">25.0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fitbit-me"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Never stop moving"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.svg"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-me.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+fitbit-thumb.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1346482799</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1349582400</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345771188</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></code></pre></div><h3 id='http-request-5'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>/goals/archived.json</code></p>
 
 <p>Get user <em>u</em>&#39;s archived goals.</p>
@@ -1004,28 +1018,28 @@ If you don&#39;t know what that is then you can ignore this parenthetical!)</p>
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals.json <span class="se">\</span>
-    -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
-    -d <span class="nv">slug</span><span class="o">=</span>exercise <span class="se">\</span>
-    -d <span class="nv">title</span><span class="o">=</span>Work+Out+More <span class="se">\</span>
-    -d <span class="nv">goal_type</span><span class="o">=</span>hustler <span class="se">\</span>
-    -d <span class="nv">goaldate</span><span class="o">=</span>1400000000 <span class="se">\</span>
-    -d <span class="nv">gunits</span><span class="o">=</span>workouts <span class="se">\</span>
-    -d <span class="nv">rate</span><span class="o">=</span>5 <span class="se">\</span>
-    -d <span class="nv">goalval</span><span class="o">=</span>null
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exercise"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Work Out More"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.svg"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.png"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise-thumb.png"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1447519599</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400000000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-6'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl <span class="nt">-X</span> POST https://www.beeminder.com/api/v1/users/alice/goals.json <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">slug</span><span class="o">=</span>exercise <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">title</span><span class="o">=</span>Work+Out+More <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">goal_type</span><span class="o">=</span>hustler <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">goaldate</span><span class="o">=</span>1400000000 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">gunits</span><span class="o">=</span>workouts <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">rate</span><span class="o">=</span>5 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">goalval</span><span class="o">=</span>null
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exercise"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Work Out More"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.svg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise-thumb.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1447519599</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400000000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='http-request-6'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals.json</code></p>
 
 <p>Create a new goal for user <em>u</em>.</p>
@@ -1052,32 +1066,29 @@ If you don&#39;t know what that is then you can ignore this parenthetical!)</p>
 <h3 id='returns-5'>Returns</h3>
 <p>The newly created <a href="#goal">Goal</a> object.</p>
 
-<p>One of the three fields <code>goaldate</code>, <code>goalval</code>, and <code>rate</code> will return a null value.
-This indicates that the value is calculated based on the other two fields, as selected by the user.</p>
-
 <h2 id="putgoal">Update a goal for a user</h2>
 
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/exercise.json <span class="se">\</span>
-    -d <span class="nv">auth_token</span><span class="o">=</span>abc124 <span class="se">\</span>
-    -d <span class="nv">title</span><span class="o">=</span>Work+Out+Even+More <span class="se">\</span>
-    -d <span class="nv">secret</span><span class="o">=</span><span class="nb">true</span>
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exercise"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Work Out Even More"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.svg"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.png"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise-thumb.png"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1447519599</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400000000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-7'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl <span class="nt">-X</span> PUT https://www.beeminder.com/api/v1/users/alice/goals/exercise.json <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">auth_token</span><span class="o">=</span>abc124 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">title</span><span class="o">=</span>Work+Out+Even+More <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">secret</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exercise"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Work Out Even More"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.svg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise-thumb.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"secret"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1447519599</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1400000000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345774578</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"queued"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='http-request-7'>HTTP Request</h3>
 <p><code>PUT /users/</code><em>u</em><code>/goals/</code><em>g</em><code>.json</code></p>
 
 <p>Update user <em>u</em>&#39;s goal with slug <em>g</em>.
@@ -1118,9 +1129,9 @@ To change any of {<code>goaldate</code>, <code>goalval</code>, <code>rate</code>
 <blockquote>
 <p>Example Request</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/refresh_graph.json?auth_token<span class="o">=</span>abc123
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="kc">true</span><span class="w">
-</span></code></pre><h3 id='http-request-8'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/refresh_graph.json?auth_token<span class="o">=</span>abc123
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="kc">true</span><span class="w">
+</span></code></pre></div><h3 id='http-request-8'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/refresh_graph.json</code></p>
 
 <p>Analagous to the refresh button on the goal page. Forces a refetch of autodata for goals with automatic data sources. Refreshes the graph image regardless.
@@ -1132,26 +1143,26 @@ To change any of {<code>goaldate</code>, <code>goalval</code>, <code>rate</code>
 It is up to you to watch for an updated graph image.</p>
 
 <h2 id="dialroad">[deprecated] Update a yellow brick road aka bright red line</h2>
-<pre class="highlight shell tab-shell"><code>  // Example request
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  // Example request
 
-  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/dial_road.json <span class="se">\</span>
-    -d <span class="nv">auth_token</span><span class="o">=</span>abc124 <span class="se">\</span>
-    -d <span class="nv">rate</span><span class="o">=</span>-0.5 <span class="se">\</span>
-    -d <span class="nv">goalval</span><span class="o">=</span>166 <span class="se">\</span>
-    -d <span class="nv">goaldate</span><span class="o">=</span>null
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">result</span><span class="w">
+  curl <span class="nt">-X</span> POST https://www.beeminder.com/api/v1/users/alice/goals/weight/dial_road.json <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">auth_token</span><span class="o">=</span>abc124 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">rate</span><span class="o">=</span><span class="nt">-0</span>.5 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">goalval</span><span class="o">=</span>166 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">goaldate</span><span class="o">=</span>null
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">result</span><span class="w">
 
-  </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"weight"</span><span class="p">,</span><span class="w">                       
-    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weight Loss"</span><span class="p">,</span><span class="w">                 
-    </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fatloser"</span><span class="p">,</span><span class="w">                    
-    </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight.svg"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight.png"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight-thumb.png"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">                 
-    </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mi">166</span><span class="p">,</span><span class="w">                         
-    </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">,</span><span class="w">                           
-    </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1358524800</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-9'>HTTP Request</h3>
+  </span><span class="p">{</span><span class="w"> </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"weight"</span><span class="p">,</span><span class="w">                       
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Weight Loss"</span><span class="p">,</span><span class="w">                 
+    </span><span class="nl">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fatloser"</span><span class="p">,</span><span class="w">                    
+    </span><span class="nl">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight.svg"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+weight-thumb.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">                 
+    </span><span class="nl">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mi">166</span><span class="p">,</span><span class="w">                         
+    </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">,</span><span class="w">                           
+    </span><span class="nl">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1358524800</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='http-request-9'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/dial_road.json</code></p>
 
 <aside class="notice">
@@ -1227,10 +1238,10 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token<span class="o">=</span>abc123
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1234567890</span><span class="p">,</span><span class="w"> </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="s2">"20090213"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="s2">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"a"</span><span class="p">},</span><span class="w">
-   </span><span class="p">{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1234567891</span><span class="p">,</span><span class="w"> </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="s2">"20090214"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="s2">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"b"</span><span class="p">}]</span><span class="w">
-</span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token<span class="o">=</span>abc123
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[{</span><span class="nl">"id"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="mi">1234567890</span><span class="p">,</span><span class="w"> </span><span class="nl">"daystamp"</span><span class="p">:</span><span class="s2">"20090213"</span><span class="p">,</span><span class="w"> </span><span class="nl">"value"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="nl">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="nl">"requestid"</span><span class="p">:</span><span class="s2">"a"</span><span class="p">},</span><span class="w">
+   </span><span class="p">{</span><span class="nl">"id"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="w"> </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="mi">1234567891</span><span class="p">,</span><span class="w"> </span><span class="nl">"daystamp"</span><span class="p">:</span><span class="s2">"20090214"</span><span class="p">,</span><span class="w"> </span><span class="nl">"value"</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="nl">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="nl">"requestid"</span><span class="p">:</span><span class="s2">"b"</span><span class="p">}]</span><span class="w">
+</span></code></pre></div><h3 id='http-request-13'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints.json</code></p>
 
 <p>Get the list of datapoints for user <em>u</em>&#39;s goal <em>g</em> &mdash; beeminder.com/<em>u</em>/<em>g</em>.</p>
@@ -1249,18 +1260,18 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json <span class="se">\</span>
-    -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
-    -d <span class="nv">timestamp</span><span class="o">=</span>1325523600 <span class="se">\</span>
-    -d <span class="nv">value</span><span class="o">=</span>130.1 <span class="se">\</span>
-    -d <span class="nv">comment</span><span class="o">=</span>sweat+a+lot+today
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325523600</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120102"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">130.1</span><span class="p">,</span><span class="w">         
-    </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sweat a lot today"</span><span class="p">,</span><span class="w">   
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4f9dd9fd86f22478d3000008"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475925"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-14'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl <span class="nt">-X</span> POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">timestamp</span><span class="o">=</span>1325523600 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">value</span><span class="o">=</span>130.1 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">comment</span><span class="o">=</span>sweat+a+lot+today
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1325523600</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120102"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">130.1</span><span class="p">,</span><span class="w">         
+    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sweat a lot today"</span><span class="p">,</span><span class="w">   
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4f9dd9fd86f22478d3000008"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475925"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='http-request-14'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints.json</code></p>
 
 <p>Add a new datapoint to user <em>u</em>&#39;s goal <em>g</em> &mdash; beeminder.com/<em>u</em>/<em>g</em>.</p>
@@ -1287,24 +1298,24 @@ In other words, this is an upsert endpoint and requestid is an idempotency key.<
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json <span class="se">\</span>
-    -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
-    -d <span class="nv">datapoints</span><span class="o">=[{</span><span class="s2">"timestamp"</span>:1343577600,<span class="s2">"value"</span>:220.6,<span class="s2">"comment"</span>:<span class="s2">"blah+blah"</span>, <span class="s2">"requestid"</span>:<span class="s2">"abcd182475929"</span><span class="o">}</span>, <span class="o">{</span><span class="s2">"timestamp"</span>:1343491200,<span class="s2">"value"</span>:220.7, <span class="s2">"requestid"</span>:<span class="s2">"abcd182475930"</span><span class="o">}]</span>
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">220.6</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475923"</span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9bdad11576ad000010"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343491200</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120728"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">220.7</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343491200</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475923"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span></code></pre><h3 id='http-request-15'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl <span class="nt">-X</span> POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">datapoints</span><span class="o">=[{</span><span class="s2">"timestamp"</span>:1343577600,<span class="s2">"value"</span>:220.6,<span class="s2">"comment"</span>:<span class="s2">"blah+blah"</span>, <span class="s2">"requestid"</span>:<span class="s2">"abcd182475929"</span><span class="o">}</span>, <span class="o">{</span><span class="s2">"timestamp"</span>:1343491200,<span class="s2">"value"</span>:220.7, <span class="s2">"requestid"</span>:<span class="s2">"abcd182475930"</span><span class="o">}]</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">220.6</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah blah"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475923"</span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9bdad11576ad000010"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343491200</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120728"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">220.7</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343491200</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475923"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></code></pre></div><h3 id='http-request-15'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/create_all.json</code></p>
 
 <p>Create multiple new datapoints for beeminder.com/<em>u</em>/<em>g</em>.</p>
@@ -1323,16 +1334,16 @@ Or, in the case of any errors, you will receive an object with two lists, <code>
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json <span class="se">\</span>
-    -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
-    -d <span class="nv">comment</span><span class="o">=</span>a+real+comment
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">220.6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a real comment"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-16'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl <span class="nt">-X</span> PUT https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">comment</span><span class="o">=</span>a+real+comment
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">220.6</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a real comment"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='http-request-16'>HTTP Request</h3>
 <p><code>PUT /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/</code><em>id</em><code>.json</code></p>
 
 <p>Update the datapoint with ID <em>id</em> for user <em>u</em>&#39;s goal <em>g</em> (beeminder.com/<em>u</em>/<em>g</em>).</p>
@@ -1350,14 +1361,14 @@ Or, in the case of any errors, you will receive an object with two lists, <code>
 <blockquote>
 <p>Examples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl -X DELETE https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json?auth_token<span class="o">=</span>abc123
-</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">220.6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a real comment"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-17'>HTTP Request</h3>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl <span class="nt">-X</span> DELETE https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json?auth_token<span class="o">=</span>abc123
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">220.6</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a real comment"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='http-request-17'>HTTP Request</h3>
 <p><code>DELETE /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/</code><em>id</em><code>.json</code></p>
 
 <p>Delete the datapoint with ID <em>id</em> for user <em>u</em>&#39;s goal <em>g</em> (beeminder.com/<em>u</em>/<em>g</em>).</p>
@@ -1384,20 +1395,20 @@ A <code>Charge</code> object has the following attributes:</p>
 <blockquote>
 <p>Example request</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  curl -X POST <span class="s1">'https://www.beeminder.com/api/v1/charges.json'</span> <span class="se">\</span>
-    -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
-    -d <span class="nv">user_id</span><span class="o">=</span>alice <span class="se">\</span>
-    -d <span class="nv">amount</span><span class="o">=</span>10 <span class="se">\</span>
-    -d <span class="nv">note</span><span class="o">=</span>I%27m+not+worthy%3B+charge+myself+%2410 <span class="se">\</span>
-</code></pre>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>  curl <span class="nt">-X</span> POST <span class="s1">'https://www.beeminder.com/api/v1/charges.json'</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">user_id</span><span class="o">=</span>alice <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">amount</span><span class="o">=</span>10 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nv">note</span><span class="o">=</span>I%27m+not+worthy%3B+charge+myself+%2410 <span class="se">\</span>
+</code></pre></div>
 <blockquote>
 <p>Example response</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I'm not worthy; charge myself $10"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alice"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-18'>HTTP request</h3>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I'm not worthy; charge myself $10"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alice"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='http-request-18'>HTTP request</h3>
 <p><code>POST /charges</code></p>
 
 <p>Create a charge of a given amount and optionally add a note.</p>
@@ -1418,11 +1429,11 @@ A <code>Charge</code> object has the following attributes:</p>
 <blockquote>
 <p>Example of POSTed data</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"goal"</span><span class="p">:</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w">  
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"goal"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5016fa9adad11576ad00000f"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w">  
   </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre></div>
 <p>You can configure Beeminder to remind you about goals that are about to derail via webhook, either on the individual goal settings page or on your reminder settings page.</p>
 
 <p>Beeminder will remind you via POST request to the URL you specify with a JSON body with all the attributes specified in the description of the
