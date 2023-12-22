@@ -981,7 +981,7 @@ Get the list of datapoints for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*
 
 * \[`sort`\] (string): Which attribute to sort on, descending. Defaults to id if none given.
 * \[`count`\] (integer): Limit results to count number of datapoints. Must be non-negative. Defaults to all datapoints if parameter is missing. Ignored when page is specified.
-* \[`page`\] (integer): Used to paginate results. 1 indexed--this means page 1 is the first page.
+* \[`page`\] (integer): Used to paginate results. 1 indexed&mdash;this means page 1 is the first page.
 * \[`per`\] (integer): Number of results per page. Default 25. Ignored without page parameter. Must be non-negative.
 
 ### Returns
