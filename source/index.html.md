@@ -178,9 +178,13 @@ You can retrieve the username for a given access token at any time by sending a 
 
 ```shell
   curl https://www.beeminder.com/api/v1/users/me.json?access_token=abc123
+
+  or
+
+  curl -H "Authorization: Bearer abc123" https://www.beeminder.com/api/v1/users/me.json
 ```
 
-Append the access token as a parameter on any API requests you make on behalf of that user.
+Append the access token as a parameter on any API requests you make on behalf of that user, or include it in the request headers using the `Authorization: Bearer` scheme.
 For example, your first request will probably be to get information about the
 [User](#user)
 who just authorized your app.
