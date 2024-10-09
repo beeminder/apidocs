@@ -174,7 +174,7 @@ The access token uniquely identifies the user's authorization for your app.
 The username is provided here for convenenience.
 You can retrieve the username for a given access token at any time by sending a GET request for `/api/v1/me.json` with the token appended as a parameter.
 
-<h3 id="tokenparam">4. Include access token as a parameter</h3>
+<h3 id="tokenparam">4. Include access token in your request</h3>
 
 ```shell
   curl https://www.beeminder.com/api/v1/users/me.json?access_token=abc123
