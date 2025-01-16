@@ -289,6 +289,9 @@
                   <li>
                     <a href="#cancelstepdown" class="toc-h2 toc-link" data-title="Goal Resource">Cancel a scheduled step down</a>
                   </li>
+                  <li>
+                    <a href="#unclebutton" class="toc-h2 toc-link" data-title="Goal Resource">Call "Uncle" (i.e. instant derail)</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -322,6 +325,9 @@
                   </li>
                   <li>
                     <a href="#postcharge" class="toc-h2 toc-link" data-title="Charge Resource">Create a charge</a>
+                  </li>
+                  <li>
+                    <a href="#goalcharge" class="toc-h2 toc-link" data-title="Charge Resource">Charge a goal</a>
                   </li>
               </ul>
           </li>
@@ -1211,6 +1217,46 @@ The pledge will remain at the current amount.</p>
 <h3 id='returns-11'>Returns</h3>
 <p>The updated <a href="#goal">Goal</a> object.</p>
 
+<h2 id="unclebutton">Call "Uncle" (i.e. instant derail)</h2>
+
+<blockquote>
+<p>Example
+<code>shell
+  curl https://www.beeminder.com/api/v1/users/alice/goals/blah/uncleme.json?auth_token=abc123
+</code></p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">success</span><span class="p">:</span><span class="w">
+  </span><span class="err">//</span><span class="w"> </span><span class="err">updated</span><span class="w"> </span><span class="err">goal</span><span class="w"> </span><span class="err">object</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah"</span><span class="p">,</span><span class="w">                       
+    </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">                    
+    </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+blah.svg"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+blah.png"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+blah-thumb.png"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">                 
+    </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mi">166</span><span class="p">,</span><span class="w">                         
+    </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w">                           
+    </span><span class="err">...</span><span class="w">
+    </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1358524800</span><span class="w"> </span><span class="p">}</span><span class="w">
+
+  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">error</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Can't uncle a goal that's not in the red."</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
+<p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/uncleme.json</code></p>
+
+<p>Call &quot;Uncle&quot; on a goal that is imminently going to derail (aka is in a beemergency, or &quot;is red&quot;).
+Sometimes there&#39;s just no way you&#39;re going to complete a goal, despite it being in the red, and you&#39;d rather just derail it now, pay the pledge, and get your post-derail-respite.
+That&#39;s what this endpoint is for.</p>
+
+<p>Posting to this endpoint insta-derails the goal (stopping all alerts), charges you the pledge amount, and inserts your post-derail respite into the graph. </p>
+
+<p>This endpoint will fail if the goal has more than 0 days of buffer. </p>
+
+<p>This endpoint will charge you -- and all Groupies of the goal -- immediately for the derail.</p>
+<h3 id='parameters-13'>Parameters</h3>
+<p>None</p>
+<h3 id='returns-12'>Returns</h3>
+<p>The updated <a href="#goal">Goal</a> object, or an error if the goal is not red.</p>
+
 <p><a href="#">Back to top</a></p>
 
 <h1 id="datapoint">Datapoint Resource</h1>
@@ -1226,6 +1272,11 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
 <li><code>comment</code> (string): An optional comment about the datapoint.</li>
 <li><code>updated_at</code> (number): The unix time that this datapoint was entered or last updated.</li>
 <li><code>requestid</code> (string): If a datapoint was created via the API and this parameter was included, it will be echoed back.</li>
+<li><code>origin</code> (string): A short code related to where the datapoint came from. E.g. if it was added from the website, it would be &quot;web&quot;; if it was added by an autodata integration, e.g. Duolingo, it would be &quot;duolingo&quot;.</li>
+<li><code>creator</code> (string): Similar to origin, but for users. Especially in context of group goals, should resolve to the member who added the data, assuming the member is still around etc. When there isn&#39;t a logical <code>creator</code> this will be null.</li>
+<li><code>is_dummy</code> (boolean): Not a logical datapoint, e.g. a &quot;#DERAIL&quot; datapoint, or Pessimistic Presumptive datapoint, added by Beeminder.</li>
+<li><code>is_initial</code> (boolean): The initial datapoint added at goal creation time. Depending on the goal type this can be semantically slightly different from a &quot;dummy&quot; datapoint, e.g. in the case of an Odometer goal, it&#39;s a meaningful datapoint because it sets your starting count, which is &quot;actual&quot; data, and meaningful to the goal, but in the case of a Do More goal, it&#39;s more of a placeholder. </li>
+<li><code>created_at</code> (time): This is the timestamp at which the datapoint was created, which may differ from the datapoint&#39;s <code>timestamp</code> because of Reasons.</li>
 </ul>
 
 <h2 id="dataall">Get all the datapoints</h2>
@@ -1236,18 +1287,18 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
 <pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token<span class="o">=</span>abc123
 </code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1234567890</span><span class="p">,</span><span class="w"> </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="s2">"20090213"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="s2">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"a"</span><span class="p">},</span><span class="w">
    </span><span class="p">{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1234567891</span><span class="p">,</span><span class="w"> </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="s2">"20090214"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="s2">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"b"</span><span class="p">}]</span><span class="w">
-</span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-14'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints.json</code></p>
 
 <p>Get the list of datapoints for user <em>u</em>&#39;s goal <em>g</em> &mdash; beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-13'>Parameters</h3>
+<h3 id='parameters-14'>Parameters</h3>
 <ul>
 <li>[<code>sort</code>] (string): Which attribute to sort on, descending. Defaults to <code>id</code> if none given.</li>
 <li>[<code>count</code>] (integer): Limit results to count number of datapoints. Must be non-negative. Defaults to all datapoints if parameter is missing. Ignored when <code>page</code> is specified.</li>
 <li>[<code>page</code>] (integer): Used to paginate results, 1-indexed, meaning page 1 is the first page.</li>
 <li>[<code>per</code>] (integer): Number of results per page. Default 25. Ignored without <code>page</code> parameter. Must be non-negative.</li>
 </ul>
-<h3 id='returns-12'>Returns</h3>
+<h3 id='returns-13'>Returns</h3>
 <p>The list of <a href="#datapoint">Datapoint</a> objects.</p>
 
 <h2 id="postdata">Create a datapoint</h2>
@@ -1266,11 +1317,11 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
     </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sweat a lot today"</span><span class="p">,</span><span class="w">   
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4f9dd9fd86f22478d3000008"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475925"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-14'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-15'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints.json</code></p>
 
 <p>Add a new datapoint to user <em>u</em>&#39;s goal <em>g</em> &mdash; beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-14'>Parameters</h3>
+<h3 id='parameters-15'>Parameters</h3>
 <ul>
 <li><code>value</code> (number)<br></li>
 <li>[<code>timestamp</code>] (number). Defaults to &quot;now&quot; if none is passed in, or the existing timestamp if the datapoint is being updated rather than created (see <code>requestid</code> below).</li>
@@ -1285,7 +1336,7 @@ If <code>requestid</code> is included and the datapoint differs from the existin
 If no datapoint with the requestid exists then the datapoint is simply created.
 In other words, this is an upsert endpoint and requestid is an idempotency key.</li>
 </ul>
-<h3 id='returns-13'>Returns</h3>
+<h3 id='returns-14'>Returns</h3>
 <p>The updated <a href="#datapoint">Datapoint</a> object.</p>
 
 <h2 id="postdatas">Create multiple datapoints</h2>
@@ -1310,17 +1361,17 @@ In other words, this is an upsert endpoint and requestid is an idempotency key.<
       </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343491200</span><span class="p">,</span><span class="w">
       </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475923"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span></code></pre><h3 id='http-request-15'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-16'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/create_all.json</code></p>
 
 <p>Create multiple new datapoints for beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-15'>Parameters</h3>
+<h3 id='parameters-16'>Parameters</h3>
 <ul>
 <li><code>datapoints</code> (array of Datapoints):
 Each Datapoint should be a JSON object, and must include at minimum a <code>value</code>.
 Other parameters are the same as for the single-create method above.<br></li>
 </ul>
-<h3 id='returns-14'>Returns</h3>
+<h3 id='returns-15'>Returns</h3>
 <p>A list of successfully created <a href="#datapoint">Datapoints</a>. 
 Or, in the case of any errors, you will receive an object with two lists, <code>successes</code>, and <code>errors</code>.</p>
 
@@ -1338,17 +1389,17 @@ Or, in the case of any errors, you will receive an object with two lists, <code>
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
     </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-16'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-17'>HTTP Request</h3>
 <p><code>PUT /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/</code><em>id</em><code>.json</code></p>
 
 <p>Update the datapoint with ID <em>id</em> for user <em>u</em>&#39;s goal <em>g</em> (beeminder.com/<em>u</em>/<em>g</em>).</p>
-<h3 id='parameters-16'>Parameters</h3>
+<h3 id='parameters-17'>Parameters</h3>
 <ul>
 <li>[<code>timestamp</code>] (number)</li>
 <li>[<code>value</code>] (number)</li>
 <li>[<code>comment</code>] (string)</li>
 </ul>
-<h3 id='returns-15'>Returns</h3>
+<h3 id='returns-16'>Returns</h3>
 <p>The updated <a href="#datapoint">Datapoint</a> object.</p>
 
 <h2 id="deletedata">Delete a datapoint</h2>
@@ -1363,13 +1414,13 @@ Or, in the case of any errors, you will receive an object with two lists, <code>
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
     </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-17'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-18'>HTTP Request</h3>
 <p><code>DELETE /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/</code><em>id</em><code>.json</code></p>
 
 <p>Delete the datapoint with ID <em>id</em> for user <em>u</em>&#39;s goal <em>g</em> (beeminder.com/<em>u</em>/<em>g</em>).</p>
-<h3 id='parameters-17'>Parameters</h3>
+<h3 id='parameters-18'>Parameters</h3>
 <p>None.</p>
-<h3 id='returns-16'>Returns</h3>
+<h3 id='returns-17'>Returns</h3>
 <p>The deleted <a href="#datapoint">Datapoint</a> object.</p>
 
 <p><a href="#">Back to top</a></p>
@@ -1403,19 +1454,24 @@ A <code>Charge</code> object has the following attributes:</p>
     </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
     </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I'm not worthy; charge myself $10"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alice"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-18'>HTTP request</h3>
+</span></code></pre><h3 id='http-request-19'>HTTP request</h3>
 <p><code>POST /charges</code></p>
 
 <p>Create a charge of a given amount and optionally add a note.</p>
-<h3 id='parameters-18'>Parameters</h3>
+<h3 id='parameters-19'>Parameters</h3>
 <ul>
 <li><code>user_id</code> (string): Username of the user who is getting charged.</li>
 <li><code>amount</code> (number)</li>
 <li><code>note</code> (string)</li>
 <li>[<code>dryrun</code>] (string): If passed, the Charge is not actually created, but the JSON for it is returned as if it were. Default: false.</li>
 </ul>
-<h3 id='returns-17'>Returns</h3>
+<h3 id='returns-18'>Returns</h3>
 <p>The Charge object, or an object with the error message(s) if the request was not successful.</p>
+
+<h2 id="goalcharge">Charge a goal</h2>
+
+<p>You&#39;re probably thinking of calling Uncle on a goal that&#39;s about to derail to get it over with.
+See the <a href="#unclebutton">Uncle</a> endpoint.</p>
 
 <p><a href="#">Back to top</a></p>
 
