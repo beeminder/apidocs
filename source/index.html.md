@@ -943,6 +943,52 @@ None
 The updated [Goal](#goal) object.
 
 
+<h2 id="unclebutton">Call "Uncle" (i.e. instant derail)</h2>
+
+> Example
+```shell
+  curl https://www.beeminder.com/api/v1/users/alice/goals/blah/uncleme.json?auth_token=abc123
+```
+
+```json
+  // Example success:
+  // updated goal object
+  { "slug": "blah",                       
+    "goal_type": "hustler",                    
+    "svg_url": "http://static.beeminder.com/alice+blah.svg",
+    "graph_url": "http://static.beeminder.com/alice+blah.png",
+    "thumb_url": "http://static.beeminder.com/alice+blah-thumb.png",
+    "goaldate": null,                 
+    "goalval": 166,                         
+    "rate": 0.5,                           
+    ...
+    "losedate": 1358524800 }
+
+  // Example error:
+  {"errors": "Can't uncle a goal that's not in the red."}
+```
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/uncleme.json`
+
+Call "Uncle" on a goal that is imminently going to derail (aka is in a beemergency, or "is red").
+Sometimes there's just no way you're going to complete a goal, despite it being in the red, and you'd rather just derail it now, pay the pledge, and get your post-derail-respite.
+That's what this endpoint is for.
+
+Posting to this endpoint insta-derails the goal (stopping all alerts), charges you the pledge amount, and inserts your post-derail respite into the graph. 
+
+This endpoint will fail if the goal has more than 0 days of buffer. 
+
+This endpoint will charge you -- and all Groupies of the goal -- immediately for the derail.
+
+### Parameters
+
+None
+
+### Returns
+
+The updated [Goal](#goal) object, or an error if the goal is not red.
 
 [Back to top](#)
 
@@ -962,6 +1008,12 @@ A Datapoint belongs to a [Goal](#goal), which has many Datapoints.
 * `comment` (string): An optional comment about the datapoint.
 * `updated_at` (number): The unix time that this datapoint was entered or last updated.
 * `requestid` (string): If a datapoint was created via the API and this parameter was included, it will be echoed back.
+* `origin` (string): A short code related to where the datapoint came from. E.g. if it was added from the website, it would be "web"; if it was added by an autodata integration, e.g. Duolingo, it would be "duolingo".
+* `creator` (string): Similar to origin, but for users. Especially in context of group goals, should resolve to the member who added the data, assuming the member is still around etc. When there isn't a logical `creator` this will be null.
+* `is_dummy` (boolean): Not a logical datapoint, e.g. a "#DERAIL" datapoint, or Pessimistic Presumptive datapoint, added by Beeminder.
+* `is_initial` (boolean): The initial datapoint added at goal creation time. Depending on the goal type this can be semantically slightly different from a "dummy" datapoint, e.g. in the case of an Odometer goal, it's a meaningful datapoint because it sets your starting count, which is "actual" data, and meaningful to the goal, but in the case of a Do More goal, it's more of a placeholder. 
+* `created_at` (time): This is the timestamp at which the datapoint was created, which may differ from the datapoint's `timestamp` because of Reasons.
+
 
 
 <h2 id="dataall">Get all the datapoints</h2>
@@ -1211,6 +1263,11 @@ Create a charge of a given amount and optionally add a note.
 
 The Charge object, or an object with the error message(s) if the request was not successful.
 
+
+<h2 id="goalcharge">Charge a goal</h2>
+
+You're probably thinking of calling Uncle on a goal that's about to derail to get it over with.
+See the [Uncle](#unclebutton) endpoint.
 
 
 [Back to top](#)
