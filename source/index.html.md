@@ -212,8 +212,10 @@ sense) includes information about a user, like their list of goals.
 
 ### Attributes
 
-* `username` (string)
-* `timezone` (string)
+* `username` (string):
+user-provided name identifying the account
+* `timezone` (string):
+The geopolitical region identifier that identifies the time zone (example: "America/Chicago")
 * `updated_at` (number):
 [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time "Number of seconds since 1970-01-01 at midnight GMT")
 (in seconds) of the last update to this user or any of their goals or datapoints.
@@ -226,6 +228,25 @@ The idea of Urgency Load is to construct a single number that captures how edge-
 * `deleted_goals` (array):
 An array of hashes, each with one key/value pair for the id of the deleted goal.
 Only returned if `diff_since` is sent.
+* `id` (string):
+system-generated identifier for the account
+* `remaining_subs_credit` (number):
+* `default_alertstart (number):
+number of seconds from midnight until the wall-clock time of the alert (example 34200; 34200 / 60 / 60 = 9.50 = 9:30 in the morning)
+* `subs_downto` (string):
+* `has_authorized_fitbit` (boolean):
+* `subscription` (string):
+the user's current subscription (probably with well-known strings: "Core Beeminder", "Infinibee", "Bee Plus", "Beemium"
+* `subs_freq` (number):
+example 1000
+* `subs_lifetime` (string):
+DRAFT: the extent of the validity of the subscription?
+* `created_at` (number):
+[Unix timestamp](http://en.wikipedia.org/wiki/Unix_time "Number of seconds since 1970-01-01 at midnight GMT")
+(in seconds) of the when the user account was created
+* `default_leadtime` (number):
+* `access_token` (string):
+optional, user's access token; used in requests
 
 
 <h2 id="getuser">Get information about a user</h2>
