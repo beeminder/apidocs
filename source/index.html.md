@@ -333,6 +333,10 @@ hhmmformat
 `
 Instead of a `datapoints` attribute, sending `skinny` will replace that attribute with a `last_datapoint` attribute. Its value is a Datapoint hash.
 
+* \[`emaciated`\] (boolean):
+If included the goal attributes called `road`, `roadall`, and `fullroad` will be stripped from any goal objects returned with the user. 
+Default: false.
+
 * \[`datapoints_count`\] (number): number of datapoints.
 Default: null, which will return all goals and datapoints.
 Send a number `n` to only recieve the `n` most recently added datapoints, sorted by `updated_at`.
@@ -574,6 +578,9 @@ Gets goal details for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*.
 ### Parameters
 
 * \[`datapoints`\] (boolean): Whether to send the goal's datapoints in the response. Default: `false`.
+* \[`emaciated`\] (boolean):
+If included the goal attributes called `road`, `roadall`, and `fullroad` will be stripped from the goal object. 
+Default: false.
 
 ### Returns
 
@@ -624,7 +631,9 @@ Get user *u*'s list of goals.
 
 ### Parameters
 
-None.
+* \[`emaciated`\] (boolean):
+If included the goal attributes called `road`, `roadall`, and `fullroad` will be stripped from the goal objects. 
+Default: false.
 
 ### Returns
 
@@ -677,7 +686,9 @@ Get user *u*'s archived goals.
 
 ### Parameters
 
-None.
+* \[`emaciated`\] (boolean):
+If included the goal attributes called `road`, `roadall`, and `fullroad` will be stripped from the goal objects. 
+Default: false.
 
 ### Returns
 
