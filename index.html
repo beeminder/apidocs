@@ -617,6 +617,9 @@ todayta,
 hhmmformat
 </code>
 Instead of a <code>datapoints</code> attribute, sending <code>skinny</code> will replace that attribute with a <code>last_datapoint</code> attribute. Its value is a Datapoint hash.</p></li>
+<li><p>[<code>emaciated</code>] (boolean):
+If included the goal attributes called <code>road</code>, <code>roadall</code>, and <code>fullroad</code> will be stripped from any goal objects returned with the user. 
+Default: false.</p></li>
 <li><p>[<code>datapoints_count</code>] (number): number of datapoints.
 Default: null, which will return all goals and datapoints.
 Send a number <code>n</code> to only recieve the <code>n</code> most recently added datapoints, sorted by <code>updated_at</code>.
@@ -929,6 +932,9 @@ You don&#39;t have to actually reach the goal value &mdash; staying on the right
 <h3 id='parameters-3'>Parameters</h3>
 <ul>
 <li>[<code>datapoints</code>] (boolean): Whether to send the goal&#39;s datapoints in the response. Default: <code>false</code>.</li>
+<li>[<code>emaciated</code>] (boolean):
+If included the goal attributes called <code>road</code>, <code>roadall</code>, and <code>fullroad</code> will be stripped from the goal object. 
+Default: false.</li>
 </ul>
 <h3 id='returns-2'>Returns</h3>
 <p>A <a href="#goal">Goal</a> object, possibly without the datapoints attribute.</p>
@@ -968,7 +974,11 @@ You don&#39;t have to actually reach the goal value &mdash; staying on the right
 
 <p>Get user <em>u</em>&#39;s list of goals.</p>
 <h3 id='parameters-4'>Parameters</h3>
-<p>None.</p>
+<ul>
+<li>[<code>emaciated</code>] (boolean):
+If included the goal attributes called <code>road</code>, <code>roadall</code>, and <code>fullroad</code> will be stripped from the goal objects. 
+Default: false.</li>
+</ul>
 <h3 id='returns-3'>Returns</h3>
 <p>A list of <a href="#goal">Goal</a> objects for the user.
 Goals are sorted in descending order of urgency, i.e., increasing order of time to derailment.
@@ -1010,7 +1020,11 @@ If you don&#39;t know what that is then you can ignore this parenthetical!)</p>
 
 <p>Get user <em>u</em>&#39;s archived goals.</p>
 <h3 id='parameters-5'>Parameters</h3>
-<p>None.</p>
+<ul>
+<li>[<code>emaciated</code>] (boolean):
+If included the goal attributes called <code>road</code>, <code>roadall</code>, and <code>fullroad</code> will be stripped from the goal objects. 
+Default: false.</li>
+</ul>
 <h3 id='returns-4'>Returns</h3>
 <p>A list of <a href="#goal">Goal</a> objects representing the user&#39;s archived goals.</p>
 
