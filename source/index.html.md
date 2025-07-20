@@ -1231,7 +1231,7 @@ A `Charge` object has the following attributes:
 
 ### Attributes
 
-* `amount` (number): The amount to charge the user, in US dollars.
+* `amount` (number): The amount to charge the user, in US dollars.  Must be positive, >=1.00
 * `note` (string): An explanation of why the charge was made.
 * `username` (string): The Beeminder username of the user being charged.
 
@@ -1266,7 +1266,7 @@ Create a charge of a given amount and optionally add a note.
 ### Parameters
 
 * `user_id` (string): Username of the user who is getting charged.
-* `amount` (number)
+* `amount` (number): The amount to charge the user, in US dollars.  Minimum value is 1.00
 * `note` (string)
 * \[`dryrun`\] (string): If passed, the Charge is not actually created, but the JSON for it is returned as if it were. Default: false.
 
