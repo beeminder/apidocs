@@ -1445,7 +1445,7 @@ Or, in the case of any errors, you will receive an object with two lists, <code>
 A <code>Charge</code> object has the following attributes:</p>
 <h3 id='attributes-4'>Attributes</h3>
 <ul>
-<li><code>amount</code> (number): The amount to charge the user, in US dollars.</li>
+<li><code>amount</code> (number): The amount to charge the user, in US dollars.  Must be positive, &gt;=1.00</li>
 <li><code>note</code> (string): An explanation of why the charge was made.</li>
 <li><code>username</code> (string): The Beeminder username of the user being charged.</li>
 </ul>
@@ -1475,7 +1475,7 @@ A <code>Charge</code> object has the following attributes:</p>
 <h3 id='parameters-19'>Parameters</h3>
 <ul>
 <li><code>user_id</code> (string): Username of the user who is getting charged.</li>
-<li><code>amount</code> (number)</li>
+<li><code>amount</code> (number): The amount to charge the user, in US dollars.  Minimum value is 1.00</li>
 <li><code>note</code> (string)</li>
 <li>[<code>dryrun</code>] (string): If passed, the Charge is not actually created, but the JSON for it is returned as if it were. Default: false.</li>
 </ul>
