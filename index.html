@@ -614,6 +614,7 @@ delta_text,
 safebump,
 gunits,
 todayta,
+timey
 hhmmformat
 </code>
 Instead of a <code>datapoints</code> attribute, sending <code>skinny</code> will replace that attribute with a <code>last_datapoint</code> attribute. Its value is a Datapoint hash.</p></li>
@@ -751,7 +752,8 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).</li>
 <li><code>last_datapoint</code> (<a href="#datapoint">Datapoint</a>): The last datapoint entered for this goal.</li>
 <li><code>integery</code> (boolean): Assume that the units must be integer values.  Used for things like <code>limsum</code>.</li>
 <li><code>gunits</code> (string): Goal units, like &quot;hours&quot; or &quot;pushups&quot; or &quot;pages&quot;.</li>
-<li><code>hhmmformat</code> (boolean): Whether to show data in a &quot;timey&quot; way, with colons.  For example, this would make a 1.5 show up as 1:30.</li>
+<li><code>timey</code> (boolean): Whether to show data in a &quot;timey&quot; way, with colons.  For example, this would make a 1.5 show up as 1:30. This replaces <code>hhmmformat</code>.</li>
+<li><code>hhmmformat</code> (boolean): DEPRECATED. Will be removed in a future version. Use <code>timey</code> instead.</li>
 <li><code>todayta</code> (boolean): Whether there are any datapoints for today</li>
 <li><code>weekends_off</code> (boolean): If the goal has weekends automatically scheduled.</li>
 <li><code>tmin</code> (string): Lower bound on x-axis; don&#39;t show data before this date; using yyyy-mm-dd date format. (In Graph Settings this is &#39;X-min&#39;)</li>
