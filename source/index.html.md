@@ -12,6 +12,7 @@ toc_footers:
   - <a href='https://github.com/lord/slate'>Docs powered by Slate</a>
 
 includes:
+  - url_goal_creation
   - errors
 
 search: false
@@ -1302,3 +1303,5 @@ You can configure Beeminder to remind you about goals that are about to derail v
 
 Beeminder will remind you via POST request to the URL you specify with a JSON body with all the attributes specified in the description of the
 [Goal Resource](#goal).
+
+
