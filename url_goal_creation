@@ -1,0 +1,317 @@
+<h1 id='url-based-goal-creation'>URL-Based Goal Creation</h1>
+<p>Create Beeminder goals by passing parameters in the URL to pre-fill the goal creation wizard. This allows for streamlined goal setup from external applications, bookmarklets, or custom workflows.</p>
+<h2 id='overview'>Overview</h2>
+<p>Instead of manually filling out the goal creation wizard, you can construct a URL with query parameters that automatically populate the form fields and advance to the preview screen.</p>
+
+<p><strong>Base URL:</strong> <code>https://www.beeminder.com/new</code></p>
+
+<p><strong>Note:</strong> Users must be logged in to create goals. Unauthenticated requests will redirect to the login page.</p>
+<h2 id='quick-examples'>Quick Examples</h2><h3 id='do-more-goal'>Do More Goal</h3>
+<p>Create a goal to do 5 pushups per day:
+<code>
+https://www.beeminder.com/new?goaltype=domore&amp;units=pushups&amp;dailyrate=5&amp;goalname=pushups
+</code></p>
+<h3 id='weight-loss-goal'>Weight Loss Goal</h3>
+<p>Create a weight loss goal starting at 200 lbs with 2 lb daily fluctuation:
+<code>
+https://www.beeminder.com/new?goaltype=weightloss&amp;units=lbs&amp;start_value=200&amp;flux=2&amp;goalname=getthinner
+</code></p>
+<h3 id='custom-goal-with-safety-buffer'>Custom Goal with Safety Buffer</h3>
+<p>Create a reading goal with 7 days of initial safety buffer:
+<code>
+https://www.beeminder.com/new?goaltype=custom&amp;units=pages&amp;dailyrate=10&amp;leeway=7&amp;goalname=reading
+</code></p>
+<h2 id='parameters'>Parameters</h2><h3 id='required-parameters'>Required Parameters</h3><h4 id='code-goaltype-code-required'><code>goaltype</code> (required)</h4>
+<p>The type of goal to create. Can use either user-friendly names or internal type names.</p>
+
+<p><strong>User-friendly names:</strong>
+- <code>manual</code> - Show goal type picker
+- <code>domore</code> - Do More goal (hustler)
+- <code>doless</code> - Do Less goal (drinker)
+- <code>weightloss</code> - Lose Weight goal (fatloser)
+- <code>weightgain</code> - Gain Weight goal (gainer)
+- <code>odometer</code> - Odometer goal (biker)
+- <code>whittledown</code> - Whittle Down goal (inboxer)
+- <code>custom</code> - Custom goal</p>
+
+<p><strong>Internal type names (also accepted):</strong>
+- <code>hustler</code>, <code>drinker</code>, <code>biker</code>, <code>fatloser</code>, <code>gainer</code>, <code>inboxer</code>, <code>custom</code></p>
+
+<p>Or specify an integration:
+- <code>fitbit</code>, <code>garmin</code>, <code>strava</code>, <code>github</code>, <code>gmail</code>, etc.</p>
+
+<p><strong>Example:</strong> <code>goaltype=domore</code>, or <code>goaltype=fitbit</code></p>
+
+<hr>
+<h4 id='code-units-code-required-for-manual-goals'><code>units</code> (required for manual goals)</h4>
+<p>The units for measuring progress (e.g., &quot;pushups&quot;, &quot;pages&quot;, &quot;hours&quot;).</p>
+
+<p><strong>Rules:</strong>
+- Must start with a letter
+- Maximum 30 characters
+- Required for all manual goal types except when only specifying <code>goaltype=manual</code></p>
+
+<p><strong>Example:</strong> <code>units=pushups</code></p>
+
+<hr>
+<h4 id='code-dailyrate-code-required-for-some-manual-goals'><code>dailyrate</code> (required for some manual goals)</h4>
+<p>The daily rate of progress you&#39;re committing to. This is the number you need to achieve per day.</p>
+
+<p><strong>Required for:</strong> Do More, Do Less, Odometer, and Custom goals<br>
+<strong>Not required for:</strong> Weight Loss, Weight Gain, and Whittle Down goals (these calculate the rate automatically)</p>
+
+<p><strong>Example:</strong> <code>dailyrate=5</code> (do 5 of your units per day)</p>
+
+<hr>
+<h4 id='code-goalname-code-required-for-auto-advance'><code>goalname</code> (required for auto-advance)</h4>
+<p>The URL slug for your goal. This becomes part of the goal URL: <code>beeminder.com/username/goalname</code></p>
+
+<p><strong>Rules:</strong>
+- Alphanumeric characters, dashes, and underscores only (no spaces)
+- Maximum 20 characters
+- Cannot be a reserved word (e.g., &quot;new&quot;, &quot;goal&quot;, &quot;login&quot;, &quot;archived&quot;)
+- Must be unique among your goals</p>
+
+<p><strong>Example:</strong> <code>goalname=workout</code></p>
+
+<hr>
+<h3 id='goal-type-specific-parameters'>Goal Type Specific Parameters</h3><h4 id='code-start_value-code-required-for-certain-goal-types'><code>start_value</code> (required for certain goal types)</h4>
+<p>The initial/current value for your goal.</p>
+
+<p><strong>Required for:</strong> 
+- Odometer goals (current odometer reading)
+- Weight Loss/Gain goals (current weight)
+- Whittle Down goals (current count to whittle down)
+- Custom goals (starting value)</p>
+
+<p><strong>Example:</strong> <code>start_value=200</code> (for a weight goal starting at 200 lbs)</p>
+
+<hr>
+<h4 id='code-flux-code-required-for-weight-goals'><code>flux</code> (required for weight goals)</h4>
+<p>The expected daily weight fluctuation. Beeminder uses this to give you appropriate safety buffer for natural weight variations.</p>
+
+<p><strong>Required for:</strong> Weight Loss and Weight Gain goals<br>
+<strong>Invalid for:</strong> All other goal types (will return error)</p>
+
+<p><strong>Example:</strong> <code>flux=2</code> (weight can fluctuate by 2 lbs per day)</p>
+
+<hr>
+<h3 id='optional-parameters'>Optional Parameters</h3><h4 id='code-leeway-code-optional'><code>leeway</code> (optional)</h4>
+<p>Number of days of initial safety buffer before you need to make progress.</p>
+
+<p><strong>Default:</strong> 0 (start immediately)<br>
+<strong>Maximum:</strong> 30 days<br>
+<strong>Type:</strong> Integer</p>
+
+<p><strong>Example:</strong> <code>leeway=7</code> (7 days before first deadline)</p>
+
+<hr>
+<h4 id='code-pledge_cap-code-optional'><code>pledge_cap</code> (optional)</h4>
+<p>The maximum pledge amount for this goal. When you derail, your pledge increases until it reaches this cap.</p>
+
+<p><strong>Default:</strong> User&#39;s default pledge cap<br>
+<strong>Allowed values:</strong> 0, 5, 10, 30, 90, 270, 810, 2430, 7290<br>
+<strong>Type:</strong> Integer (dollars)</p>
+
+<p><strong>Example:</strong> <code>pledge_cap=30</code> (cap pledge at $30)</p>
+
+<hr>
+<h4 id='code-feetwetting-code-optional'><code>feetwetting</code> (optional)</h4>
+<p>Whether to hold the pledge at $0 for the first 7 days while you &quot;get your feet wet&quot; with the goal.</p>
+
+<p><strong>Default:</strong> <code>false</code><br>
+<strong>Allowed values:</strong> <code>true</code>, <code>false</code><br>
+<strong>Type:</strong> Boolean</p>
+
+<p><strong>Example:</strong> <code>feetwetting=true</code></p>
+
+<hr>
+<h2 id='auto-advance-behavior'>Auto-Advance Behavior</h2>
+<p>When <strong>all required parameters</strong> for a goal type are provided, the wizard automatically advances through the form screens and stops at the <strong>Preview</strong> screen.</p>
+<h3 id='required-parameters-by-goal-type'>Required Parameters by Goal Type</h3><h4 id='do-more-do-less-goals'>Do More / Do Less Goals</h4>
+<ul>
+<li><code>goaltype</code></li>
+<li><code>units</code></li>
+<li><code>dailyrate</code></li>
+<li><code>goalname</code></li>
+</ul>
+<h4 id='weight-loss-weight-gain-goals'>Weight Loss / Weight Gain Goals</h4>
+<ul>
+<li><code>goaltype</code></li>
+<li><code>units</code></li>
+<li><code>start_value</code></li>
+<li><code>flux</code></li>
+<li><code>goalname</code></li>
+</ul>
+<h4 id='odometer-custom-goals'>Odometer / Custom Goals</h4>
+<ul>
+<li><code>goaltype</code></li>
+<li><code>units</code></li>
+<li><code>dailyrate</code></li>
+<li><code>start_value</code></li>
+<li><code>goalname</code></li>
+</ul>
+<h4 id='whittle-down-goals'>Whittle Down Goals</h4>
+<ul>
+<li><code>goaltype</code></li>
+<li><code>units</code></li>
+<li><code>start_value</code></li>
+<li><code>goalname</code></li>
+</ul>
+
+<p>(Note: No <code>dailyrate</code> needed - Whittle Down goals automatically calculate the rate to reach zero)</p>
+<h3 id='partial-auto-fill'>Partial Auto-Fill</h3>
+<p>If you provide some but not all required parameters, the forms will be pre-filled but won&#39;t auto-advance. The user can then manually fill in the missing fields and click Continue.</p>
+
+<hr>
+<h2 id='error-handling'>Error Handling</h2>
+<p>Invalid parameters return a <code>400 Bad Request</code> response with JSON error details.</p>
+<h3 id='error-response-format'>Error Response Format</h3><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Goal name must contain only letters, numbers, dashes, and underscores (no spaces)"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"Goal name must contain only letters, numbers, dashes, and underscores (no spaces)"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='common-validation-errors'>Common Validation Errors</h3><h4 id='invalid-goal-name'>Invalid Goal Name</h4><pre class="highlight plaintext"><code>https://www.beeminder.com/new?goaltype=domore&amp;units=pages&amp;dailyrate=5&amp;goalname=my goal
+</code></pre>
+<p><strong>Error:</strong> &quot;Goal name must contain only letters, numbers, dashes, and underscores (no spaces)&quot;</p>
+
+<hr>
+<h4 id='goal-name-too-long'>Goal Name Too Long</h4><pre class="highlight plaintext"><code>https://www.beeminder.com/new?goaltype=domore&amp;units=pages&amp;dailyrate=5&amp;goalname=thisgoalnameiswaytoolongtobevalid
+</code></pre>
+<p><strong>Error:</strong> &quot;Goal name is too long (maximum 20 characters)&quot;</p>
+
+<hr>
+<h4 id='reserved-goal-name'>Reserved Goal Name</h4><pre class="highlight plaintext"><code>https://www.beeminder.com/new?goaltype=domore&amp;units=pages&amp;dailyrate=5&amp;goalname=new
+</code></pre>
+<p><strong>Error:</strong> &quot;Goal name &#39;new&#39; is reserved and cannot be used&quot;</p>
+
+<hr>
+<h4 id='duplicate-goal-name'>Duplicate Goal Name</h4><pre class="highlight plaintext"><code>https://www.beeminder.com/new?goaltype=domore&amp;units=pages&amp;dailyrate=5&amp;goalname=existinggoal
+</code></pre>
+<p><strong>Error:</strong> &quot;You already have a goal named &#39;existinggoal&#39;&quot;</p>
+
+<hr>
+<h4 id='invalid-pledge-cap'>Invalid Pledge Cap</h4><pre class="highlight plaintext"><code>https://www.beeminder.com/new?goaltype=domore&amp;units=pages&amp;dailyrate=5&amp;goalname=test&amp;pledge_cap=999
+</code></pre>
+<p><strong>Error:</strong> &quot;Pledge cap must be one of: 0, 5, 10, 30, 90, 270, 810, 2430, 7290&quot;</p>
+
+<hr>
+<h4 id='flux-on-non-weight-goal'>Flux on Non-Weight Goal</h4><pre class="highlight plaintext"><code>https://www.beeminder.com/new?goaltype=domore&amp;units=pages&amp;dailyrate=5&amp;goalname=test&amp;flux=2
+</code></pre>
+<p><strong>Error:</strong> &quot;The &#39;flux&#39; parameter is only valid for weight loss and weight gain goals&quot;</p>
+
+<hr>
+<h2 id='complete-examples'>Complete Examples</h2><h3 id='example-1-basic-do-more-goal'>Example 1: Basic Do More Goal</h3>
+<p>Create a goal to write 500 words per day:
+<code>
+https://www.beeminder.com/new?goaltype=domore&amp;units=words&amp;dailyrate=500&amp;goalname=writing
+</code></p>
+<h3 id='example-2-do-more-goal-with-safety-buffer'>Example 2: Do More Goal with Safety Buffer</h3>
+<p>Create a meditation goal with 3 days of leeway:
+<code>
+https://www.beeminder.com/new?goaltype=domore&amp;units=sessions&amp;dailyrate=1&amp;leeway=3&amp;goalname=meditate
+</code></p>
+<h3 id='example-3-do-more-goal-with-pledge-cap'>Example 3: Do More Goal with Pledge Cap</h3>
+<p>Create an exercise goal capped at $10:
+<code>
+https://www.beeminder.com/new?goaltype=domore&amp;units=workouts&amp;dailyrate=4&amp;pledge_cap=10&amp;goalname=exercise
+</code></p>
+<h3 id='example-4-do-less-goal'>Example 4: Do Less Goal</h3>
+<p>Limit social media to 30 minutes per day:
+<code>
+https://www.beeminder.com/new?goaltype=doless&amp;units=minutes&amp;dailyrate=30&amp;goalname=socialmedia
+</code></p>
+<h3 id='example-5-weight-loss-goal'>Example 5: Weight Loss Goal</h3>
+<p>Lose weight starting from 180 lbs with 1.5 lb daily fluctuation:
+<code>
+https://www.beeminder.com/new?goaltype=weightloss&amp;units=pounds&amp;start_value=180&amp;flux=1.5&amp;goalname=weightloss
+</code></p>
+<h3 id='example-6-odometer-goal'>Example 6: Odometer Goal</h3>
+<p>Track cumulative pages read, currently at page 0, reading 50 pages/day:
+<code>
+https://www.beeminder.com/new?goaltype=odometer&amp;units=pages&amp;dailyrate=50&amp;start_value=0&amp;goalname=bookpages
+</code></p>
+<h3 id='example-7-whittle-down-goal'>Example 7: Whittle Down Goal</h3>
+<p>Reduce inbox from 200 emails at 5 emails per day:
+<code>
+https://www.beeminder.com/new?goaltype=whittledown&amp;units=emails&amp;dailyrate=5&amp;start_value=200&amp;goalname=inbox
+</code></p>
+<h3 id='example-8-fee-twetting-goal'>Example 8: Fee Twetting Goal</h3>
+<p>Create a goal with 7-day grace period at $0 pledge:
+<code>
+https://www.beeminder.com/new?goaltype=domore&amp;units=tasks&amp;dailyrate=3&amp;feetwetting=true&amp;goalname=tasks
+</code></p>
+<h3 id='example-9-goal-with-all-optional-parameters'>Example 9: Goal with All Optional Parameters</h3>
+<p>Create a fully customized goal:
+<code>
+https://www.beeminder.com/new?goaltype=domore&amp;units=hours&amp;dailyrate=2&amp;leeway=7&amp;pledge_cap=90&amp;feetwetting=true&amp;goalname=coding
+</code></p>
+
+<hr>
+<h2 id='integration-examples'>Integration Examples</h2><h3 id='bookmarklet'>Bookmarklet</h3>
+<p>Create a bookmarklet to quickly create a goal for the current page:</p>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">javascript</span><span class="p">:(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">title</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">().</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/</span><span class="se">[^</span><span class="sr">a-z0-9</span><span class="se">]</span><span class="sr">/g</span><span class="p">,</span><span class="s1">''</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">'https://www.beeminder.com/new?goaltype=domore&amp;units=items&amp;dailyrate=1&amp;goalname='</span> <span class="o">+</span> <span class="nx">title</span><span class="p">;</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
+<span class="p">})();</span>
+</code></pre><h3 id='from-external-app'>From External App</h3>
+<p>If you&#39;re building an app that helps users create Beeminder goals:</p>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">urllib.parse</span>
+
+<span class="k">def</span> <span class="nf">create_goal_url</span><span class="p">(</span><span class="n">goaltype</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">dailyrate</span><span class="p">,</span> <span class="n">goalname</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'goaltype'</span><span class="p">:</span> <span class="n">goaltype</span><span class="p">,</span>
+        <span class="s">'units'</span><span class="p">:</span> <span class="n">units</span><span class="p">,</span>
+        <span class="s">'dailyrate'</span><span class="p">:</span> <span class="n">dailyrate</span><span class="p">,</span>
+        <span class="s">'goalname'</span><span class="p">:</span> <span class="n">goalname</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">}</span>
+    <span class="n">query_string</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span><span class="s">"https://www.beeminder.com/new?{query_string}"</span>
+
+<span class="c"># Example usage</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">create_goal_url</span><span class="p">(</span>
+    <span class="n">goaltype</span><span class="o">=</span><span class="s">'domore'</span><span class="p">,</span>
+    <span class="n">units</span><span class="o">=</span><span class="s">'pages'</span><span class="p">,</span>
+    <span class="n">dailyrate</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">goalname</span><span class="o">=</span><span class="s">'reading'</span><span class="p">,</span>
+    <span class="n">leeway</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+    <span class="n">pledge_cap</span><span class="o">=</span><span class="mi">30</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</code></pre><h3 id='browser-extension'>Browser Extension</h3><pre class="highlight javascript tab-javascript"><code><span class="c1">// Create a goal from a browser extension</span>
+<span class="kd">function</span> <span class="nx">createBeeminderGoal</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">queryString</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URLSearchParams</span><span class="p">(</span><span class="nx">params</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+  <span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`https://www.beeminder.com/new?</span><span class="p">${</span><span class="nx">queryString</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+  <span class="nx">chrome</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">url</span><span class="p">:</span> <span class="nx">url</span> <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage</span>
+<span class="nx">createBeeminderGoal</span><span class="p">({</span>
+  <span class="na">goaltype</span><span class="p">:</span> <span class="s1">'domore'</span><span class="p">,</span>
+  <span class="na">units</span><span class="p">:</span> <span class="s1">'articles'</span><span class="p">,</span>
+  <span class="na">dailyrate</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="na">goalname</span><span class="p">:</span> <span class="s1">'reading'</span><span class="p">,</span>
+  <span class="na">leeway</span><span class="p">:</span> <span class="mi">3</span>
+<span class="p">});</span>
+</code></pre>
+<hr>
+<h2 id='notes'>Notes</h2>
+<ul>
+<li>Users must be logged in to access the goal creation page</li>
+<li>All parameters are case-sensitive</li>
+<li>Goal names are converted to lowercase automatically</li>
+<li>The preview screen allows final review before creating the goal</li>
+<li>Invalid parameter combinations return descriptive JSON errors</li>
+<li>Integration types (fitbit, garmin, etc.) redirect to their respective setup pages</li>
+</ul>
+
+<hr>
+<h2 id='see-also'>See Also</h2>
+<ul>
+<li><a href="https://api.beeminder.com">Beeminder API Documentation</a></li>
+<li><a href="https://api.beeminder.com/#post-goals">Goal Creation API Endpoint</a> - For programmatic goal creation</li>
+<li><a href="https://help.beeminder.com/article/11-goal-types">Goal Types Reference</a></li>
+</ul>
