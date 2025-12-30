@@ -1004,10 +1004,87 @@ None
 
 The updated [Goal](#goal) object, or an error if the goal is not red.
 
+
+<h2 id="ratchet">Ratchet a goal</h2>
+
+> Example
+```shell
+  # Ratchet a do-more goal down to 2 days of safety buffer
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json \
+    -d auth_token=abc123 \
+    -d newsafety=2
+
+  # Ratchet a do-less goal down to 3 units of hard cap
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/junkfood/ratchet.json \
+    -d auth_token=abc123 \
+    -d newsafety=3
+
+  # Ratchet to beemergency (requires beemergency=True for safety)
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json \
+    -d auth_token=abc123 \
+    -d newsafety=0 \
+    -d beemergency=True
+```
+
+```json
+  // Example success:
+  // updated goal object
+  { "slug": "exercise",                       
+    "goal_type": "hustler",                    
+    "svg_url": "http://static.beeminder.com/alice+exercise.svg",
+    "graph_url": "http://static.beeminder.com/alice+exercise.png",
+    "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
+    "goaldate": null,                 
+    "goalval": 100,                         
+    "rate": 1,
+    "safebuf": 2,
+    ...
+    "losedate": 1358524800 }
+
+  // Example error:
+  {"errors": "newsafety cannot exceed 5"}
+  {"errors": "Ratcheting to 0 days of buffer requires beemergency=True on the API call"}
+  {"errors": "Goal cannot be ratcheted (may be archived, ended, or have no buffer)"}
+```
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/ratchet.json`
+
+Ratchet down the goal by reducing the safety buffer (for do-more goals) or hard cap (for do-less goals).
+This moves the bright red line (yellow brick road) closer to your current data, making the goal harder.
+
+Ratcheting is useful when you have built up a large safety buffer and want to commit to maintaining your rate more consistently, or when you want to increase the pressure on yourself to meet your goal.
+
+**Important differences by goal type:**
+
+* **Do More / Odometer / Gain Weight goals**: `newsafety` represents the number of **days of safety buffer** you want to ratchet down to. For example, `newsafety=2` means you'll have 2 days of buffer after ratcheting.
+
+* **Do Less / Whittle Down goals**: `newsafety` represents the **hard cap value in goal units** (e.g., cigarettes, dollars, etc.) that you want to ratchet down to. For example, if your current hard cap is 10 cigarettes and you pass `newsafety=5`, you'll have a hard cap of 5 cigarettes.
+
+### Parameters
+
+* `newsafety` (number, required): Target safety buffer/hard cap to ratchet down to. Must be between 0 and the current maximum ratchetable amount. The meaning depends on goal type (see above).
+* \[`beemergency`\] (boolean or string): Required when `newsafety=0`. Must be `true`, `"true"`, or `"True"`. This is a safety mechanism to prevent accidentally ratcheting to beemergency (zero days of buffer or zero hard cap).
+
+### Returns
+
+The updated [Goal](#goal) object.
+
+### Errors
+
+* "newsafety parameter is required" - Missing required parameter
+* "newsafety must be a number" - Invalid parameter type
+* "newsafety cannot be negative" - Negative value not allowed
+* "newsafety cannot exceed X" - Requested value exceeds maximum ratchetable amount
+* "Ratcheting to 0 days of buffer requires beemergency=True on the API call" - Safety parameter missing for zero ratchet
+* "Goal cannot be ratcheted (may be archived, ended, or have no buffer)" - Goal is not in a ratchetable state
+* "Failed to ratchet goal" - Ratchet operation failed
+
 [Back to top](#)
 
 
-
+<h1 id="datapoint">Datapoint Resource</h1>
 <h1 id="datapoint">Datapoint Resource</h1>
 
 A Datapoint consists of a timestamp and a value, an optional comment, and meta information.
