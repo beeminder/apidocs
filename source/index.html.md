@@ -34,7 +34,7 @@ In case you're here to automate adding data to Beeminder, there's a good chance
 we've got you covered with our 
 [Zapier integration](http://beeminder.com/zapier "Zapier is a service like IFTTT that connects hundreds of disparate webservices. In the case of Beeminder you can create triggers in other webservices that automatically cause data to be added to Beeminder graphs.")
 or our
-[IFTTT integration](http://ifthisMINDthat.com "IFTTT = If This Then That").
+[IFTTT integration](https://www.beeminder.com/ifttt "IFTTT = If This Then That").
 
 The
 [tech category of our forum](http://forum.beeminder.com/c/tech "Yay Discourse.org!")
