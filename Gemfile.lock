@@ -11,6 +11,8 @@ GEM
     autoprefixer-rails (6.7.7.2)
       execjs
     backports (3.24.1)
+    base64 (0.3.0)
+    bigdecimal (4.0.1)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -18,6 +20,7 @@ GEM
     concurrent-ruby (1.2.2)
     contracts (0.16.1)
     dotenv (2.8.1)
+    drb (2.2.3)
     erubis (2.7.0)
     execjs (2.9.1)
     fast_blank (1.0.1)
@@ -79,8 +82,11 @@ GEM
     middleman-syntax (3.0.0)
       middleman-core (>= 3.2)
       rouge (~> 2.0)
+    mini_portile2 (2.8.9)
     minitest (5.20.0)
-    nokogiri (1.15.5-x86_64-darwin)
+    mutex_m (0.3.0)
+    nokogiri (1.15.5)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     padrino-helpers (0.15.3)
       i18n (>= 0.6.7, < 2)
@@ -121,15 +127,20 @@ GEM
     webrick (1.8.1)
 
 PLATFORMS
+  arm64-darwin-24
   x86_64-darwin-21
   x86_64-darwin-23
 
 DEPENDENCIES
+  base64
+  bigdecimal
+  drb
   haml (>= 4.0.5, < 6.0)
   middleman (> 4.2.1)
   middleman-autoprefixer (~> 2.7.0)
   middleman-sprockets (~> 4.1.0)
   middleman-syntax (~> 3.0.0)
+  mutex_m
   nokogiri (~> 1.15)
   redcarpet (~> 3.4.0)
   rouge (~> 2.0.5)

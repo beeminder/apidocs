@@ -13,3 +13,10 @@ gem 'redcarpet', '~> 3.4.0'
 gem 'nokogiri', '~> 1.15' 
 
 gem "sass", "~> 3.4"
+
+# Claude added the following:
+# Required for Ruby 3.4+ (removed from stdlib)
+gem "bigdecimal"
+gem "mutex_m"
+gem "drb"
+gem "base64"
