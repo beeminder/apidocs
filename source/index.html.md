@@ -525,11 +525,20 @@ Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots 
 
 If you just want the dot color, here's how to infer it from `safebuf` (see code in sidebar).
 
+```javascript
+colorkey = (safebuf < 1 ? "red"    :
+            safebuf < 2 ? "orange" :
+            safebuf < 3 ? "blue"   : 
+            safebuf < 7 ? "green"  : 
+                          "darkgreen")
 ```
-color = (safebuf < 1 ? "red"    :
-         safebuf < 2 ? "orange" :
-         safebuf < 3 ? "blue"   : 
-         safebuf < 7 ? "green"  : "gray")
+
+```javascript
+colorhex = (safebuf < 1 ? "#ff0000" : // Red for beemergencies
+            safebuf < 2 ? "#ffa500" : // Orange for 1 safe day
+            safebuf < 3 ? "#3f3fff" : // Blue for 2 safe days
+            safebuf < 7 ? "#00aa00" : // Green for 3-6 safe days
+                          "#228B22")  // Dark green Grayson dots, 7+ safe days
 ```
 
 Finally, the way to tell if a goal has finished successfully is `now >= goaldate && goaldate < losedate`.
