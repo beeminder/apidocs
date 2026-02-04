@@ -767,6 +767,8 @@ Allows third-party apps to send the user to a specific part of the website witho
 <li><code>delta</code> (number): Distance from the bright red line to today&#39;s datapoint (<code>curval</code>).</li>
 <li><code>delta_text</code> (string): Deprecated.</li>
 <li><code>safebuf</code> (number): The integer number of safe days. If it&#39;s a beemergency this will be zero.</li>
+<li><code>colorkey</code> (string): One of {red, orange, blue, green, dkgreen, gray} indicating the amount of safety buffer (see below).</li>
+<li><code>colorhex</code> (string): The RGB color corresponding to <code>colorkey</code>.</li>
 <li><code>safebump</code> (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.</li>
 <li><code>autoratchet</code> (number): The goal&#39;s autoratchet setting. If it&#39;s not set or they don&#39;t have permission to autoratchet, its value will be nil. This represents the maximum number of days of safety buffer the goal is allowed to accrue, or in the case of a Do-Less goal, the max buffer in terms of the goal&#39;s units. Read-only. </li>
 <li><code>id</code> (string of hex digits): We prefer using user/slug as the goal identifier, however, since we began allowing users to change slugs, this id is useful!</li>
@@ -922,7 +924,8 @@ The following table lists what those attributes are.</p>
 Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots the cumulative total of your metric, such as total cigarettes smoked. So even a quit-smoking goal will slope up (dir&gt;0). Just that it will slope up less and less steeply as you wean yourself. When you actually quit, the slope will be zero. That's why "WEEN" goals are sloping up but good side is down. The opposite case &mdash; sloping down but good side's up &mdash; is called "RASH" and is rarely used. It's for beeminding a number that you want to go down slowly. Maybe cigarettes remaining in a carton that you want to be your last, or bottles of fresh water remaining post-apocalypse &mdash; someday this goal type will be useful!
 </aside>
 
-<p>If you just want the dot color, here&#39;s how to infer it from <code>safebuf</code> (see code in sidebar).</p>
+<p>Note that <code>colorkey</code> and <code>colorhex</code> can be inferred from <code>safebuf</code> roughly according to the code in the sidebar.
+There&#39;s also &quot;gray&quot; as a possible color in case of an error preventing us from generating the graph.</p>
 <pre class="highlight javascript tab-javascript"><code><span class="nx">colorkey</span> <span class="o">=</span> <span class="p">(</span><span class="nx">safebuf</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">?</span> <span class="s2">"red"</span>    <span class="p">:</span>
             <span class="nx">safebuf</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="p">?</span> <span class="s2">"orange"</span> <span class="p">:</span>
             <span class="nx">safebuf</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">?</span> <span class="s2">"blue"</span>   <span class="p">:</span> 
