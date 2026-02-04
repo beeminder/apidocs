@@ -461,6 +461,8 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `delta` (number): Distance from the bright red line to today's datapoint (`curval`).
 * `delta_text` (string): Deprecated.
 * `safebuf` (number): The integer number of safe days. If it's a beemergency this will be zero.
+* `colorkey` (string): One of {red, orange, blue, green, dkgreen, gray} indicating the amount of safety buffer (see below).
+* `colorhex` (string): The RGB color corresponding to `colorkey`.
 * `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
 * `autoratchet` (number): The goal's autoratchet setting. If it's not set or they don't have permission to autoratchet, its value will be nil. This represents the maximum number of days of safety buffer the goal is allowed to accrue, or in the case of a Do-Less goal, the max buffer in terms of the goal's units. Read-only. 
 * `id` (string of hex digits): We prefer using user/slug as the goal identifier, however, since we began allowing users to change slugs, this id is useful!
@@ -523,7 +525,8 @@ The `dir` parameter, for which direction the bright red line is expected to go, 
 Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots the cumulative total of your metric, such as total cigarettes smoked. So even a quit-smoking goal will slope up (dir&gt;0). Just that it will slope up less and less steeply as you wean yourself. When you actually quit, the slope will be zero. That's why "WEEN" goals are sloping up but good side is down. The opposite case &mdash; sloping down but good side's up &mdash; is called "RASH" and is rarely used. It's for beeminding a number that you want to go down slowly. Maybe cigarettes remaining in a carton that you want to be your last, or bottles of fresh water remaining post-apocalypse &mdash; someday this goal type will be useful!
 </aside>
 
-If you just want the dot color, here's how to infer it from `safebuf` (see code in sidebar).
+Note that `colorkey` and `colorhex` can be inferred from `safebuf` roughly according to the code in the sidebar.
+There's also "gray" as a possible color in case of an error preventing us from generating the graph.
 
 ```javascript
 colorkey = (safebuf < 1 ? "red"    :
