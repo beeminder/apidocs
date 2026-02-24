@@ -292,6 +292,9 @@
                   <li>
                     <a href="#unclebutton" class="toc-h2 toc-link" data-title="Goal Resource">Call "Uncle" (i.e. instant derail)</a>
                   </li>
+                  <li>
+                    <a href="#ratchet" class="toc-h2 toc-link" data-title="Goal Resource">Ratchet a goal</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1314,6 +1317,79 @@ That&#39;s what this endpoint is for.</p>
 <h3 id='returns-12'>Returns</h3>
 <p>The updated <a href="#goal">Goal</a> object, or an error if the goal is not red.</p>
 
+<h2 id="ratchet">Ratchet a goal</h2>
+
+<blockquote>
+<p>Example
+```shell
+  # Ratchet a do-more goal down to 2 days of safety buffer
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json \
+    -d auth_token=abc123 \
+    -d newsafety=2</p>
+</blockquote>
+
+<p># Ratchet a do-less goal down to 3 units of hard cap
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/junkfood/ratchet.json \
+    -d auth_token=abc123 \
+    -d newsafety=3</p>
+
+<p># Ratchet to beemergency (requires beemergency=True for safety)
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json \
+    -d auth_token=abc123 \
+    -d newsafety=0 \
+    -d beemergency=True
+```</p>
+<pre class="highlight json tab-json"><code><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">success</span><span class="p">:</span><span class="w">
+  </span><span class="err">//</span><span class="w"> </span><span class="err">updated</span><span class="w"> </span><span class="err">goal</span><span class="w"> </span><span class="err">object</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exercise"</span><span class="p">,</span><span class="w">                       
+    </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">                    
+    </span><span class="s2">"svg_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.svg"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"graph_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise.png"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://static.beeminder.com/alice+exercise-thumb.png"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"goaldate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">                 
+    </span><span class="s2">"goalval"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">                         
+    </span><span class="s2">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"safebuf"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+    </span><span class="s2">"losedate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1358524800</span><span class="w"> </span><span class="p">}</span><span class="w">
+
+  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">error</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"newsafety cannot exceed 5"</span><span class="p">}</span><span class="w">
+  </span><span class="p">{</span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ratcheting to 0 days of buffer requires beemergency=True on the API call"</span><span class="p">}</span><span class="w">
+  </span><span class="p">{</span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Goal cannot be ratcheted (may be archived, ended, or have no buffer)"</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-14'>HTTP Request</h3>
+<p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/ratchet.json</code></p>
+
+<p>Ratchet down the goal by reducing the safety buffer (for do-more goals) or hard cap (for do-less goals).
+This moves the bright red line (yellow brick road) closer to your current data, making the goal harder.</p>
+
+<p>Ratcheting is useful when you have built up a large safety buffer and want to commit to maintaining your rate more consistently, or when you want to increase the pressure on yourself to meet your goal.</p>
+
+<p><strong>Important differences by goal type:</strong></p>
+
+<ul>
+<li><p><strong>Do More / Odometer / Gain Weight goals</strong>: <code>newsafety</code> represents the number of <strong>days of safety buffer</strong> you want to ratchet down to. For example, <code>newsafety=2</code> means you&#39;ll have 2 days of buffer after ratcheting.</p></li>
+<li><p><strong>Do Less / Whittle Down goals</strong>: <code>newsafety</code> represents the <strong>hard cap value in goal units</strong> (e.g., cigarettes, dollars, etc.) that you want to ratchet down to. For example, if your current hard cap is 10 cigarettes and you pass <code>newsafety=5</code>, you&#39;ll have a hard cap of 5 cigarettes.</p></li>
+</ul>
+<h3 id='parameters-14'>Parameters</h3>
+<ul>
+<li><code>newsafety</code> (number, required): Target safety buffer/hard cap to ratchet down to. Must be between 0 and the current maximum ratchetable amount. The meaning depends on goal type (see above).</li>
+<li>[<code>beemergency</code>] (boolean or string): Required when <code>newsafety=0</code>. Must be <code>true</code>, <code>&quot;true&quot;</code>, or <code>&quot;True&quot;</code>. This is a safety mechanism to prevent accidentally ratcheting to beemergency (zero days of buffer or zero hard cap).</li>
+</ul>
+<h3 id='returns-13'>Returns</h3>
+<p>The updated <a href="#goal">Goal</a> object.</p>
+<h3 id='errors'>Errors</h3>
+<ul>
+<li>&quot;newsafety parameter is required&quot; - Missing required parameter</li>
+<li>&quot;newsafety must be a number&quot; - Invalid parameter type</li>
+<li>&quot;newsafety cannot be negative&quot; - Negative value not allowed</li>
+<li>&quot;newsafety cannot exceed X&quot; - Requested value exceeds maximum ratchetable amount</li>
+<li>&quot;Ratcheting to 0 days of buffer requires beemergency=True on the API call&quot; - Safety parameter missing for zero ratchet</li>
+<li>&quot;Goal cannot be ratched because it is non-monotonic in the next N days&quot; - Goal is not in a ratchetable state</li>
+<li>&quot;Goal cannot be ratcheted (may be archived, ended, or have no buffer)&quot; - Goal is not in a ratchetable state</li>
+<li>&quot;Failed to ratchet goal&quot; - Ratchet operation failed</li>
+</ul>
+
 <p><a href="#">Back to top</a></p>
 
 <h1 id="datapoint">Datapoint Resource</h1>
@@ -1344,18 +1420,18 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
 <pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token<span class="o">=</span>abc123
 </code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">[{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1234567890</span><span class="p">,</span><span class="w"> </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="s2">"20090213"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="s2">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"a"</span><span class="p">},</span><span class="w">
    </span><span class="p">{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1234567891</span><span class="p">,</span><span class="w"> </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="s2">"20090214"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="s2">"comment"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"b"</span><span class="p">}]</span><span class="w">
-</span></code></pre><h3 id='http-request-14'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-15'>HTTP Request</h3>
 <p><code>GET /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints.json</code></p>
 
 <p>Get the list of datapoints for user <em>u</em>&#39;s goal <em>g</em> &mdash; beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-14'>Parameters</h3>
+<h3 id='parameters-15'>Parameters</h3>
 <ul>
 <li>[<code>sort</code>] (string): Which attribute to sort on, descending. Defaults to <code>id</code> if none given.</li>
 <li>[<code>count</code>] (integer): Limit results to count number of datapoints. Must be non-negative. Defaults to all datapoints if parameter is missing. Ignored when <code>page</code> is specified.</li>
 <li>[<code>page</code>] (integer): Used to paginate results, 1-indexed, meaning page 1 is the first page.</li>
 <li>[<code>per</code>] (integer): Number of results per page. Default 25. Ignored without <code>page</code> parameter. Must be non-negative.</li>
 </ul>
-<h3 id='returns-13'>Returns</h3>
+<h3 id='returns-14'>Returns</h3>
 <p>The list of <a href="#datapoint">Datapoint</a> objects.</p>
 
 <h2 id="postdata">Create a datapoint</h2>
@@ -1374,11 +1450,11 @@ A Datapoint belongs to a <a href="#goal">Goal</a>, which has many Datapoints.</p
     </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sweat a lot today"</span><span class="p">,</span><span class="w">   
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4f9dd9fd86f22478d3000008"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475925"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-15'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-16'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints.json</code></p>
 
 <p>Add a new datapoint to user <em>u</em>&#39;s goal <em>g</em> &mdash; beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-15'>Parameters</h3>
+<h3 id='parameters-16'>Parameters</h3>
 <ul>
 <li><code>value</code> (number)<br></li>
 <li>[<code>timestamp</code>] (number). Defaults to &quot;now&quot; if none is passed in, or the existing timestamp if the datapoint is being updated rather than created (see <code>requestid</code> below).</li>
@@ -1393,7 +1469,7 @@ If <code>requestid</code> is included and the datapoint differs from the existin
 If no datapoint with the requestid exists then the datapoint is simply created.
 In other words, this is an upsert endpoint and requestid is an idempotency key.</li>
 </ul>
-<h3 id='returns-14'>Returns</h3>
+<h3 id='returns-15'>Returns</h3>
 <p>The updated <a href="#datapoint">Datapoint</a> object.</p>
 
 <h2 id="postdatas">Create multiple datapoints</h2>
@@ -1418,17 +1494,17 @@ In other words, this is an upsert endpoint and requestid is an idempotency key.<
       </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343491200</span><span class="p">,</span><span class="w">
       </span><span class="s2">"requestid"</span><span class="p">:</span><span class="s2">"abcd182475923"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span></code></pre><h3 id='http-request-16'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-17'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/create_all.json</code></p>
 
 <p>Create multiple new datapoints for beeminder.com/<em>u</em>/<em>g</em>.</p>
-<h3 id='parameters-16'>Parameters</h3>
+<h3 id='parameters-17'>Parameters</h3>
 <ul>
 <li><code>datapoints</code> (array of Datapoints):
 Each Datapoint should be a JSON object, and must include at minimum a <code>value</code>.
 Other parameters are the same as for the single-create method above.<br></li>
 </ul>
-<h3 id='returns-15'>Returns</h3>
+<h3 id='returns-16'>Returns</h3>
 <p>A list of successfully created <a href="#datapoint">Datapoints</a>. 
 Or, in the case of any errors, you will receive an object with two lists, <code>successes</code>, and <code>errors</code>.</p>
 
@@ -1446,17 +1522,17 @@ Or, in the case of any errors, you will receive an object with two lists, <code>
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
     </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-17'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-18'>HTTP Request</h3>
 <p><code>PUT /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/</code><em>id</em><code>.json</code></p>
 
 <p>Update the datapoint with ID <em>id</em> for user <em>u</em>&#39;s goal <em>g</em> (beeminder.com/<em>u</em>/<em>g</em>).</p>
-<h3 id='parameters-17'>Parameters</h3>
+<h3 id='parameters-18'>Parameters</h3>
 <ul>
 <li>[<code>timestamp</code>] (number)</li>
 <li>[<code>value</code>] (number)</li>
 <li>[<code>comment</code>] (string)</li>
 </ul>
-<h3 id='returns-16'>Returns</h3>
+<h3 id='returns-17'>Returns</h3>
 <p>The updated <a href="#datapoint">Datapoint</a> object.</p>
 
 <h2 id="deletedata">Delete a datapoint</h2>
@@ -1471,13 +1547,13 @@ Or, in the case of any errors, you will receive an object with two lists, <code>
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577600</span><span class="p">,</span><span class="w">
     </span><span class="s2">"daystamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20120729"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1343577609</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-18'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-19'>HTTP Request</h3>
 <p><code>DELETE /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/datapoints/</code><em>id</em><code>.json</code></p>
 
 <p>Delete the datapoint with ID <em>id</em> for user <em>u</em>&#39;s goal <em>g</em> (beeminder.com/<em>u</em>/<em>g</em>).</p>
-<h3 id='parameters-18'>Parameters</h3>
+<h3 id='parameters-19'>Parameters</h3>
 <p>None.</p>
-<h3 id='returns-17'>Returns</h3>
+<h3 id='returns-18'>Returns</h3>
 <p>The deleted <a href="#datapoint">Datapoint</a> object.</p>
 
 <p><a href="#">Back to top</a></p>
@@ -1511,18 +1587,18 @@ A <code>Charge</code> object has the following attributes:</p>
     </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
     </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I'm not worthy; charge myself $10"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alice"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-19'>HTTP request</h3>
+</span></code></pre><h3 id='http-request-20'>HTTP request</h3>
 <p><code>POST /charges</code></p>
 
 <p>Create a charge of a given amount and optionally add a note.</p>
-<h3 id='parameters-19'>Parameters</h3>
+<h3 id='parameters-20'>Parameters</h3>
 <ul>
 <li><code>user_id</code> (string): Username of the user who is getting charged.</li>
 <li><code>amount</code> (number): The amount to charge the user, in US dollars.  Minimum value is 1.00</li>
 <li><code>note</code> (string)</li>
 <li>[<code>dryrun</code>] (string): If passed, the Charge is not actually created, but the JSON for it is returned as if it were. Default: false.</li>
 </ul>
-<h3 id='returns-18'>Returns</h3>
+<h3 id='returns-19'>Returns</h3>
 <p>The Charge object, or an object with the error message(s) if the request was not successful.</p>
 
 <h2 id="goalcharge">Charge a goal</h2>
