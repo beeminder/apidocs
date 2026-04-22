@@ -998,6 +998,8 @@ The updated [Goal](#goal) object.
 
 `POST /users/`*u*`/goals/`*g*`/uncleme.json`
 
+USE AT YOUR OWN RISK. No lifeguard will be posted. 
+
 Call "Uncle" on a goal that is imminently going to derail (aka is in a beemergency, or "is red").
 Sometimes there's just no way you're going to complete a goal, despite it being in the red, and you'd rather just derail it now, pay the pledge, and get your post-derail-respite.
 That's what this endpoint is for.
@@ -1007,6 +1009,10 @@ Posting to this endpoint insta-derails the goal (stopping all alerts), charges y
 This endpoint will fail if the goal has more than 0 days of buffer. 
 
 This endpoint will charge you -- and all Groupies of the goal -- immediately for the derail.
+
+There are no takebacks, no undos, and no refunds.
+This *intentionally* and *immediately* derails the goal, so be careful. 
+
 
 ### Parameters
 
