@@ -1303,6 +1303,8 @@ The pledge will remain at the current amount.</p>
 </span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
 <p><code>POST /users/</code><em>u</em><code>/goals/</code><em>g</em><code>/uncleme.json</code></p>
 
+<p>USE AT YOUR OWN RISK. No lifeguard will be posted. </p>
+
 <p>Call &quot;Uncle&quot; on a goal that is imminently going to derail (aka is in a beemergency, or &quot;is red&quot;).
 Sometimes there&#39;s just no way you&#39;re going to complete a goal, despite it being in the red, and you&#39;d rather just derail it now, pay the pledge, and get your post-derail-respite.
 That&#39;s what this endpoint is for.</p>
@@ -1312,6 +1314,9 @@ That&#39;s what this endpoint is for.</p>
 <p>This endpoint will fail if the goal has more than 0 days of buffer. </p>
 
 <p>This endpoint will charge you -- and all Groupies of the goal -- immediately for the derail.</p>
+
+<p>There are no takebacks, no undos, and no refunds.
+This <em>intentionally</em> and <em>immediately</em> derails the goal, so be careful. </p>
 <h3 id='parameters-13'>Parameters</h3>
 <p>None</p>
 <h3 id='returns-12'>Returns</h3>
