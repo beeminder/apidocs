@@ -972,6 +972,7 @@ The updated [Goal](#goal) object.
 <h2 id="unclebutton">Call "Uncle" (i.e. instant derail)</h2>
 
 > Example
+
 ```shell
   curl https://www.beeminder.com/api/v1/users/alice/goals/blah/uncleme.json?auth_token=abc123
 ```
@@ -1026,6 +1027,7 @@ The updated [Goal](#goal) object, or an error if the goal is not red.
 <h2 id="ratchet">Ratchet a goal</h2>
 
 > Example
+
 ```shell
   # Ratchet a do-more goal down to 2 days of safety buffer
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json \
