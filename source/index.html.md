@@ -972,6 +972,7 @@ The updated [Goal](#goal) object.
 <h2 id="unclebutton">Call "Uncle" (i.e. instant derail)</h2>
 
 > Example
+
 ```shell
   curl https://www.beeminder.com/api/v1/users/alice/goals/blah/uncleme.json?auth_token=abc123
 ```
@@ -1026,13 +1027,15 @@ The updated [Goal](#goal) object, or an error if the goal is not red.
 <h2 id="ratchet">Ratchet a goal</h2>
 
 > Example
+
 ```shell
   # Ratchet a do-more goal down to 2 days of safety buffer
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json \
     -d auth_token=abc123 \
     -d newsafety=2
 
-  # Ratchet a do-less goal down to 3 units of hard cap
+  # Ratchet a do-less goal down to 3 *units* of safety buffer (distance below
+  # the bright red line)
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/junkfood/ratchet.json \
     -d auth_token=abc123 \
     -d newsafety=3
@@ -1078,12 +1081,16 @@ Ratcheting is useful when you have built up a large safety buffer and want to co
 
 * **Do More / Odometer / Gain Weight goals**: `newsafety` represents the number of **days of safety buffer** you want to ratchet down to. For example, `newsafety=2` means you'll have 2 days of buffer after ratcheting.
 
-* **Do Less / Whittle Down goals**: `newsafety` represents the **hard cap value in goal units** (e.g., cigarettes, dollars, etc.) that you want to ratchet down to. For example, if your current hard cap is 10 cigarettes and you pass `newsafety=5`, you'll have a hard cap of 5 cigarettes.
+* **Do Less / Whittle Down goals**: `newsafety` specifies the number of **units of safety buffer** you want to ratchet down to. Namely, the distance, as measured in the goal's units (e.g., cigarettes or dollars), between your current total and the bright red line. For example, if your current hard cap is +10 cigarettes and you pass `newsafety=5`, you'll have a hard cap of +5 cigarettes, aka 5 units of buffer before you derail. (Note that the number is relative to the bright red line, not the absolute hard-cap total.)
 
 ### Parameters
 
-* `newsafety` (number, required): Target safety buffer/hard cap to ratchet down to. Must be between 0 and the current maximum ratchetable amount. The meaning depends on goal type (see above).
+* `newsafety` (number, required): Target safety buffer to ratchet down to, given as days of buffer for do-more goals, or units of buffer for do-less goals. Must be between 0 and the current maximum ratchetable amount. The meaning depends on goal type (see above).
 * \[`beemergency`\] (boolean or string): Required when `newsafety=0`. Must be `true`, `"true"`, or `"True"`. This is a safety mechanism to prevent accidentally ratcheting to beemergency (zero days of buffer or zero hard cap).
+
+<aside class="notice">
+If the goal is currently on a flat spot (such as a scheduled break starting tomorrow), <code>newsafety</code> is clamped to a minimum of 1 day: ratcheting cannot push you into a beemergency while you're on a break. The request still returns <code>200</code> with the updated goal, but the resulting buffer may be larger than the <code>newsafety</code> you requested. In particular, <code>newsafety=0</code>, even with <code>beemergency=true</code>, would leave you with 1 day of buffer, not 0, when you're on flat spot. Ratchet again to further shorten the break.
+</aside>
 
 ### Returns
 
@@ -1096,7 +1103,7 @@ The updated [Goal](#goal) object.
 * "newsafety cannot be negative" - Negative value not allowed
 * "newsafety cannot exceed X" - Requested value exceeds maximum ratchetable amount
 * "Ratcheting to 0 days of buffer requires beemergency=True on the API call" - Safety parameter missing for zero ratchet
-* "Goal cannot be ratched because it is non-monotonic in the next N days" - Goal is not in a ratchetable state
+* "Goal cannot be ratcheted because it is non-monotonic in the next N days" - Goal is not in a ratchetable state
 * "Goal cannot be ratcheted (may be archived, ended, or have no buffer)" - Goal is not in a ratchetable state
 * "Failed to ratchet goal" - Ratchet operation failed
 
