@@ -487,6 +487,7 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).
 * `tmin` (string): Lower bound on x-axis; don't show data before this date; using yyyy-mm-dd date format. (In Graph Settings this is 'X-min')
 * `tmax` (string): Upper bound on x-axis; don't show data after this date; using yyyy-mm-dd date format. (In Graph Settings this is 'X-max')
 * `tags` (array): A list of the goal's tags.
+* `archivedate` (number): Unix timestamp (in seconds) of the date at which the goal will be archived. Null if already archived or not scheduled for archive. Date may be in the past of archival is due or in-flight.
 
 <em id="one-of-three">A note about rate, date, and val:</em> One of the three fields `goaldate`, `goalval`, and `rate` will return a null value.
 This indicates that the value is calculated based on the other two fields, as selected by the user.
@@ -1405,5 +1406,3 @@ You can configure Beeminder to remind you about goals that are about to derail v
 
 Beeminder will remind you via POST request to the URL you specify with a JSON body with all the attributes specified in the description of the
 [Goal Resource](#goal).
-
-
