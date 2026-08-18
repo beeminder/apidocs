@@ -796,6 +796,7 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).</li>
 <li><code>tmin</code> (string): Lower bound on x-axis; don&#39;t show data before this date; using yyyy-mm-dd date format. (In Graph Settings this is &#39;X-min&#39;)</li>
 <li><code>tmax</code> (string): Upper bound on x-axis; don&#39;t show data after this date; using yyyy-mm-dd date format. (In Graph Settings this is &#39;X-max&#39;)</li>
 <li><code>tags</code> (array): A list of the goal&#39;s tags.</li>
+<li><code>archivedate</code> (number): Unix timestamp (in seconds) of the date at which the goal will be archived. Null if already archived or not scheduled for archive. Date may be in the past of archival is due or in-flight.</li>
 </ul>
 
 <p><em id="one-of-three">A note about rate, date, and val:</em> One of the three fields <code>goaldate</code>, <code>goalval</code>, and <code>rate</code> will return a null value.
@@ -1280,12 +1281,10 @@ The pledge will remain at the current amount.</p>
 <h2 id="unclebutton">Call "Uncle" (i.e. instant derail)</h2>
 
 <blockquote>
-<p>Example
-<code>shell
-  curl https://www.beeminder.com/api/v1/users/alice/goals/blah/uncleme.json?auth_token=abc123
-</code></p>
+<p>Example</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">success</span><span class="p">:</span><span class="w">
+<pre class="highlight shell tab-shell"><code>  curl https://www.beeminder.com/api/v1/users/alice/goals/blah/uncleme.json?auth_token<span class="o">=</span>abc123
+</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">success</span><span class="p">:</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">updated</span><span class="w"> </span><span class="err">goal</span><span class="w"> </span><span class="err">object</span><span class="w">
   </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah"</span><span class="p">,</span><span class="w">                       
     </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">                    
@@ -1325,26 +1324,25 @@ This <em>intentionally</em> and <em>immediately</em> derails the goal, so be car
 <h2 id="ratchet">Ratchet a goal</h2>
 
 <blockquote>
-<p>Example
-```shell
-  # Ratchet a do-more goal down to 2 days of safety buffer
-  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json \
-    -d auth_token=abc123 \
-    -d newsafety=2</p>
+<p>Example</p>
 </blockquote>
+<pre class="highlight shell tab-shell"><code>  <span class="c"># Ratchet a do-more goal down to 2 days of safety buffer</span>
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json <span class="se">\</span>
+    -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
+    -d <span class="nv">newsafety</span><span class="o">=</span>2
 
-<p># Ratchet a do-less goal down to 3 units of hard cap
-  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/junkfood/ratchet.json \
-    -d auth_token=abc123 \
-    -d newsafety=3</p>
+  <span class="c"># Ratchet a do-less goal down to 3 *units* of safety buffer (distance below</span>
+  <span class="c"># the bright red line)</span>
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/junkfood/ratchet.json <span class="se">\</span>
+    -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
+    -d <span class="nv">newsafety</span><span class="o">=</span>3
 
-<p># Ratchet to beemergency (requires beemergency=True for safety)
-  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json \
-    -d auth_token=abc123 \
-    -d newsafety=0 \
-    -d beemergency=True
-```</p>
-<pre class="highlight json tab-json"><code><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">success</span><span class="p">:</span><span class="w">
+  <span class="c"># Ratchet to beemergency (requires beemergency=True for safety)</span>
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/exercise/ratchet.json <span class="se">\</span>
+    -d <span class="nv">auth_token</span><span class="o">=</span>abc123 <span class="se">\</span>
+    -d <span class="nv">newsafety</span><span class="o">=</span>0 <span class="se">\</span>
+    -d <span class="nv">beemergency</span><span class="o">=</span>True
+</code></pre><pre class="highlight json tab-json"><code><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">success</span><span class="p">:</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">updated</span><span class="w"> </span><span class="err">goal</span><span class="w"> </span><span class="err">object</span><span class="w">
   </span><span class="p">{</span><span class="w"> </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exercise"</span><span class="p">,</span><span class="w">                       
     </span><span class="s2">"goal_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hustler"</span><span class="p">,</span><span class="w">                    
@@ -1374,13 +1372,17 @@ This moves the bright red line (yellow brick road) closer to your current data, 
 
 <ul>
 <li><p><strong>Do More / Odometer / Gain Weight goals</strong>: <code>newsafety</code> represents the number of <strong>days of safety buffer</strong> you want to ratchet down to. For example, <code>newsafety=2</code> means you&#39;ll have 2 days of buffer after ratcheting.</p></li>
-<li><p><strong>Do Less / Whittle Down goals</strong>: <code>newsafety</code> represents the <strong>hard cap value in goal units</strong> (e.g., cigarettes, dollars, etc.) that you want to ratchet down to. For example, if your current hard cap is 10 cigarettes and you pass <code>newsafety=5</code>, you&#39;ll have a hard cap of 5 cigarettes.</p></li>
+<li><p><strong>Do Less / Whittle Down goals</strong>: <code>newsafety</code> specifies the number of <strong>units of safety buffer</strong> you want to ratchet down to. Namely, the distance, as measured in the goal&#39;s units (e.g., cigarettes or dollars), between your current total and the bright red line. For example, if your current hard cap is +10 cigarettes and you pass <code>newsafety=5</code>, you&#39;ll have a hard cap of +5 cigarettes, aka 5 units of buffer before you derail. (Note that the number is relative to the bright red line, not the absolute hard-cap total.)</p></li>
 </ul>
 <h3 id='parameters-14'>Parameters</h3>
 <ul>
-<li><code>newsafety</code> (number, required): Target safety buffer/hard cap to ratchet down to. Must be between 0 and the current maximum ratchetable amount. The meaning depends on goal type (see above).</li>
+<li><code>newsafety</code> (number, required): Target safety buffer to ratchet down to, given as days of buffer for do-more goals, or units of buffer for do-less goals. Must be between 0 and the current maximum ratchetable amount. The meaning depends on goal type (see above).</li>
 <li>[<code>beemergency</code>] (boolean or string): Required when <code>newsafety=0</code>. Must be <code>true</code>, <code>&quot;true&quot;</code>, or <code>&quot;True&quot;</code>. This is a safety mechanism to prevent accidentally ratcheting to beemergency (zero days of buffer or zero hard cap).</li>
 </ul>
+
+<aside class="notice">
+If the goal is currently on a flat spot (such as a scheduled break starting tomorrow), <code>newsafety</code> is clamped to a minimum of 1 day: ratcheting cannot push you into a beemergency while you're on a break. The request still returns <code>200</code> with the updated goal, but the resulting buffer may be larger than the <code>newsafety</code> you requested. In particular, <code>newsafety=0</code>, even with <code>beemergency=true</code>, would leave you with 1 day of buffer, not 0, when you're on flat spot. Ratchet again to further shorten the break.
+</aside>
 <h3 id='returns-13'>Returns</h3>
 <p>The updated <a href="#goal">Goal</a> object.</p>
 <h3 id='errors'>Errors</h3>
@@ -1390,7 +1392,7 @@ This moves the bright red line (yellow brick road) closer to your current data, 
 <li>&quot;newsafety cannot be negative&quot; - Negative value not allowed</li>
 <li>&quot;newsafety cannot exceed X&quot; - Requested value exceeds maximum ratchetable amount</li>
 <li>&quot;Ratcheting to 0 days of buffer requires beemergency=True on the API call&quot; - Safety parameter missing for zero ratchet</li>
-<li>&quot;Goal cannot be ratched because it is non-monotonic in the next N days&quot; - Goal is not in a ratchetable state</li>
+<li>&quot;Goal cannot be ratcheted because it is non-monotonic in the next N days&quot; - Goal is not in a ratchetable state</li>
 <li>&quot;Goal cannot be ratcheted (may be archived, ended, or have no buffer)&quot; - Goal is not in a ratchetable state</li>
 <li>&quot;Failed to ratchet goal&quot; - Ratchet operation failed</li>
 </ul>
