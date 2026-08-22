@@ -2,12 +2,13 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import { LEGACY_HASH_SHIM } from './src/legacy-anchors.js';
 import { remarkHeadingId } from './src/remark-heading-id.mjs';
+import { unified } from '@astrojs/markdown-remark';
 
 // Every user-facing label below is copied verbatim from the pre-migration docs
 // (page <h1>s and the Slate toc_footers). No new copy is introduced here.
 export default defineConfig({
   site: 'https://api.beeminder.com',
-  markdown: { remarkPlugins: [remarkHeadingId] },
+  markdown: { processor: unified({ remarkPlugins: [remarkHeadingId] }) },
   integrations: [
     starlight({
       title: 'Beeminder API Reference',

@@ -41,23 +41,47 @@ const sectioned = files => {
   const add = (k, w) => w.length && buckets.set(k, (buckets.get(k) ?? []).concat(w));
   for (const f of files) {
     let text = readFileSync(f, 'utf8');
-    let key = '(preamble)';
+    let key = '(preamble)'; let sub = ''; let inFence = false;
     const fm = /^---\n([\s\S]*?)\n---\n/.exec(text);
     if (fm) {                                   // post-split page: its title IS the section
-      key = (/^title:\s*(.*)$/m.exec(fm[1]) ?? [, key])[1].trim();
+      key = (/^title:\s*(.*)$/m.exec(fm[1])?.[1] ?? key).trim();
       text = text.slice(fm[0].length);
     }
     for (const line of text.split('\n')) {
       const h1 = /^# (.+)$/.exec(line) ?? /^<h1 id="[^"]*">(.*?)<\/h1>$/.exec(line);
       const h2 = /^## (.+?)(?:\s*\{#[\w-]+\})?$/.exec(line) ?? /^<h2 id="[^"]*">(.*?)<\/h2>$/.exec(line);
-      if (h1) { key = h1[1].trim(); continue; }  // the heading text itself names the bucket
-      if (h2) { key = h2[1].trim(); continue; }
-      add(key, words(line));
+      // h3+ also opens a bucket. Without it every "Attributes"/"HTTP Request"/"Parameters"/
+      // "Returns" under one endpoint pools together, and a default swapped between two
+      // parameters would leave the multiset identical and pass silently.
+      const h3 = /^#{3,6} (.+?)(?:\s*\{#[\w-]+\})?$/.exec(line) ?? /^<h([3-6]) id="[^"]*">(.*?)<\/h\1>$/.exec(line);
+      if (h1) { key = h1[1].trim(); sub = ''; continue; }  // the heading text names the bucket
+      if (h2) { key = h2[1].trim(); sub = ''; continue; }
+      if (h3) { sub = (h3[2] ?? h3[1]).trim(); continue; }
+      // Prose is bucketed tightly (h3), so a sentence or a default cannot migrate between
+      // Parameters and Returns unseen. Code samples are bucketed loosely (h2), because the
+      // migration deliberately moved them out of the endpoint preamble into the subsection
+      // they demonstrate -- a move that crosses h3 boundaries on purpose.
+      const fence = /^\s*```/.test(line);
+      if (fence) inFence = !inFence;
+      add(fence || inFence ? key : (sub ? `${key} > ${sub}` : key), words(line));
     }
   }
   for (const [k, v] of buckets) buckets.set(k, v.sort());
   return buckets;
 };
+
+// Two markup transformations deliberately move words between buckets, both committed and
+// described earlier on this branch: a "> Example authorization URL:" rail label became a
+// code-block title, and the datapoints_count example listings became fenced code instead
+// of loose paragraphs. Because fenced words bucket at h2 and prose at h3, each shows up
+// here as a matched pair. They are listed exactly rather than loosening the gate, so any
+// OTHER movement still fails.
+const EXPECTED = [
+  "+ [Client OAuth] Example URL: authorization",
+  "- [Client OAuth > 2. Send your users to the Beeminder authorization URL] Example URL: authorization",
+  "+ [Get information about a user] 1 1 1 1 1 1 1 1 1 12 12 13 14 14 15 15 16 16",
+  "- [Get information about a user > Parameters] 1 1 1 1 1 1 1 1 1 12 12 13 14 14 15 15 16 16",
+];
 
 const A = sectioned(OLD), B = sectioned(NEW);
 const total = m => [...m.values()].reduce((n, v) => n + v.length, 0);
@@ -72,6 +96,12 @@ for (const k of new Set([...A.keys(), ...B.keys()])) {
 }
 
 console.log(`old: ${total(A)} words in ${A.size} sections   new: ${total(B)} words in ${B.size} sections`);
-if (!diffs.length) { console.log('PASS: every section holds exactly the same words'); process.exit(0); }
-console.log('\nDifferences:\n' + diffs.join('\n'));
+const unexpected = diffs.filter(d => !EXPECTED.includes(d));
+const missing = EXPECTED.filter(e => !diffs.includes(e));
+if (!unexpected.length && !missing.length) {
+  console.log(`PASS: every section holds the same words (${EXPECTED.length / 2} declared markup moves)`);
+  process.exit(0);
+}
+if (unexpected.length) console.log('\nUnexpected differences:\n' + unexpected.join('\n'));
+if (missing.length) console.log('\nDeclared moves that no longer occur (stale whitelist):\n' + missing.join('\n'));
 process.exit(1);

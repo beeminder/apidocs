@@ -20,7 +20,7 @@ If you do find something that needs clarification or is just plain wrong, we'd l
 
 You're going to need:
 
- - **Node.js, version 20 or newer**
+ - **Node.js, version 22.12 or newer** (what Astro itself requires)
  - **pnpm** — `corepack enable` will install the version pinned in `package.json`.
 
 ### Getting Set Up

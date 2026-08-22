@@ -12,7 +12,7 @@ function visit(node) {
       const m = /^(.*?)\s*\{#([A-Za-z0-9_-]+)\}\s*$/s.exec(last.value);
       if (m) {
         last.value = m[1];
-        (node.data ??= {}).hProperties = { ...(node.data.hProperties ?? {}), id: m[2] };
+        (node.data ??= {}).hProperties = { ...node.data.hProperties, id: m[2] };
         if (last.value === '') node.children.pop();
       }
     }
