@@ -22,9 +22,10 @@ const words = (text) => text
   .map(l => l.replace(/^<h([2-6]) id="[^"]*">(.*?)<\/h\1>$/, '$2')
              .replace(/^#{2,6} (.*?)\s*\{#[A-Za-z0-9_-]+\}$/, '$1'))
   .map(l => l.replace(/^> ?/, ''))                      // blockquote markers: quoting is layout, not words
+  .map(l => l.replace(/<br\s*\/?>/gi, ''))               // <br> is presentational, same as a fence marker
   // Fence delimiters are structure, not words. Keep any title="..." text, since that is
   // where the old "> Examples" labels now live. Code *inside* fences still counts.
-  .map(l => /^```/.test(l) ? (/title="([^"]*)"/.exec(l)?.[1] ?? '') : l)
+  .map(l => /^\s*```/.test(l) ? (/title="([^"]*)"/.exec(l)?.[1] ?? '') : l)
   .join('\n')
   // Link targets are rewritten by design (single page -> many); collapse both forms to a
   // token so the gate compares words, not hrefs. \s* tolerates a stray space in the source.

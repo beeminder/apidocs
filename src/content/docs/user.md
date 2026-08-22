@@ -136,20 +136,24 @@ Default: false.
 Default: null, which will return all goals and datapoints.
 Send a number `n` to only recieve the `n` most recently added datapoints, sorted by `updated_at`.
 Note that the most recently added datapoint could have been a datapoint whose timestamp is well in the past and therefore before other datapoints in that respect.
-For example, my datapoints might look like:  
-<br>
-12 1  
-14 1  
-15 1  
-16 1  
-<br>
-If I go back and realize that I forgot to enter data on the 13th, the datapoint for the 13th will be sorted ahead of the one on the 16th:  
-<br>
-12 1  
-14 1  
-15 1  
-16 1  
-13 1  
+For example, my datapoints might look like:
+
+  ```
+  12 1
+  14 1
+  15 1
+  16 1
+  ```
+
+  If I go back and realize that I forgot to enter data on the 13th, the datapoint for the 13th will be sorted ahead of the one on the 16th:
+
+  ```
+  12 1
+  14 1
+  15 1
+  16 1
+  13 1
+  ```
 
 ### Returns
 
