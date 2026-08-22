@@ -159,9 +159,26 @@ You don't have to actually reach the goal value &mdash; staying on the right sid
 
 ## Get information about a goal {#getgoal}
 
+### HTTP Request
+
+`GET /users/`*u*`/goals/`*g*`.json`
+
+Gets goal details for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*.
+
 ```shell title="Examples"
   curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123&datapoints=true
 ```
+
+### Parameters
+
+* \[`datapoints`\] (boolean): Whether to send the goal's datapoints in the response. Default: `false`.
+* \[`emaciated`\] (boolean):
+If included the goal attributes called `road`, `roadall`, and `fullroad` will be stripped from the goal object. 
+Default: false.
+
+### Returns
+
+A [Goal](/goal/) object, possibly without the datapoints attribute.
 
 ```json
   { "slug": "weight",               
@@ -186,64 +203,17 @@ You don't have to actually reach the goal value &mdash; staying on the right sid
                     "id": "5f9d79fd86f33468d4"}]}
 
 ```
-
-### HTTP Request
-
-`GET /users/`*u*`/goals/`*g*`.json`
-
-Gets goal details for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*.
-
-### Parameters
-
-* \[`datapoints`\] (boolean): Whether to send the goal's datapoints in the response. Default: `false`.
-* \[`emaciated`\] (boolean):
-If included the goal attributes called `road`, `roadall`, and `fullroad` will be stripped from the goal object. 
-Default: false.
-
-### Returns
-
-A [Goal](/goal/) object, possibly without the datapoints attribute.
-
-
 ## Get all goals for a user {#getgoals}
-
-
-```shell title="Examples"
-  curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token=abc123
-```
-
-```json
-  [ { "slug": "gmailzero",
-      "title": "Inbox Zero",
-      "goal_type": "inboxer",
-      "svg_url": "http://static.beeminder.com/alice+gmailzero.svg",
-      "graph_url": "http://static.beeminder.com/alice+gmailzero.png",
-      "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",
-      "losedate": 1347519599,
-      "goaldate": 0,
-      "goalval": 25.0,
-      "rate": -0.5,
-      "updated_at": 1345774578,
-      "queued": false },
-    { "slug": "fitbit-me",
-      "title": "Never stop moving",
-      "goal_type": "hustler",
-      "svg_url": "http://static.beeminder.com/alice+fitbit-me.svg",
-      "graph_url": "http://static.beeminder.com/alice+fitbit-me.png",
-      "thumb_url": "http://static.beeminder.com/alice+fitbit-thumb.png",
-      "losedate": 1346482799,
-      "goaldate": 1349582400,
-      "goalval": null,
-      "rate": 8.0,
-      "updated_at": 1345771188,
-      "queued": false } ]
-```
 
 ### HTTP Request
 
 `GET /users/`*u*`/goals.json`
 
 Get user *u*'s list of goals.
+
+```shell title="Examples"
+  curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token=abc123
+```
 
 ### Parameters
 
@@ -258,12 +228,53 @@ Goals are sorted in descending order of urgency, i.e., increasing order of time 
 (There's actually a very tiny caveat to this involving the long-deprecated "sort threshold" parameter.
 If you don't know what that is then you can ignore this parenthetical!)
 
+```json
+  [ { "slug": "gmailzero",
+      "title": "Inbox Zero",
+      "goal_type": "inboxer",
+      "svg_url": "http://static.beeminder.com/alice+gmailzero.svg",
+      "graph_url": "http://static.beeminder.com/alice+gmailzero.png",
+      "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",
+      "losedate": 1347519599,
+      "goaldate": 0,
+      "goalval": 25.0,
+      "rate": -0.5,
+      "updated_at": 1345774578,
+      "queued": false },
+    { "slug": "fitbit-me",
+      "title": "Never stop moving",
+      "goal_type": "hustler",
+      "svg_url": "http://static.beeminder.com/alice+fitbit-me.svg",
+      "graph_url": "http://static.beeminder.com/alice+fitbit-me.png",
+      "thumb_url": "http://static.beeminder.com/alice+fitbit-thumb.png",
+      "losedate": 1346482799,
+      "goaldate": 1349582400,
+      "goalval": null,
+      "rate": 8.0,
+      "updated_at": 1345771188,
+      "queued": false } ]
+```
 ## Get archived goals for a user {#getarchivedgoals}
 
+### HTTP Request
+
+`GET /users/`*u*`/goals/archived.json`
+
+Get user *u*'s archived goals.
 
 ```shell title="Examples"
   curl https://www.beeminder.com/api/v1/users/alice/goals/archived.json?auth_token=abc123
 ```
+
+### Parameters
+
+* \[`emaciated`\] (boolean):
+If included the goal attributes called `road`, `roadall`, and `fullroad` will be stripped from the goal objects. 
+Default: false.
+
+### Returns
+
+A list of [Goal](/goal/) objects representing the user's archived goals.
 
 ```json
   [ { "slug": "gmailzero",
@@ -291,25 +302,13 @@ If you don't know what that is then you can ignore this parenthetical!)
       "updated_at": 1345771188,
       "queued": false } ]
 ```
+## Create a goal for a user {#creategoal}
 
 ### HTTP Request
 
-`GET /users/`*u*`/goals/archived.json`
+`POST /users/`*u*`/goals.json`
 
-Get user *u*'s archived goals.
-
-### Parameters
-
-* \[`emaciated`\] (boolean):
-If included the goal attributes called `road`, `roadall`, and `fullroad` will be stripped from the goal objects. 
-Default: false.
-
-### Returns
-
-A list of [Goal](/goal/) objects representing the user's archived goals.
-
-## Create a goal for a user {#creategoal}
-
+Create a new goal for user *u*.
 
 ```shell title="Examples"
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals.json \
@@ -322,27 +321,6 @@ A list of [Goal](/goal/) objects representing the user's archived goals.
     -d rate=5 \
     -d goalval=null
 ```
-
-```json
-  { "slug": "exercise",
-    "title": "Work Out More",
-    "goal_type": "hustler",
-    "svg_url": "http://static.beeminder.com/alice+exercise.svg",
-    "graph_url": "http://static.beeminder.com/alice+exercise.png",
-    "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
-    "losedate": 1447519599,
-    "goaldate": 1400000000,
-    "goalval": null,
-    "rate": 5,
-    "updated_at": 1345774578,
-    "queued": false }
-```
-
-### HTTP Request
-
-`POST /users/`*u*`/goals.json`
-
-Create a new goal for user *u*.
 
 ### Parameters
 
@@ -368,24 +346,13 @@ If you pass in your API client's registered name for the `datasource`, and your 
 
 The newly created [Goal](/goal/) object.
 
-
-## Update a goal for a user {#putgoal}
-
-```shell title="Examples"
-  curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/exercise.json \
-    -d auth_token=abc124 \
-    -d title=Work+Out+Even+More \
-    -d secret=true
-```
-
 ```json
   { "slug": "exercise",
-    "title": "Work Out Even More",
+    "title": "Work Out More",
     "goal_type": "hustler",
     "svg_url": "http://static.beeminder.com/alice+exercise.svg",
     "graph_url": "http://static.beeminder.com/alice+exercise.png",
     "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
-    "secret": true,
     "losedate": 1447519599,
     "goaldate": 1400000000,
     "goalval": null,
@@ -393,6 +360,7 @@ The newly created [Goal](/goal/) object.
     "updated_at": 1345774578,
     "queued": false }
 ```
+## Update a goal for a user {#putgoal}
 
 ### HTTP Request
 
@@ -401,6 +369,13 @@ The newly created [Goal](/goal/) object.
 Update user *u*'s goal with slug *g*.
 This is similar to the call to create a new goal, but the goal type (`goal_type`) cannot be changed.
 To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
+
+```shell title="Examples"
+  curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/exercise.json \
+    -d auth_token=abc124 \
+    -d title=Work+Out+Even+More \
+    -d secret=true
+```
 
 ### Parameters
 
@@ -427,16 +402,22 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 
 The updated [Goal](/goal/) object.
 
-
-## Force a fetch of autodata and graph refresh {#refresh}
-
-```shell title="Example Request"
-  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/refresh_graph.json?auth_token=abc123
-```
-
 ```json
-  true
+  { "slug": "exercise",
+    "title": "Work Out Even More",
+    "goal_type": "hustler",
+    "svg_url": "http://static.beeminder.com/alice+exercise.svg",
+    "graph_url": "http://static.beeminder.com/alice+exercise.png",
+    "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
+    "secret": true,
+    "losedate": 1447519599,
+    "goaldate": 1400000000,
+    "goalval": null,
+    "rate": 5,
+    "updated_at": 1345774578,
+    "queued": false }
 ```
+## Force a fetch of autodata and graph refresh {#refresh}
 
 ### HTTP Request
 
@@ -444,6 +425,10 @@ The updated [Goal](/goal/) object.
 
 Analagous to the refresh button on the goal page. Forces a refetch of autodata for goals with automatic data sources. Refreshes the graph image regardless.
 ***Please be extremely conservative with this endpoint!***
+
+```shell title="Example Request"
+  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/refresh_graph.json?auth_token=abc123
+```
 
 ### Parameters
 
@@ -454,9 +439,23 @@ None.
 This is an asynchronous operation, so this endpoint simply returns **true** if the goal was queued and **false** if not.
 It is up to you to watch for an updated graph image.
 
-
+```json
+  true
+```
 ## [deprecated] Update a yellow brick road aka bright red line {#dialroad}
 
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/dial_road.json`
+
+<aside class="notice">
+Note: the dial_road endpoint is deprecated in favor of
+<a href="#putgoal" title="on the goal update endpoint">roadall</a> which, despite its highly confusing state, is the future.
+</aside>
+
+Change the slope of the yellow brick road aka bright red line (starting after the one-week
+[Akrasia Horizon](http://blog.beeminder.com/dial ))
+for beeminder.com/*u*/*g*.
 
 ```shell
   // Example request
@@ -467,6 +466,18 @@ It is up to you to watch for an updated graph image.
     -d goalval=166 \
     -d goaldate=null
 ```
+
+### Parameters
+
+* `rate` (number or null)
+* `goaldate` (number or null)
+* `goalval` (number or null)
+
+Exactly two of `goaldate`, `goalval`, and `rate` should be specified &mdash; setting two implies the third.
+
+### Returns
+
+The updated [Goal](/goal/) object.
 
 ```json
   // Example result
@@ -482,33 +493,6 @@ It is up to you to watch for an updated graph image.
     "rate": -0.5,                           
     "losedate": 1358524800 }
 ```
-
-### HTTP Request
-
-`POST /users/`*u*`/goals/`*g*`/dial_road.json`
-
-<aside class="notice">
-Note: the dial_road endpoint is deprecated in favor of
-<a href="#putgoal" title="on the goal update endpoint">roadall</a> which, despite its highly confusing state, is the future.
-</aside>
-
-Change the slope of the yellow brick road aka bright red line (starting after the one-week
-[Akrasia Horizon](http://blog.beeminder.com/dial ))
-for beeminder.com/*u*/*g*.
-
-### Parameters
-
-* `rate` (number or null)
-* `goaldate` (number or null)
-* `goalval` (number or null)
-
-Exactly two of `goaldate`, `goalval`, and `rate` should be specified &mdash; setting two implies the third.
-
-### Returns
-
-The updated [Goal](/goal/) object.
-
-
 ## Short circuit a goal's pledge {#shortcircuit}
 
 ### HTTP Request
@@ -564,28 +548,6 @@ The updated [Goal](/goal/) object.
 
 ## Call "Uncle" (i.e. instant derail) {#unclebutton}
 
-```shell title="Example"
-  curl https://www.beeminder.com/api/v1/users/alice/goals/blah/uncleme.json?auth_token=abc123
-```
-
-```json
-  // Example success:
-  // updated goal object
-  { "slug": "blah",                       
-    "goal_type": "hustler",                    
-    "svg_url": "http://static.beeminder.com/alice+blah.svg",
-    "graph_url": "http://static.beeminder.com/alice+blah.png",
-    "thumb_url": "http://static.beeminder.com/alice+blah-thumb.png",
-    "goaldate": null,                 
-    "goalval": 166,                         
-    "rate": 0.5,                           
-    ...
-    "losedate": 1358524800 }
-
-  // Example error:
-  {"errors": "Can't uncle a goal that's not in the red."}
-```
-
 ### HTTP Request
 
 `POST /users/`*u*`/goals/`*g*`/uncleme.json`
@@ -605,6 +567,9 @@ This endpoint will charge you -- and all Groupies of the goal -- immediately for
 There are no takebacks, no undos, and no refunds.
 This *intentionally* and *immediately* derails the goal, so be careful. 
 
+```shell title="Example"
+  curl https://www.beeminder.com/api/v1/users/alice/goals/blah/uncleme.json?auth_token=abc123
+```
 
 ### Parameters
 
@@ -614,8 +579,39 @@ None
 
 The updated [Goal](/goal/) object, or an error if the goal is not red.
 
+```json
+  // Example success:
+  // updated goal object
+  { "slug": "blah",                       
+    "goal_type": "hustler",                    
+    "svg_url": "http://static.beeminder.com/alice+blah.svg",
+    "graph_url": "http://static.beeminder.com/alice+blah.png",
+    "thumb_url": "http://static.beeminder.com/alice+blah-thumb.png",
+    "goaldate": null,                 
+    "goalval": 166,                         
+    "rate": 0.5,                           
+    ...
+    "losedate": 1358524800 }
 
+  // Example error:
+  {"errors": "Can't uncle a goal that's not in the red."}
+```
 ## Ratchet a goal {#ratchet}
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/ratchet.json`
+
+Ratchet down the goal by reducing the safety buffer (for do-more goals) or hard cap (for do-less goals).
+This moves the bright red line (yellow brick road) closer to your current data, making the goal harder.
+
+Ratcheting is useful when you have built up a large safety buffer and want to commit to maintaining your rate more consistently, or when you want to increase the pressure on yourself to meet your goal.
+
+**Important differences by goal type:**
+
+* **Do More / Odometer / Gain Weight goals**: `newsafety` represents the number of **days of safety buffer** you want to ratchet down to. For example, `newsafety=2` means you'll have 2 days of buffer after ratcheting.
+
+* **Do Less / Whittle Down goals**: `newsafety` specifies the number of **units of safety buffer** you want to ratchet down to. Namely, the distance, as measured in the goal's units (e.g., cigarettes or dollars), between your current total and the bright red line. For example, if your current hard cap is +10 cigarettes and you pass `newsafety=5`, you'll have a hard cap of +5 cigarettes, aka 5 units of buffer before you derail. (Note that the number is relative to the bright red line, not the absolute hard-cap total.)
 
 ```shell title="Example"
   # Ratchet a do-more goal down to 2 days of safety buffer
@@ -635,6 +631,19 @@ The updated [Goal](/goal/) object, or an error if the goal is not red.
     -d newsafety=0 \
     -d beemergency=True
 ```
+
+### Parameters
+
+* `newsafety` (number, required): Target safety buffer to ratchet down to, given as days of buffer for do-more goals, or units of buffer for do-less goals. Must be between 0 and the current maximum ratchetable amount. The meaning depends on goal type (see above).
+* \[`beemergency`\] (boolean or string): Required when `newsafety=0`. Must be `true`, `"true"`, or `"True"`. This is a safety mechanism to prevent accidentally ratcheting to beemergency (zero days of buffer or zero hard cap).
+
+<aside class="notice">
+If the goal is currently on a flat spot (such as a scheduled break starting tomorrow), <code>newsafety</code> is clamped to a minimum of 1 day: ratcheting cannot push you into a beemergency while you're on a break. The request still returns <code>200</code> with the updated goal, but the resulting buffer may be larger than the <code>newsafety</code> you requested. In particular, <code>newsafety=0</code>, even with <code>beemergency=true</code>, would leave you with 1 day of buffer, not 0, when you're on flat spot. Ratchet again to further shorten the break.
+</aside>
+
+### Returns
+
+The updated [Goal](/goal/) object.
 
 ```json
   // Example success:
@@ -656,34 +665,6 @@ The updated [Goal](/goal/) object, or an error if the goal is not red.
   {"errors": "Ratcheting to 0 days of buffer requires beemergency=True on the API call"}
   {"errors": "Goal cannot be ratcheted (may be archived, ended, or have no buffer)"}
 ```
-
-### HTTP Request
-
-`POST /users/`*u*`/goals/`*g*`/ratchet.json`
-
-Ratchet down the goal by reducing the safety buffer (for do-more goals) or hard cap (for do-less goals).
-This moves the bright red line (yellow brick road) closer to your current data, making the goal harder.
-
-Ratcheting is useful when you have built up a large safety buffer and want to commit to maintaining your rate more consistently, or when you want to increase the pressure on yourself to meet your goal.
-
-**Important differences by goal type:**
-
-* **Do More / Odometer / Gain Weight goals**: `newsafety` represents the number of **days of safety buffer** you want to ratchet down to. For example, `newsafety=2` means you'll have 2 days of buffer after ratcheting.
-
-* **Do Less / Whittle Down goals**: `newsafety` specifies the number of **units of safety buffer** you want to ratchet down to. Namely, the distance, as measured in the goal's units (e.g., cigarettes or dollars), between your current total and the bright red line. For example, if your current hard cap is +10 cigarettes and you pass `newsafety=5`, you'll have a hard cap of +5 cigarettes, aka 5 units of buffer before you derail. (Note that the number is relative to the bright red line, not the absolute hard-cap total.)
-
-### Parameters
-
-* `newsafety` (number, required): Target safety buffer to ratchet down to, given as days of buffer for do-more goals, or units of buffer for do-less goals. Must be between 0 and the current maximum ratchetable amount. The meaning depends on goal type (see above).
-* \[`beemergency`\] (boolean or string): Required when `newsafety=0`. Must be `true`, `"true"`, or `"True"`. This is a safety mechanism to prevent accidentally ratcheting to beemergency (zero days of buffer or zero hard cap).
-
-<aside class="notice">
-If the goal is currently on a flat spot (such as a scheduled break starting tomorrow), <code>newsafety</code> is clamped to a minimum of 1 day: ratcheting cannot push you into a beemergency while you're on a break. The request still returns <code>200</code> with the updated goal, but the resulting buffer may be larger than the <code>newsafety</code> you requested. In particular, <code>newsafety=0</code>, even with <code>beemergency=true</code>, would leave you with 1 day of buffer, not 0, when you're on flat spot. Ratchet again to further shorten the break.
-</aside>
-
-### Returns
-
-The updated [Goal](/goal/) object.
 
 ### Errors
 

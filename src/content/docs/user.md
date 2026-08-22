@@ -26,6 +26,14 @@ Only returned if `diff_since` is sent.
 
 ## Get information about a user {#getuser}
 
+### HTTP Request
+
+`GET /users/`*u*`.json`
+
+Retrieves information and a list of goalnames for the user with username *u*.
+
+Since appending an `access_token` to the request uniquely identifies a user, you can alternatively make the request to /users/me.json (without the username).
+
 ```shell title="Examples"
   curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123
 
@@ -45,32 +53,6 @@ Only returned if `diff_since` is sent.
 ```shell
   curl https://www.beeminder.com/api/v1/users/alice.json?diff_since=1352561989&auth_token=abc123
 ```
-
-```json
-  { "username": "alice",
-    "timezone": "America/Los_Angeles",
-    "updated_at": 1343449880,                       
-    "goals": [ {"slug": "weight", ...,
-               "datapoints": [{"timestamp": 1325523600,    
-                    "value": 70.45,            
-                    "comment": "blah blah",     
-                    "id": "4f9dd9fd86f22478d3"},
-                   {"timestamp": 1325610000,
-                    "value": 70.85,
-                    "comment": "blah blah",
-                    "id": "5f9d79fd86f33468d4"}],
-               "title": "Weight Loss", ...},
-               { another goal }, ... ],
-    "deleted_goals": [{ "id": "519279fd86f33468ne"}, ... ] }
-```
-
-### HTTP Request
-
-`GET /users/`*u*`.json`
-
-Retrieves information and a list of goalnames for the user with username *u*.
-
-Since appending an `access_token` to the request uniquely identifies a user, you can alternatively make the request to /users/me.json (without the username).
 
 ### Parameters
 
@@ -166,12 +148,24 @@ If you store the returned value and, on your next call to this endpoint, the val
 
 Checking the timestamp is an order of magnitude faster than retrieving all the data, so it's definitely wise to use this approach.
 
-
-## Authenticate and redirect the user {#redirectuser}
-
-```shell title="Examples"
-  curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123&redirect_to_url=https%3A%2F%2Fwww.beeminder.com%2Fpledges
+```json
+  { "username": "alice",
+    "timezone": "America/Los_Angeles",
+    "updated_at": 1343449880,                       
+    "goals": [ {"slug": "weight", ...,
+               "datapoints": [{"timestamp": 1325523600,    
+                    "value": 70.45,            
+                    "comment": "blah blah",     
+                    "id": "4f9dd9fd86f22478d3"},
+                   {"timestamp": 1325610000,
+                    "value": 70.85,
+                    "comment": "blah blah",
+                    "id": "5f9d79fd86f33468d4"}],
+               "title": "Weight Loss", ...},
+               { another goal }, ... ],
+    "deleted_goals": [{ "id": "519279fd86f33468ne"}, ... ] }
 ```
+## Authenticate and redirect the user {#redirectuser}
 
 ### HTTP Request
 
@@ -179,6 +173,10 @@ Checking the timestamp is an order of magnitude faster than retrieving all the d
 
 Attempts to authenticate the user and if successful redirects to the given URL.
 Allows third-party apps to send the user to a specific part of the website without getting intercepted by a login screen, for doing things not available through the API.
+
+```shell title="Examples"
+  curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123&redirect_to_url=https%3A%2F%2Fwww.beeminder.com%2Fpledges
+```
 
 ### Parameters
 

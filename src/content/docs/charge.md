@@ -14,6 +14,12 @@ A `Charge` object has the following attributes:
 
 ## Create a charge {#postcharge}
 
+### HTTP request
+
+`POST /charges`
+
+Create a charge of a given amount and optionally add a note.
+
 ```shell title="Example request"
   curl -X POST 'https://www.beeminder.com/api/v1/charges.json' \
     -d auth_token=abc123 \
@@ -21,19 +27,6 @@ A `Charge` object has the following attributes:
     -d amount=10 \
     -d note=I%27m+not+worthy%3B+charge+myself+%2410 \
 ```
-
-```json title="Example response"
-  { "id": "5016fa9adad11576ad00000f",
-    "amount": 10,
-    "note": "I'm not worthy; charge myself $10",
-    "username": "alice" }
-```
-
-### HTTP request
-
-`POST /charges`
-
-Create a charge of a given amount and optionally add a note.
 
 ### Parameters
 
@@ -46,7 +39,12 @@ Create a charge of a given amount and optionally add a note.
 
 The Charge object, or an object with the error message(s) if the request was not successful.
 
-
+```json title="Example response"
+  { "id": "5016fa9adad11576ad00000f",
+    "amount": 10,
+    "note": "I'm not worthy; charge myself $10",
+    "username": "alice" }
+```
 ## Charge a goal {#goalcharge}
 
 You're probably thinking of calling Uncle on a goal that's about to derail to get it over with.

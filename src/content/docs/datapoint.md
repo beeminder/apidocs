@@ -24,20 +24,15 @@ A Datapoint belongs to a [Goal](/goal/), which has many Datapoints.
 
 ## Get all the datapoints {#dataall}
 
-```shell title="Examples"
-  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token=abc123
-```
-
-```json
-  [{"id":"1", "timestamp":1234567890, "daystamp":"20090213", "value":7, "comment":"", "updated_at":123, "requestid":"a"},
-   {"id":"2", "timestamp":1234567891, "daystamp":"20090214", "value":8, "comment":"", "updated_at":123, "requestid":"b"}]
-```
-
 ### HTTP Request
 
 `GET /users/`*u*`/goals/`*g*`/datapoints.json`
 
 Get the list of datapoints for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*.
+
+```shell title="Examples"
+  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token=abc123
+```
 
 ### Parameters
 
@@ -50,8 +45,17 @@ Get the list of datapoints for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*
 
 The list of [Datapoint](/datapoint/) objects.
 
-
+```json
+  [{"id":"1", "timestamp":1234567890, "daystamp":"20090213", "value":7, "comment":"", "updated_at":123, "requestid":"a"},
+   {"id":"2", "timestamp":1234567891, "daystamp":"20090214", "value":8, "comment":"", "updated_at":123, "requestid":"b"}]
+```
 ## Create a datapoint {#postdata}
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/datapoints.json`
+
+Add a new datapoint to user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*.
 
 ```shell title="Examples"
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json \
@@ -60,21 +64,6 @@ The list of [Datapoint](/datapoint/) objects.
     -d value=130.1 \
     -d comment=sweat+a+lot+today
 ```
-
-```json
-  { "timestamp": 1325523600,
-    "daystamp": "20120102",
-    "value": 130.1,         
-    "comment": "sweat a lot today",   
-    "id": "4f9dd9fd86f22478d3000008",
-    "requestid":"abcd182475925" }
-```
-
-### HTTP Request
-
-`POST /users/`*u*`/goals/`*g*`/datapoints.json`
-
-Add a new datapoint to user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*.
 
 ### Parameters
 
@@ -95,14 +84,38 @@ In other words, this is an upsert endpoint and requestid is an idempotency key.
 
 The updated [Datapoint](/datapoint/) object.
 
-
+```json
+  { "timestamp": 1325523600,
+    "daystamp": "20120102",
+    "value": 130.1,         
+    "comment": "sweat a lot today",   
+    "id": "4f9dd9fd86f22478d3000008",
+    "requestid":"abcd182475925" }
+```
 ## Create multiple datapoints {#postdatas}
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/datapoints/create_all.json`
+
+Create multiple new datapoints for beeminder.com/*u*/*g*.
 
 ```shell title="Examples"
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json \
     -d auth_token=abc123 \
     -d datapoints=[{"timestamp":1343577600,"value":220.6,"comment":"blah+blah", "requestid":"abcd182475929"}, {"timestamp":1343491200,"value":220.7, "requestid":"abcd182475930"}]
 ```
+
+### Parameters
+
+* `datapoints` (array of Datapoints):
+Each Datapoint should be a JSON object, and must include at minimum a `value`.
+Other parameters are the same as for the single-create method above.  
+
+### Returns
+
+A list of successfully created [Datapoints](/datapoint/). 
+Or, in the case of any errors, you will receive an object with two lists, `successes`, and `errors`.
 
 ```json
   [ { "id": "5016fa9adad11576ad00000f",
@@ -120,47 +133,19 @@ The updated [Datapoint](/datapoint/) object.
       "updated_at": 1343491200,
       "requestid":"abcd182475923" } ]
 ```
-
-### HTTP Request
-
-`POST /users/`*u*`/goals/`*g*`/datapoints/create_all.json`
-
-Create multiple new datapoints for beeminder.com/*u*/*g*.
-
-### Parameters
-
-* `datapoints` (array of Datapoints):
-Each Datapoint should be a JSON object, and must include at minimum a `value`.
-Other parameters are the same as for the single-create method above.  
-
-### Returns
-
-A list of successfully created [Datapoints](/datapoint/). 
-Or, in the case of any errors, you will receive an object with two lists, `successes`, and `errors`.
-
-
 ## Update a datapoint {#putdata}
-
-```shell title="Examples"
-  curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json \
-    -d auth_token=abc123 \
-    -d comment=a+real+comment
-```
-
-```json
-  { "id": "5016fa9adad11576ad00000f",
-    "value": 220.6,
-    "comment": "a real comment",
-    "timestamp": 1343577600,
-    "daystamp": "20120729",
-    "updated_at": 1343577609 }
-```
 
 ### HTTP Request
 
 `PUT /users/`*u*`/goals/`*g*`/datapoints/`*id*`.json`
 
 Update the datapoint with ID *id* for user *u*'s goal *g* (beeminder.com/*u*/*g*).
+
+```shell title="Examples"
+  curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json \
+    -d auth_token=abc123 \
+    -d comment=a+real+comment
+```
 
 ### Parameters
 
@@ -172,13 +157,6 @@ Update the datapoint with ID *id* for user *u*'s goal *g* (beeminder.com/*u*/*g*
 
 The updated [Datapoint](/datapoint/) object.
 
-
-## Delete a datapoint {#deletedata}
-
-```shell title="Examples"
-  curl -X DELETE https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json?auth_token=abc123
-```
-
 ```json
   { "id": "5016fa9adad11576ad00000f",
     "value": 220.6,
@@ -187,12 +165,17 @@ The updated [Datapoint](/datapoint/) object.
     "daystamp": "20120729",
     "updated_at": 1343577609 }
 ```
+## Delete a datapoint {#deletedata}
 
 ### HTTP Request
 
 `DELETE /users/`*u*`/goals/`*g*`/datapoints/`*id*`.json`
 
 Delete the datapoint with ID *id* for user *u*'s goal *g* (beeminder.com/*u*/*g*).
+
+```shell title="Examples"
+  curl -X DELETE https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json?auth_token=abc123
+```
 
 ### Parameters
 
@@ -206,5 +189,11 @@ The deleted [Datapoint](/datapoint/) object.
 
 [Back to top](#)
 
-
-
+```json
+  { "id": "5016fa9adad11576ad00000f",
+    "value": 220.6,
+    "comment": "a real comment",
+    "timestamp": 1343577600,
+    "daystamp": "20120729",
+    "updated_at": 1343577609 }
+```
