@@ -2,6 +2,7 @@
   "name": "beeminder-apidocs",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@10.6.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

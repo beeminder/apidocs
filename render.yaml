@@ -2,7 +2,7 @@ services:
   - type: web
     runtime: static
     name: apidocs
-    buildCommand: npm ci && npm run build
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
     staticPublishPath: dist
     domains:
       - api.beeminder.com

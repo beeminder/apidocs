@@ -21,6 +21,7 @@ If you do find something that needs clarification or is just plain wrong, we'd l
 You're going to need:
 
  - **Node.js, version 20 or newer**
+ - **pnpm** — `corepack enable` will install the version pinned in `package.json`.
 
 ### Getting Set Up
 
@@ -30,8 +31,8 @@ You're going to need:
 4. Install and start the dev server:
 
 ```shell
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 You can now see the docs at http://localhost:4321. Whoa! That was fast!
@@ -53,7 +54,7 @@ static site defined in `render.yaml`. Pull requests get their own preview URL.
 Two checks guard the docs:
 
 ```shell
-npm run build && npm run check:anchors
+pnpm build && pnpm check:anchors
 ```
 
 `check:anchors` fails if any internal link, or any of the anchors the pre-2026 single-page
