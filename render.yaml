@@ -1,0 +1,10 @@
+services:
+  - type: web
+    runtime: static
+    name: apidocs
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    domains:
+      - api.beeminder.com
+    previews:
+      generation: automatic

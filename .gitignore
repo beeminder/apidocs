@@ -22,3 +22,8 @@ build/
 _yardoc
 doc/
 .idea/
+
+# Astro
+node_modules/
+dist/
+.astro/
