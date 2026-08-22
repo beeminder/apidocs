@@ -12,7 +12,7 @@ A `Charge` object has the following attributes:
 * `note` (string): An explanation of why the charge was made.
 * `username` (string): The Beeminder username of the user being charged.
 
-<h2 id="postcharge">Create a charge</h2>
+## Create a charge {#postcharge}
 
 ```shell title="Example request"
   curl -X POST 'https://www.beeminder.com/api/v1/charges.json' \
@@ -47,7 +47,7 @@ Create a charge of a given amount and optionally add a note.
 The Charge object, or an object with the error message(s) if the request was not successful.
 
 
-<h2 id="goalcharge">Charge a goal</h2>
+## Charge a goal {#goalcharge}
 
 You're probably thinking of calling Uncle on a goal that's about to derail to get it over with.
 See the [Uncle](/goal/#unclebutton) endpoint.

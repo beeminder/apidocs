@@ -27,3 +27,4 @@ doc/
 node_modules/
 dist/
 .astro/
+.playwright-cli/

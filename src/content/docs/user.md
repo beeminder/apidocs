@@ -24,7 +24,7 @@ An array of hashes, each with one key/value pair for the id of the deleted goal.
 Only returned if `diff_since` is sent.
 
 
-<h2 id="getuser">Get information about a user</h2>
+## Get information about a user {#getuser}
 
 ```shell title="Examples"
   curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123
@@ -163,7 +163,7 @@ If you store the returned value and, on your next call to this endpoint, the val
 Checking the timestamp is an order of magnitude faster than retrieving all the data, so it's definitely wise to use this approach.
 
 
-<h2 id="redirectuser">Authenticate and redirect the user</h2>
+## Authenticate and redirect the user {#redirectuser}
 
 ```shell title="Examples"
   curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123&redirect_to_url=https%3A%2F%2Fwww.beeminder.com%2Fpledges

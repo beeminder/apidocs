@@ -22,7 +22,7 @@ A Datapoint belongs to a [Goal](/goal/), which has many Datapoints.
 
 
 
-<h2 id="dataall">Get all the datapoints</h2>
+## Get all the datapoints {#dataall}
 
 ```shell title="Examples"
   curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token=abc123
@@ -51,7 +51,7 @@ Get the list of datapoints for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*
 The list of [Datapoint](/datapoint/) objects.
 
 
-<h2 id="postdata">Create a datapoint</h2>
+## Create a datapoint {#postdata}
 
 ```shell title="Examples"
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json \
@@ -96,7 +96,7 @@ In other words, this is an upsert endpoint and requestid is an idempotency key.
 The updated [Datapoint](/datapoint/) object.
 
 
-<h2 id="postdatas">Create multiple datapoints</h2>
+## Create multiple datapoints {#postdatas}
 
 ```shell title="Examples"
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json \
@@ -139,7 +139,7 @@ A list of successfully created [Datapoints](/datapoint/).
 Or, in the case of any errors, you will receive an object with two lists, `successes`, and `errors`.
 
 
-<h2 id="putdata">Update a datapoint</h2>
+## Update a datapoint {#putdata}
 
 ```shell title="Examples"
   curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json \
@@ -173,7 +173,7 @@ Update the datapoint with ID *id* for user *u*'s goal *g* (beeminder.com/*u*/*g*
 The updated [Datapoint](/datapoint/) object.
 
 
-<h2 id="deletedata">Delete a datapoint</h2>
+## Delete a datapoint {#deletedata}
 
 ```shell title="Examples"
   curl -X DELETE https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json?auth_token=abc123

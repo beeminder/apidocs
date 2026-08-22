@@ -157,7 +157,7 @@ You don't have to actually reach the goal value &mdash; staying on the right sid
 
 
 
-<h2 id="getgoal">Get information about a goal</h2>
+## Get information about a goal {#getgoal}
 
 ```shell title="Examples"
   curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123&datapoints=true
@@ -205,7 +205,7 @@ Default: false.
 A [Goal](/goal/) object, possibly without the datapoints attribute.
 
 
-<h2 id="getgoals">Get all goals for a user</h2>
+## Get all goals for a user {#getgoals}
 
 
 ```shell title="Examples"
@@ -258,7 +258,7 @@ Goals are sorted in descending order of urgency, i.e., increasing order of time 
 (There's actually a very tiny caveat to this involving the long-deprecated "sort threshold" parameter.
 If you don't know what that is then you can ignore this parenthetical!)
 
-<h2 id="getarchivedgoals">Get archived goals for a user</h2>
+## Get archived goals for a user {#getarchivedgoals}
 
 
 ```shell title="Examples"
@@ -308,7 +308,7 @@ Default: false.
 
 A list of [Goal](/goal/) objects representing the user's archived goals.
 
-<h2 id="creategoal">Create a goal for a user</h2>
+## Create a goal for a user {#creategoal}
 
 
 ```shell title="Examples"
@@ -369,7 +369,7 @@ If you pass in your API client's registered name for the `datasource`, and your 
 The newly created [Goal](/goal/) object.
 
 
-<h2 id="putgoal">Update a goal for a user</h2>
+## Update a goal for a user {#putgoal}
 
 ```shell title="Examples"
   curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/exercise.json \
@@ -428,7 +428,7 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 The updated [Goal](/goal/) object.
 
 
-<h2 id="refresh">Force a fetch of autodata and graph refresh</h2>
+## Force a fetch of autodata and graph refresh {#refresh}
 
 ```shell title="Example Request"
   curl https://www.beeminder.com/api/v1/users/alice/goals/weight/refresh_graph.json?auth_token=abc123
@@ -455,7 +455,7 @@ This is an asynchronous operation, so this endpoint simply returns **true** if t
 It is up to you to watch for an updated graph image.
 
 
-<h2 id="dialroad">[deprecated] Update a yellow brick road aka bright red line</h2>
+## [deprecated] Update a yellow brick road aka bright red line {#dialroad}
 
 
 ```shell
@@ -509,7 +509,7 @@ Exactly two of `goaldate`, `goalval`, and `rate` should be specified &mdash; set
 The updated [Goal](/goal/) object.
 
 
-<h2 id="shortcircuit">Short circuit a goal's pledge</h2>
+## Short circuit a goal's pledge {#shortcircuit}
 
 ### HTTP Request
 
@@ -526,7 +526,7 @@ None
 The updated [Goal](/goal/) object.
 
 
-<h2 id="stepdown">Step down a goal's pledge</h2>
+## Step down a goal's pledge {#stepdown}
 
 ### HTTP Request
 
@@ -544,7 +544,7 @@ None
 The updated [Goal](/goal/) object.
 
 
-<h2 id="cancelstepdown">Cancel a scheduled step down</h2>
+## Cancel a scheduled step down {#cancelstepdown}
 
 ### HTTP Request
 
@@ -562,7 +562,7 @@ None
 The updated [Goal](/goal/) object.
 
 
-<h2 id="unclebutton">Call "Uncle" (i.e. instant derail)</h2>
+## Call "Uncle" (i.e. instant derail) {#unclebutton}
 
 ```shell title="Example"
   curl https://www.beeminder.com/api/v1/users/alice/goals/blah/uncleme.json?auth_token=abc123
@@ -615,7 +615,7 @@ None
 The updated [Goal](/goal/) object, or an error if the goal is not red.
 
 
-<h2 id="ratchet">Ratchet a goal</h2>
+## Ratchet a goal {#ratchet}
 
 ```shell title="Example"
   # Ratchet a do-more goal down to 2 days of safety buffer

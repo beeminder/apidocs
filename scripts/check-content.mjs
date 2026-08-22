@@ -3,7 +3,7 @@
 // to a bare word stream and diffs them. Must be empty apart from the whitelist below.
 import { readFileSync, existsSync } from 'node:fs';
 
-const OLD = ['source/index.html.md', 'source/includes/_url_goal_creation.md', 'source/includes/_errors.md'];
+const OLD = (process.env.PREMIGRATION_DIR ? ['index.html.md','_url_goal_creation.md','_errors.md'].map(f => `${process.env.PREMIGRATION_DIR}/${f}`) : ['source/index.html.md', 'source/includes/_url_goal_creation.md', 'source/includes/_errors.md']);
 const NEW = ['index', 'authentication', 'user', 'goal', 'datapoint', 'charge', 'webhooks',
              'url-goal-creation', 'errors'].map(s => `src/content/docs/${s}.md`);
 
@@ -17,6 +17,10 @@ const words = (text) => text
   .split('\n')
   .filter(l => !/^<h1 id="[^"]*">.*<\/h1>$/.test(l))    // h1s that became frontmatter titles
   .filter(l => !/^# /.test(l))                          // markdown h1s, ditto
+  // Heading syntax changed (raw HTML <h2 id="x"> -> "## text {#x}") so the endpoint
+  // headings reach the table of contents. Reduce both forms to their text.
+  .map(l => l.replace(/^<h([2-6]) id="[^"]*">(.*?)<\/h\1>$/, '$2')
+             .replace(/^#{2,6} (.*?)\s*\{#[A-Za-z0-9_-]+\}$/, '$1'))
   .map(l => l.replace(/^> ?/, ''))                      // blockquote markers: quoting is layout, not words
   // Fence delimiters are structure, not words. Keep any title="..." text, since that is
   // where the old "> Examples" labels now live. Code *inside* fences still counts.
