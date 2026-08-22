@@ -26,3 +26,22 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - run: pnpm check:anchors
+
+  # Only humans write the API reference. This walks the PR's own commits and fails if an
+  # AI-agent-co-authored one changed the documentation text. PR-only: it needs the base
+  # branch to diff against, and merged history is deliberately never re-judged.
+  docs-authorship:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - run: git fetch --no-tags origin "$GITHUB_BASE_REF"
+        env:
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+      - run: node scripts/check-docs-authorship.mjs

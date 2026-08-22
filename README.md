@@ -51,16 +51,26 @@ Once you've made your changes, you can submit a pull request to beeminder/apidoc
 Merging to `master` deploys to https://api.beeminder.com automatically, via the Render
 static site defined in `render.yaml`. Pull requests get their own preview URL.
 
-Two checks guard the docs:
+Two checks run in CI on every pull request:
 
 ```shell
 pnpm build && pnpm check:anchors
+pnpm check:docs-authorship
 ```
 
 `check:anchors` fails if any internal link, or any of the anchors the pre-2026 single-page
 site exposed (`api.beeminder.com/#getgoal` and friends), stops resolving. Those legacy
 anchors are listed in `src/legacy-anchors.js`; the file explains why that list is
 hardcoded rather than generated.
+
+`check:docs-authorship` fails if an AI-agent-co-authored commit changed anything under
+`src/content/docs/`. Only humans write the API reference. An agent may change the site
+around the docs -- config, styles, build, the check scripts themselves -- but not what the
+docs say. If you hit this, review the wording yourself and re-author the commit under your
+own identity. (Mirrors `check:strings` in `beeminder/blog`.)
+
+Markdown under `src/content/docs/` is excluded from markdownlint on purpose, in
+`.markdownlint-cli2.jsonc` -- its formatting is load-bearing in ways a linter rewrites.
 
 
 

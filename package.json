@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check:content": "node scripts/check-content.mjs",
-    "check:anchors": "node scripts/check-anchors.mjs"
+    "check:anchors": "node scripts/check-anchors.mjs",
+    "check:docs-authorship": "node scripts/check-docs-authorship.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.4",
