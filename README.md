@@ -20,27 +20,24 @@ If you do find something that needs clarification or is just plain wrong, we'd l
 
 You're going to need:
 
- - **Linux or OS X** — Windows may work, but is unsupported.
- - **Ruby, version 2.2.5 or newer**
- - **Bundler** — If Ruby is already installed, but the `bundle` command doesn't work, just run `gem install bundler` in a terminal.
+ - **Node.js, version 20 or newer**
 
 ### Getting Set Up
 
 1. Fork this repository on Github.
 2. Clone *your forked repository* (not our original one) to your hard drive with `git clone https://github.com/YOURUSERNAME/apidocs.git`
 3. `cd apidocs`
-4. Initialize and start Slate. You can either do this locally, or with Vagrant:
+4. Install and start the dev server:
 
 ```shell
-# either run this to run locally
-bundle install
-bundle exec middleman server
-
-# OR run this to run with vagrant
-vagrant up
+npm install
+npm run dev
 ```
 
-You can now see the docs at http://localhost:4567. Whoa! That was fast!
+You can now see the docs at http://localhost:4321. Whoa! That was fast!
+
+The docs themselves are the Markdown files in `src/content/docs/`. Everything else is
+[Astro Starlight](https://starlight.astro.build) configuration.
 
 ### Submitting 
 
@@ -50,13 +47,19 @@ Once you've made your changes, you can submit a pull request to beeminder/apidoc
 
 (For beeminder/apidocs owners)
 
-1. Commit changes and push to the master branch at beeminder/apidocs (or accept / merge pull request) 
-2. Run ./deploy.sh 
+Merging to `master` deploys to https://api.beeminder.com automatically, via the Render
+static site defined in `render.yaml`. Pull requests get their own preview URL.
 
-* Do not touch the gh-pages branch
-* Double check if api.beeminder.com is still available.[1]
+Two checks guard the docs:
 
-[1] There was a problem where the custom domain setting was getting unset every time we deployed. It looks like I've successfully fixed it now, but if you check after deploy and the subdomain is broken (e.g. you get redirect to the github pages url) then go quickly into https://github.com/beeminder/apidocs/settings and re-add "api.beeminder.com" under 'Custom domain').
+```shell
+npm run build && npm run check:anchors
+```
+
+`check:anchors` fails if any internal link, or any of the anchors the pre-2026 single-page
+site exposed (`api.beeminder.com/#getgoal` and friends), stops resolving. Those legacy
+anchors are listed in `src/legacy-anchors.js`; the file explains why that list is
+hardcoded rather than generated.
 
 
 
@@ -65,9 +68,5 @@ Need Help? Found a bug?
 
 [Submit an issue](https://github.com/beeminder/slate/issues), or email support@beeminder.com if you need any help.
 
-
-<br>
-<br>
-<p align="center"><em>The Beeminder api docs are created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
 
 
