@@ -1,0 +1,23 @@
+services:
+  - type: web
+    runtime: static
+    name: apidocs
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    staticPublishPath: dist
+    domains:
+      - api.beeminder.com
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+    # Render's docs do not state whether PRs from forks build previews. The exposure if
+    # they do is small -- a static site with no secrets, on an onrender.com subdomain, from
+    # a diff a maintainer can see -- but the docs deliberately allow raw HTML, so a fork PR
+    # could execute script there. Worth confirming in the dashboard. To require a
+    # maintainer to opt in per PR instead, set generation to manual: previews then build
+    # only for PRs labelled render-preview or titled "[render preview]".
+    previews:
+      generation: automatic

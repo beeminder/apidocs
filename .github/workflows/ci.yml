@@ -1,0 +1,47 @@
+# check:anchors is the guard that makes the migration's promise enforceable: every anchor
+# the old single-page site exposed at api.beeminder.com/#<anchor> must still resolve. Its
+# whole value is running on every change, so that a renamed heading fails here rather than
+# as a 404 on somebody's decade-old inbound link.
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm check:anchors
+
+  # Only humans write the API reference. This walks the PR's own commits and fails if an
+  # AI-agent-co-authored one changed the documentation text. PR-only: it needs the base
+  # branch to diff against, and merged history is deliberately never re-judged.
+  docs-authorship:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - run: git fetch --no-tags origin "$GITHUB_BASE_REF"
+        env:
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+      - run: node scripts/check-docs-authorship.mjs

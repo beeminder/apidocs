@@ -1,0 +1,13 @@
+{
+  // The markdown in this repo is not source, it is Beeminder's documentation, imported
+  // verbatim from the previous Slate site. Its formatting is load-bearing in ways a
+  // linter cannot see: trailing double-spaces are hard line breaks, bare example URLs
+  // must render as text rather than links, and the goal_type sublist relies on "-"
+  // nesting under a "*" parent. Running markdownlint --fix over it silently rewrote all
+  // three. Lint the config and tooling, never the docs.
+  "ignores": [
+    "src/content/docs/**",
+    "README.md",
+    "node_modules/**"
+  ]
+}

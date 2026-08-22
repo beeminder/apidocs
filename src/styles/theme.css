@@ -1,0 +1,14 @@
+/* Beeminder brand yellow #FFCB08, sampled from the bee logo.
+   Dark theme maps link text to --sl-color-accent-high, light theme to --sl-color-accent,
+   so those two slots carry the AA burden. Brand yellow is 11.66:1 on Starlight's dark bg
+   but only 1.52:1 on white, so light mode uses the same hue darkened to #7A5D00 (6.19:1). */
+:root {
+  --sl-color-accent-low: #4a3800;
+  --sl-color-accent: #c79e00;
+  --sl-color-accent-high: #ffcb08;
+}
+:root[data-theme='light'] {
+  --sl-color-accent-low: #fff0bf;
+  --sl-color-accent: #7a5d00;
+  --sl-color-accent-high: #4a3800;
+}
