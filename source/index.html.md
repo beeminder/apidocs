@@ -434,7 +434,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `initval` (number): The y-value of the start of the bright red line.
 * `curday` (number): Unix timestamp (in seconds) of the end of the bright red line, i.e., the most recent (inferred) datapoint.
 * `curval` (number): The value of the most recent datapoint.
-* `currate` (number): The rate of the red line at time `curday`; if there's a rate change on that day, take the limit from the left.
+* `currate` (number): The rate of the red line at time `curday`; if there's a rate change on that day the value of `currate` appears to currently be the limit from the right. Howmever, do not count on this because we've lost the thread of which it should be -- right vs left. We're currently investigating (as of 2026-09-29). If you happen upon this notice and find it to be embarassingly out of date, please email us at support@beeminder.com to jog into finishing it.
 * `lastday` (number): Unix timestamp (in seconds) of the last (explicitly entered) datapoint.
 * `yaw` (number): Good side of the bright red line. I.e., the side of the line (+1/-1 = above/below) that makes you say "yay".
 * `dir` (number): Direction the bright red line is sloping, usually the same as yaw.
@@ -455,7 +455,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `maxflux` (Integer): Max daily fluctuation for weight goals. Used as an absolute buffer amount after a derail. Also shown on the graph as a thick guiding line.
 * `contract` (dictionary): Dictionary with two attributes. `amount` is the amount at risk on the contract, and `stepdown_at` is a Unix timestamp of when the contract is scheduled to revert to the next lowest pledge amount. `null` indicates that it is not scheduled to revert.
 * `road` (array): Array of tuples that can be used to construct the Bright Red Line (formerly "Yellow Brick Road"). This field is also known as the graph matrix. Each tuple specifies 2 out of 3 of \[`time`, `goal`, `rate`\]. To construct `road`, start with a known starting point (time, value) and then each row of the graph matrix specifies 2 out of 3 of {t,v,r} which gives the segment ending at time t. You can walk forward filling in the missing 1-out-of-3 from the (time, value) in the previous row.
-* `roadall` (array): Like `road` but with an additional initial row consisting of \[`initday`, `initval`, null\] and an additional final row consisting of \[`goaldate`, `goalval`, `rate`\].
+* `roadall` (array): Like `road` but with an additional initial row consisting of \[`initday`, `initval`, null\] and an additional final row consisting of \[`goaldate`, `goalval`, `rate`\], one of which will also be null, following the pattern of red line row formats.
 * `fullroad` (array): Like `roadall` but with the nulls filled in.
 * `rah` (number): Red line value (y-value of the bright red line) at the akrasia horizon (today plus one week).
 * `delta` (number): Distance from the bright red line to today's datapoint (`curval`).
@@ -464,7 +464,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `colorkey` (string): One of {red, orange, blue, green, dkgreen, gray} indicating the amount of safety buffer (see below).
 * `colorhex` (string): The RGB color corresponding to `colorkey`.
 * `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
-* `autoratchet` (number): The goal's autoratchet setting. If it's not set or they don't have permission to autoratchet, its value will be nil. This represents the maximum number of days of safety buffer the goal is allowed to accrue, or in the case of a Do-Less goal, the max buffer in terms of the goal's units. Read-only. 
+* `autoratchet` (number): The goal's autoratchet setting. If it's not set or they don't have permission to autoratchet, its value will be null. This represents the maximum number of days of safety buffer the goal is allowed to accrue, or in the case of a Do-Less goal, the max buffer in terms of the goal's units. Read-only. 
 * `id` (string of hex digits): We prefer using user/slug as the goal identifier, however, since we began allowing users to change slugs, this id is useful!
 * `callback_url` (string): Callback URL, as
 [discussed in the forum](http://forum.beeminder.com/t/webhook-callback-documentation/313 "In short: you can add a callback to your own server whenever data is added on Beeminder").
@@ -491,6 +491,8 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).
 
 <em id="one-of-three">A note about rate, date, and val:</em> One of the three fields `goaldate`, `goalval`, and `rate` will return a null value.
 This indicates that the value is calculated based on the other two fields, as selected by the user.
+
+<em id="a-note-about-errors">Some of these attributes may be null if the goal is in an error state such that the graph cannot be generated or if the goal is frozen. Including `mathishard`, `lane`, `delta`, `limsum`, `safebump`, `safebuf`, `initday`, `initval`, `curday`, `curval`, `currate`, `fullroad`, `headsum`, `graphsum`, `rah`, and others.</em>
 
 <em id="goal-types">A detailed note about goal types:</em> The goal types are shorthand for a collection of settings of more fundamental goal attributes.
 Note that changing the goal type of an already-created goal has no effect on those fundamental goal attributes.
@@ -827,7 +829,7 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 * \[`datasource`\] (string): one of {"api", "ifttt", "zapier", or `clientname`\}. Default: none.
   * If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST to your callback when this goal wants new data, as outlined in [Client OAuth](#6-optional-autofetch-callback ).
   * To unset the datasource, (i.e., return to manual entry) pass in the empty string `""`.
-* \[`tags`\] (array). A list of tags for the goal. Each tag must be an alphanumeric string. NOTE: if you pass this parameter, it will replace the existing tags for the goal. If you pass an empty array, or an explicit nil value, it will remove all tags from the goal. 
+* \[`tags`\] (array). A list of tags for the goal. Each tag must be an alphanumeric string. NOTE: if you pass this parameter, it will replace the existing tags for the goal. If you pass an empty array, or an explicit null value, it will remove all tags from the goal. 
 
 ### Returns
 
