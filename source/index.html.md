@@ -762,6 +762,12 @@ Create a new goal for user *u*.
 * `initval` (number): Initial value for today's date. Default: 0.
 * \[`secret`\] (boolean)
 * \[`datapublic`\] (boolean)
+* \[`deadline`\] (number): Seconds by which the goal's deadline differs from midnight. Negative is before midnight, positive is after. Default: your default deadline. Some autodata sources fix the deadline (Skritter's is 4am, for example); for those, passing any other deadline returns a 422 error saying what the source's deadline is.
+* \[`alertstart`\] (number): Seconds after midnight to start sending reminders, on the day you get them. Must be at or before the deadline. Default: your default alert start.
+* \[`leadtime`\] (number): Days before derailing to start sending reminders. Default: your default lead time.
+* \[`wantsemail`\], \[`wantssms`\], \[`wantsios`\], \[`wantsandroid`\], \[`wantsslackdm`\] (boolean): Whether to send this goal's reminders by email, SMS, iOS push, Android push, and Slack DM, respectively. Default: your defaults, minus any channel your account can't use. Explicitly turning on a channel your account can't use (SMS without a verified phone number, say) returns a 422 error saying why.
+* \[`slackchannel`\] (string): Slack channel to post this goal's reminders to, e.g. "#general". Requires Slack to be connected to your account.
+* \[`zenowebhook`\] (string): URL we POST this goal's reminders to.
 * \[`datasource`\] (string): one of {"api", "ifttt", "zapier", or `clientname`\}. Default: none (i.e., "manual").
 * \[`dryrun`\] (boolean). Pass this to test the endpoint without actually creating a goal. Defaults to false.
 * \[`tags`\] (array). An optional list of tags to add to the new goal. Each tag must be an alphanumeric string.
@@ -769,6 +775,8 @@ Create a new goal for user *u*.
 [Exactly](http://youtu.be/QM9Bynjh2Lk?t=4m14s) two out of three of `goaldate`, `goalval`, and `rate` are required.
 
 If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST to your callback when this goal wants new data, as outlined in [Client OAuth](#6-optional-autofetch-callback ).
+
+If `alertstart` would fall after the deadline, the response is a 422 error on `alertstart`. When one of the two came from your defaults rather than the request, the error says so, and what to pass instead.
 
 ### Returns
 
@@ -818,6 +826,12 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 * \[`tmax`\] (string) date format "yyyy-mm-dd"
 * \[`secret`\] (boolean)
 * \[`datapublic`\] (boolean)
+* \[`deadline`\] (number): Seconds by which the goal's deadline differs from midnight. Negative is before midnight, positive is after. Deadline changes aren't allowed on a beemergency day. Goals on autodata sources that fix the deadline (Skritter, for example) can't change it; passing any other deadline returns a 422 error saying what the source's deadline is.
+* \[`alertstart`\] (number): Seconds after midnight to start sending reminders, on the day you get them. Must be at or before the deadline.
+* \[`leadtime`\] (number): Days before derailing to start sending reminders.
+* \[`wantsemail`\], \[`wantssms`\], \[`wantsios`\], \[`wantsandroid`\], \[`wantsslackdm`\] (boolean): Whether to send this goal's reminders by email, SMS, iOS push, Android push, and Slack DM, respectively. Turning on a channel your account can't use (SMS without a verified phone number, say) returns a 422 error saying why.
+* \[`slackchannel`\] (string): Slack channel to post this goal's reminders to, e.g. "#general". Requires Slack to be connected to your account.
+* \[`zenowebhook`\] (string): URL we POST this goal's reminders to.
 * \[`roadall`\] (array of arrays like `[date::int, value::float, rate::float]` each with exactly one field null)
   * This must not make the goal easier between now and the akrasia horizon (unless you are an admin).
   * Use `roadall` returned by [goal GET](#getgoal), not `road` &mdash; the latter is missing the first and last rows (for the sake of backwards compatibility).
@@ -830,6 +844,8 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
   * If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST to your callback when this goal wants new data, as outlined in [Client OAuth](#6-optional-autofetch-callback ).
   * To unset the datasource, (i.e., return to manual entry) pass in the empty string `""`.
 * \[`tags`\] (array). A list of tags for the goal. Each tag must be an alphanumeric string. NOTE: if you pass this parameter, it will replace the existing tags for the goal. If you pass an empty array, or an explicit null value, it will remove all tags from the goal. 
+
+If `alertstart` would fall after the deadline, passed or current, the response is a 422 error on `alertstart`. When only one of the two was passed, the error says what the other one currently is, and what to pass instead.
 
 ### Returns
 
