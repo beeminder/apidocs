@@ -13,6 +13,7 @@ toc_footers:
 
 includes:
   - url_goal_creation
+  - mcp
   - errors
 
 search: false
